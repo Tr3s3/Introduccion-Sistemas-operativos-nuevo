@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="380" viewBox="0 0 820 380" font-family="Arial, sans-serif">
+<rect width="100%" height="100%" fill="white"/>
+<defs><marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#444"/></marker></defs>
+<text x="20" y="30" font-size="16" text-anchor="start" fill="#222" font-weight="bold">Pasos de un fallo de página (con todos los marcos ocupados)</text>
+<rect x="40" y="60" width="520" height="38" rx="4" fill="#eff6ff" stroke="#1e3a8a" stroke-width="1.5"/>
+<text x="55" y="85" font-size="14" text-anchor="start" fill="#222" font-weight="normal">1. La CPU referencia una página no presente (bit = 0)</text>
+<line x1="300" y1="98" x2="300" y2="112" stroke="#555" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="40" y="112" width="520" height="38" rx="4" fill="#eff6ff" stroke="#1e3a8a" stroke-width="1.5"/>
+<text x="55" y="137" font-size="14" text-anchor="start" fill="#222" font-weight="normal">2. TRAP al SO (fallo de página)</text>
+<line x1="300" y1="150" x2="300" y2="164" stroke="#555" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="40" y="164" width="520" height="38" rx="4" fill="#fef3c7" stroke="#92400e" stroke-width="1.5"/>
+<text x="55" y="189" font-size="14" text-anchor="start" fill="#222" font-weight="normal">3. El SO elige el marco víctima (FIFO, NRU, LRU, reloj…)</text>
+<line x1="300" y1="202" x2="300" y2="216" stroke="#555" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="40" y="216" width="520" height="38" rx="4" fill="#fef3c7" stroke="#92400e" stroke-width="1.5"/>
+<text x="55" y="241" font-size="14" text-anchor="start" fill="#222" font-weight="normal">4. Si la víctima tiene M = 1: escribirla al disco</text>
+<line x1="300" y1="254" x2="300" y2="268" stroke="#555" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="40" y="268" width="520" height="38" rx="4" fill="#eff6ff" stroke="#1e3a8a" stroke-width="1.5"/>
+<text x="55" y="293" font-size="14" text-anchor="start" fill="#222" font-weight="normal">5. Cargar la página pedida en el marco y actualizar la tabla</text>
+<line x1="300" y1="306" x2="300" y2="320" stroke="#555" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="40" y="320" width="520" height="38" rx="4" fill="#eff6ff" stroke="#1e3a8a" stroke-width="1.5"/>
+<text x="55" y="345" font-size="14" text-anchor="start" fill="#222" font-weight="normal">6. Reiniciar la instrucción que falló</text>
+<text x="600" y="120" font-size="14" text-anchor="start" fill="#222" font-weight="bold">Lo que cuesta</text>
+<text x="600" y="145" font-size="13" text-anchor="start" fill="#222" font-weight="normal">El disco es el paso caro:</text>
+<text x="600" y="165" font-size="13" text-anchor="start" fill="#222" font-weight="normal">lectura + posible escritura.</text>
+</svg>

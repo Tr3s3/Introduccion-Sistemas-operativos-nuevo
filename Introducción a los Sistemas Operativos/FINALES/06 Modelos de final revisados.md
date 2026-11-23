@@ -28,9 +28,15 @@ tipo: modelos
 | **1T Febrero 2025** | Llamada al sistema · modelo probabilístico · mapa de bits · tabla de 8 bits · 32 bits, 16 K, 3 niveles |
 | **Diciembre 2025** | Multiprogramación, generación y spooling · segmentación con paginación (SO + programa) · fallo de página · tabla invertida de 64 bits |
 | **Junio 2026** | Multiprogramación con segmentos de 16 bits y páginas de 2 K · tabla invertida 64 bits, 16 GB, 8 K |
+| **Final julio 2024** (03/07/2024) | Multiprogramación y spooling · tabla multinivel 10+10+12 · listas enlazadas · fallo de página · tabla invertida 64 bits, 16 GB, factor 2 |
+| **Parcial 2025 Tema 1 y Tema 2** | Gantt 50 % con llegadas · tamaño óptimo de página · 64 bits con páginas de 16 K (64 GB) u 8 K (32 GB) · FIFO con bit R |
+| **2T Febrero 2025** (26/02/2025) | Multiprogramación · fragmentación · máquina virtual · tabla invertida 32 bits · 31 bits con páginas de 8 K |
 | **Modelos resueltos** (13 págs.) | Semáforos, TSL, Peterson, aging, RR, multiprogramación 75 %, estados con swapping, condiciones de competencia, bits, tablas multinivel, relocación, spooling, LRU |
 
-**Pendiente de revisar en detalle:** 2T Febrero 2025, junio 2024 y Parcial 2025 (PDF escaneados). No los incluimos en las frecuencias.
+**Revisados en la segunda pasada (antes pendientes):**
+- **2T Febrero 2025** (26/02/2025 según la hoja): multiprogramación, fragmentación, máquina virtual, tabla invertida de 32 bits con PC de 4 MB, 31 bits con páginas de 8 KB.
+- **Final julio 2024** (03/07/2024, archivo `junio2024`): multiprogramación y spooling, tabla multinivel 32 bits (10+10+12), listas enlazadas, fallo de página, tabla invertida de 64 bits con 16 GB y factor 2.
+- **Parcial 2025 Tema 1 y Tema 2**: Gantt con E/S del 50 % y llegadas escalonadas, tamaño óptimo de página, 64 bits con páginas de 16 KB o 8 KB, FIFO con bit R.
 
 ## Lo que más se repite (en los exámenes revisados)
 

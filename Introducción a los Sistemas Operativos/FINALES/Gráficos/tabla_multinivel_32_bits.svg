@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="420" viewBox="0 0 820 420" font-family="Arial, sans-serif">
+<rect width="100%" height="100%" fill="white"/>
+<defs><marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#444"/></marker></defs>
+<text x="20" y="30" font-size="16" text-anchor="start" fill="#222" font-weight="bold">Tabla de páginas de dos niveles — dirección de 32 bits (10 + 10 + 12)</text>
+<rect x="60" y="60" width="220" height="40" rx="4" fill="#fde68a" stroke="#92400e" stroke-width="1.5"/>
+<text x="170" y="86" font-size="13" text-anchor="middle" fill="#222" font-weight="normal">Nivel 1 (10 bits)</text>
+<rect x="280" y="60" width="220" height="40" rx="4" fill="#bbf7d0" stroke="#166534" stroke-width="1.5"/>
+<text x="390" y="86" font-size="13" text-anchor="middle" fill="#222" font-weight="normal">Nivel 2 (10 bits)</text>
+<rect x="500" y="60" width="160" height="40" rx="4" fill="#e9d5ff" stroke="#6b21a8" stroke-width="1.5"/>
+<text x="580" y="86" font-size="13" text-anchor="middle" fill="#222" font-weight="normal">Desplazamiento (12)</text>
+<text x="150" y="150" font-size="13" text-anchor="middle" fill="#222" font-weight="bold">Tabla nivel 1 (1024 entradas)</text>
+<rect x="90" y="160" width="120" height="28" rx="2" fill="#fef3c7" stroke="#92400e" stroke-width="1.5"/>
+<text x="150" y="179" font-size="12" text-anchor="middle" fill="#222" font-weight="normal">índice 0</text>
+<rect x="90" y="192" width="120" height="28" rx="2" fill="#fef3c7" stroke="#92400e" stroke-width="1.5"/>
+<text x="150" y="211" font-size="12" text-anchor="middle" fill="#222" font-weight="normal">índice 1</text>
+<rect x="90" y="224" width="120" height="28" rx="2" fill="#fef3c7" stroke="#92400e" stroke-width="1.5"/>
+<text x="150" y="243" font-size="12" text-anchor="middle" fill="#222" font-weight="normal">índice 2</text>
+<rect x="90" y="256" width="120" height="28" rx="2" fill="#fef3c7" stroke="#92400e" stroke-width="1.5"/>
+<text x="150" y="275" font-size="12" text-anchor="middle" fill="#222" font-weight="normal">índice …</text>
+<rect x="90" y="288" width="120" height="28" rx="2" fill="#fef3c7" stroke="#92400e" stroke-width="1.5"/>
+<text x="150" y="307" font-size="12" text-anchor="middle" fill="#222" font-weight="normal">índice 1023</text>
+<text x="490" y="150" font-size="13" text-anchor="middle" fill="#222" font-weight="bold">Tabla nivel 2 (1024 entradas)</text>
+<rect x="430" y="160" width="120" height="28" rx="2" fill="#dcfce7" stroke="#166534" stroke-width="1.5"/>
+<text x="490" y="179" font-size="12" text-anchor="middle" fill="#222" font-weight="normal">índice 0</text>
+<rect x="430" y="192" width="120" height="28" rx="2" fill="#dcfce7" stroke="#166534" stroke-width="1.5"/>
+<text x="490" y="211" font-size="12" text-anchor="middle" fill="#222" font-weight="normal">índice 1</text>
+<rect x="430" y="224" width="120" height="28" rx="2" fill="#dcfce7" stroke="#166534" stroke-width="1.5"/>
+<text x="490" y="243" font-size="12" text-anchor="middle" fill="#222" font-weight="normal">índice 2</text>
+<rect x="430" y="256" width="120" height="28" rx="2" fill="#dcfce7" stroke="#166534" stroke-width="1.5"/>
+<text x="490" y="275" font-size="12" text-anchor="middle" fill="#222" font-weight="normal">índice …</text>
+<rect x="430" y="288" width="120" height="28" rx="2" fill="#dcfce7" stroke="#166534" stroke-width="1.5"/>
+<text x="490" y="307" font-size="12" text-anchor="middle" fill="#222" font-weight="normal">índice 1023</text>
+<line x1="170" y1="100" x2="150" y2="158" stroke="#92400e" stroke-width="1.6" marker-end="url(#a)"/>
+<line x1="390" y1="100" x2="490" y2="158" stroke="#166534" stroke-width="1.6" marker-end="url(#a)"/>
+<line x1="210" y1="238" x2="430" y2="174" stroke="#555" stroke-width="1.6" stroke-dasharray="5,4" marker-end="url(#a)"/>
+<text x="230" y="240" font-size="12" text-anchor="start" fill="#555" font-weight="normal">la entrada 2 apunta a</text>
+<text x="230" y="256" font-size="12" text-anchor="start" fill="#555" font-weight="normal">una tabla de nivel 2</text>
+<text x="40" y="400" font-size="12" text-anchor="start" fill="#333" font-weight="normal">Solo se crean las tablas de nivel 2 que hacen falta: si una entrada de nivel 1 está vacía, no ocupa memoria.</text>
+</svg>

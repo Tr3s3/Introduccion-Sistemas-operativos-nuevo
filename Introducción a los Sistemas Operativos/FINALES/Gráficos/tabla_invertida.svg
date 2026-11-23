@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="380" viewBox="0 0 820 380" font-family="Arial, sans-serif">
+<rect width="100%" height="100%" fill="white"/>
+<defs><marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#444"/></marker></defs>
+<text x="20" y="30" font-size="16" text-anchor="start" fill="#222" font-weight="bold">Tabla de páginas invertida — una entrada por marco de memoria física</text>
+<text x="60" y="70" font-size="13" text-anchor="middle" fill="#222" font-weight="bold">Página virtual (p, pid)</text>
+<text x="360" y="70" font-size="13" text-anchor="middle" fill="#222" font-weight="bold">Marco (fila de la tabla)</text>
+<text x="560" y="70" font-size="13" text-anchor="middle" fill="#222" font-weight="bold">Hash de (pid, p)</text>
+<rect x="40" y="90" width="200" height="36" rx="4" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.5"/>
+<text x="140" y="113" font-size="13" text-anchor="middle" fill="#222" font-weight="normal">pid 1 · pág 5</text>
+<rect x="300" y="90" width="140" height="36" rx="4" fill="#dcfce7" stroke="#166534" stroke-width="1.5"/>
+<text x="370" y="113" font-size="13" text-anchor="middle" fill="#222" font-weight="normal">marco 0</text>
+<line x1="240" y1="108" x2="300" y2="108" stroke="#555" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="40" y="140" width="200" height="36" rx="4" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.5"/>
+<text x="140" y="163" font-size="13" text-anchor="middle" fill="#222" font-weight="normal">pid 2 · pág 0</text>
+<rect x="300" y="140" width="140" height="36" rx="4" fill="#dcfce7" stroke="#166534" stroke-width="1.5"/>
+<text x="370" y="163" font-size="13" text-anchor="middle" fill="#222" font-weight="normal">marco 1</text>
+<line x1="240" y1="158" x2="300" y2="158" stroke="#555" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="40" y="190" width="200" height="36" rx="4" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.5"/>
+<text x="140" y="213" font-size="13" text-anchor="middle" fill="#222" font-weight="normal">pid 1 · pág 2</text>
+<rect x="300" y="190" width="140" height="36" rx="4" fill="#dcfce7" stroke="#166534" stroke-width="1.5"/>
+<text x="370" y="213" font-size="13" text-anchor="middle" fill="#222" font-weight="normal">marco 2</text>
+<line x1="240" y1="208" x2="300" y2="208" stroke="#555" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="40" y="240" width="200" height="36" rx="4" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.5"/>
+<text x="140" y="263" font-size="13" text-anchor="middle" fill="#222" font-weight="normal">pid 3 · pág 7</text>
+<rect x="300" y="240" width="140" height="36" rx="4" fill="#dcfce7" stroke="#166534" stroke-width="1.5"/>
+<text x="370" y="263" font-size="13" text-anchor="middle" fill="#222" font-weight="normal">marco 3</text>
+<line x1="240" y1="258" x2="300" y2="258" stroke="#555" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="520" y="90" width="200" height="36" rx="4" fill="#fef9c3" stroke="#854d0e" stroke-width="1.5"/>
+<text x="620" y="113" font-size="13" text-anchor="middle" fill="#222" font-weight="normal">h(pid, p) → cadena</text>
+<rect x="520" y="140" width="200" height="36" rx="4" fill="#fef9c3" stroke="#854d0e" stroke-width="1.5"/>
+<text x="620" y="163" font-size="13" text-anchor="middle" fill="#222" font-weight="normal">entradas que colisionan</text>
+<line x1="620" y1="126" x2="620" y2="140" stroke="#555" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="20" y="320" font-size="13" text-anchor="start" fill="#333" font-weight="normal">Con 16 GB y páginas de 8 KB hay 2²¹ marcos → 2²¹ entradas (o 2²² con factor 2), en lugar de 2⁵¹ páginas virtuales.</text>
+<text x="20" y="345" font-size="13" text-anchor="start" fill="#333" font-weight="normal">Para buscar la página se recorre la cadena del hash: la tabla crece con la memoria física, no con la virtual.</text>
+</svg>

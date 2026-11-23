@@ -41,3 +41,28 @@ tipo: frecuencia
 
 > [!tip] Para el oral
 > Los **primeros 15** temas explican casi todas las preguntas. Si tenés que elegir qué mirar dos veces, son esos.
+
+## Ejercicios que más se repiten (cruzado con todos los exámenes)
+
+> [!abstract] Cómo se calculó
+> Se cruzaron los exámenes de 2022 a 2026: parciales, recuperatorios, finales de 2023 a 2025 (incluido el de julio 2024, el 2T de febrero 2025 y los Parcial 2025 Tema 1 y 2), y los Modelos. Un ejercicio cuenta como "repetido" si aparece en 3 o más exámenes.
+
+| # | Ejercicio | Frecuencia | Resolución paso a paso |
+|---|---|---|---|
+| E1 | Bits, páginas y marcos (desplazamiento, memoria direccionable) | en casi todos | [[08 Ejercicios frecuentes paso a paso]] |
+| E3 | Multiprogramación con U = 1 − pⁿ | en casi todos | [[08 Ejercicios frecuentes paso a paso]] |
+| E4 | Gantt con E/S del 50 % y procesos que llegan | 5 o más (Parcial 2025 T1 y T2, Modelos, Final julio 2024) | [[08 Ejercicios frecuentes paso a paso]] |
+| E5 | Tabla de páginas invertida (cantidad de entradas y bits) | 5 o más | [[08 Ejercicios frecuentes paso a paso]] |
+| E6 | Tabla multinivel (cantidad de tablas) | 4 o más | [[08 Ejercicios frecuentes paso a paso]] |
+| E2 | Tamaño óptimo de página √(2PE) | 3 o más (Parcial 2025 T1 y T2, 2T Feb 2025) | [[08 Ejercicios frecuentes paso a paso]] |
+| E7 | Fallo de página: pasos y reemplazo | 3 o más | [[08 Ejercicios frecuentes paso a paso]] |
+| E8 | FIFO y su problema (solución: FIFO con bit R) | 3 o más (Parcial 2025 T1 y T2) | [[08 Ejercicios frecuentes paso a paso]] |
+| E9 | Asignación de memoria: first, next, best, worst | 2 o 3 | [[08 Ejercicios frecuentes paso a paso]] |
+| E10 | Fragmentación interna vs. externa | 3 o más | [[08 Ejercicios frecuentes paso a paso]] |
+| E11 | Mapa de bits vs. listas enlazadas | 3 | [[08 Ejercicios frecuentes paso a paso]] |
+
+**Ejercicios nuevos identificados en esta revisión** (no estaban en la versión anterior): **E2** (tamaño óptimo, con los dos casos de Parcial 2025), **E4** (Gantt con llegadas escalonadas, que es el ejercicio más pedido del 2025), **E5** (invertida con 64 bits en tres exámenes) y **E7** (fallo de página con todos los marcos ocupados, pedido en julio 2024).
+
+> [!tip] Lo que cambió con los exámenes nuevos
+> El Gantt con llegadas escalonadas y la tabla invertida con 64 bits son los dos que más se repitieron en 2025. Si tenés que elegir, estudiá E4 y E5 antes que cualquier otra cosa.
+

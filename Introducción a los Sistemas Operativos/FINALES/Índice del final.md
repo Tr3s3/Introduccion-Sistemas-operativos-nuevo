@@ -13,5 +13,6 @@ Empezá por la estrategia y después usá las notas de apoyo:
 6. [[05 Mapa pregunta a subtema]]: de cada pregunta a su nota.
 7. [[06 Modelos de final revisados]]: qué trae cada examen real y qué se repite.
 8. [[07 Ejercicios de los modelos (resueltos)]]: cálculos de los modelos, con método y resultado.
+9. [[08 Ejercicios frecuentes paso a paso]]: los ejercicios que más se repiten, con teoría, gráficos y resolución.
 
 Materia: [[00 Índice de la materia]].

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="330" viewBox="0 0 820 330" font-family="Arial, sans-serif">
+<rect width="100%" height="100%" fill="white"/>
+<defs><marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#444"/></marker></defs>
+<text x="20" y="30" font-size="16" text-anchor="start" fill="#222" font-weight="bold">Gantt — Parcial 2025 Tema 2 (E/S 50 %, p = 0,5)</text>
+<line x1="120" y1="70" x2="120" y2="260" stroke="#bbb" stroke-width="1.6" stroke-dasharray="5,4"/>
+<text x="120" y="280" font-size="12" text-anchor="middle" fill="#222" font-weight="normal">17:00</text>
+<line x1="720" y1="70" x2="720" y2="260" stroke="#bbb" stroke-width="1.6" stroke-dasharray="5,4"/>
+<text x="720" y="280" font-size="12" text-anchor="middle" fill="#222" font-weight="normal">17:15</text>
+<line x1="880" y1="70" x2="880" y2="260" stroke="#bbb" stroke-width="1.6" stroke-dasharray="5,4"/>
+<text x="880" y="280" font-size="12" text-anchor="middle" fill="#222" font-weight="normal">17:19</text>
+<line x1="960" y1="70" x2="960" y2="260" stroke="#bbb" stroke-width="1.6" stroke-dasharray="5,4"/>
+<text x="960" y="280" font-size="12" text-anchor="middle" fill="#222" font-weight="normal">17:21</text>
+<line x1="1040" y1="70" x2="1040" y2="260" stroke="#bbb" stroke-width="1.6" stroke-dasharray="5,4"/>
+<text x="1040" y="280" font-size="12" text-anchor="middle" fill="#222" font-weight="normal">17:23</text>
+<line x1="1200" y1="70" x2="1200" y2="260" stroke="#bbb" stroke-width="1.6" stroke-dasharray="5,4"/>
+<text x="1200" y="280" font-size="12" text-anchor="middle" fill="#222" font-weight="normal">17:27</text>
+<line x1="120" y1="260" x2="1240" y2="260" stroke="#333" stroke-width="1.6"/>
+<text x="40" y="130" font-size="15" text-anchor="start" fill="#222" font-weight="bold">P1</text>
+<rect x="120" y="110" width="760" height="36" rx="3" fill="#93c5fd" stroke="#333" stroke-width="1.5"/>
+<text x="126" y="133" font-size="12" text-anchor="start" fill="#222" font-weight="normal">17:00 → 17:19 (CPU 9 min)</text>
+<text x="40" y="190" font-size="15" text-anchor="start" fill="#222" font-weight="bold">P2</text>
+<rect x="720" y="170" width="240" height="36" rx="3" fill="#fca5a5" stroke="#333" stroke-width="1.5"/>
+<text x="726" y="193" font-size="12" text-anchor="start" fill="#222" font-weight="normal">17:15 → 17:21 (CPU 2,5 min)</text>
+<text x="40" y="250" font-size="15" text-anchor="start" fill="#222" font-weight="bold">P3</text>
+<rect x="1040" y="230" width="160" height="36" rx="3" fill="#86efac" stroke="#333" stroke-width="1.5"/>
+<text x="1046" y="253" font-size="12" text-anchor="start" fill="#222" font-weight="normal">17:23 → 17:27 (CPU 2 min)</text>
+<text x="20" y="300" font-size="12" text-anchor="start" fill="#333" font-weight="normal">Fin: P1 17:19 · P2 17:21 · P3 17:27.</text>
+</svg>
