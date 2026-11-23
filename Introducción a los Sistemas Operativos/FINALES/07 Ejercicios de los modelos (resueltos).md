@@ -31,21 +31,24 @@ Teoría: [[4.1.3 Cálculo de bits, páginas y marcos]].
 ## 2. Tabla de páginas completa (dada en el enunciado)
 **Método:** cada fila es una página. Los bits de marco van en el medio y el último bit es **presente (1) o ausente (0)**.
 
-Tabla de 8 bits del examen de febrero 2024 (lectura manual de la foto, entrada de 8 bits por página; el marco va en el medio y el bit de presencia en el último lugar):
+Tabla de 8 bits del examen 1T Febrero 2024 (verificada contra la hoja original). Cada fila es una página, con marco de 2 bits y una columna aparte de presencia:
 
-| Página | Entrada leída | Bit de presencia (último bit) |
+| Página | Marco | En memoria |
 |---|---|---|
-| 0 | 00 | 0 |
-| 1 | 00 | 0 |
-| 2 | 00 | 0 |
-| 3 | 10 | 0 |
-| 4 | 00 | 0 |
-| 5 | 11 | 1 |
+| 7 | 00 | 0 |
 | 6 | 00 | 0 |
-| 7 | 01 | 1 |
+| 5 | 00 | 0 |
+| 4 | 10 | 1 |
+| 3 | 00 | 1 |
+| 2 | 11 | 1 |
+| 1 | 00 | 0 |
+| 0 | 01 | 1 |
 
-> [!warning] Verificar antes de usar
-> La lectura manual de la foto no está confirmada: el PDF no tiene texto y la tabla tiene dos formatos posibles (dos bits de marco más presencia, o marco de 1 bit). Antes de dar un resultado numérico, releer la hoja original. Lo que sí es seguro: una memoria de 256 bytes con páginas de 32 bytes tiene 8 páginas y 8 marcos, y el desplazamiento son 5 bits.
+**Resultados (memoria de 256 bytes, páginas de 32 bytes), como están en la hoja:**
+- Memoria direccionable: 2⁸ = **256 bytes**.
+- Desplazamiento: 5 bits (32 = 2⁵). Acceso a la tabla de páginas: log₂(256 ÷ 32) = **3 bits**.
+- Páginas virtuales: **8**. Marcos totales: 256 ÷ 32 = **8**.
+- Marcos ocupados: **4** (páginas 4, 3, 2 y 0 están en memoria).
 
 **Resultados base (memoria de 256 bytes, páginas de 32 bytes):**
 - Memoria direccionable: 2⁸ = **256 bytes**.

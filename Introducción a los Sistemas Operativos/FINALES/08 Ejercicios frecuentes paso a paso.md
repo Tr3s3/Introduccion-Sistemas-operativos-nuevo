@@ -157,9 +157,8 @@ tipo: resolucion
 
 ![[gantt_parcial_2025_t2.svg]]
 
-> [!warning] Convención a confirmar
-> Esta es la interpretación de la cátedra (round robin con reparto U/n). Si el enunciado da "duración" como tiempo de reloj y no de CPU, cambiá el cálculo. Preguntá cuál es la convención en el final.
-
+> [!success] Convención verificada
+> El reparto U/n por proceso sale del ejemplo de la página 4-4 del resumen SAE: con 2 trabajos, U = 0,36 y cada uno recibe 0,36 / 2 = 0,18 min de CPU por minuto de reloj. Solo cambia el cálculo si el enunciado da la duración como tiempo de reloj y no como tiempo de CPU: en ese caso, preguntá en el final.
 ---
 
 ## E5. Tabla de páginas invertida
