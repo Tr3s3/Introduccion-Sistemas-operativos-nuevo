@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="330" viewBox="0 0 900 330" font-family="Arial, sans-serif">
+<rect width="100%" height="100%" fill="white"/>
+<defs><marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#444"/></marker></defs>
+<text x="20" y="30" font-size="16" text-anchor="start" fill="#222" font-weight="bold">Traducción de una dirección virtual con una tabla de páginas</text>
+<rect x="60" y="60" width="300" height="40" rx="4" fill="#fde68a" stroke="#92400e" stroke-width="1.5"/>
+<text x="210" y="86" font-size="13" text-anchor="middle" fill="#222" font-weight="normal">Número de página (p)</text>
+<rect x="360" y="60" width="160" height="40" rx="4" fill="#e9d5ff" stroke="#6b21a8" stroke-width="1.5"/>
+<text x="440" y="86" font-size="13" text-anchor="middle" fill="#222" font-weight="normal">Desplazamiento (d)</text>
+<rect x="60" y="150" width="300" height="50" rx="4" fill="#fff7ed" stroke="#92400e" stroke-width="1.5"/>
+<text x="210" y="180" font-size="13" text-anchor="middle" fill="#222" font-weight="bold">Tabla de páginas: p → f (+ bit presencia)</text>
+<rect x="60" y="250" width="300" height="40" rx="4" fill="#fde68a" stroke="#92400e" stroke-width="1.5"/>
+<text x="210" y="275" font-size="13" text-anchor="middle" fill="#222" font-weight="normal">Marco (f)</text>
+<rect x="360" y="250" width="160" height="40" rx="4" fill="#e9d5ff" stroke="#6b21a8" stroke-width="1.5"/>
+<text x="440" y="275" font-size="13" text-anchor="middle" fill="#222" font-weight="normal">Desplazamiento (d)</text>
+<line x1="210" y1="100" x2="210" y2="150" stroke="#92400e" stroke-width="1.6" marker-end="url(#a)"/>
+<line x1="440" y1="100" x2="440" y2="250" stroke="#6b21a8" stroke-width="1.6" stroke-dasharray="5,4" marker-end="url(#a)"/>
+<line x1="210" y1="200" x2="210" y2="250" stroke="#92400e" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="560" y="60" font-size="13" text-anchor="start" fill="#222" font-weight="bold">Ejemplo (4 KB):</text>
+<text x="560" y="80" font-size="13" text-anchor="start" fill="#222" font-weight="normal">20500 = 5 · 4096 + 20</text>
+<text x="560" y="100" font-size="13" text-anchor="start" fill="#222" font-weight="normal">página 5, desplazamiento 20</text>
+<text x="560" y="130" font-size="13" text-anchor="start" fill="#222" font-weight="normal">si la página 5 está en el marco 3:</text>
+<text x="560" y="150" font-size="13" text-anchor="start" fill="#222" font-weight="normal">3 · 4096 + 20 = 12308</text>
+<text x="60" y="315" font-size="13" text-anchor="start" fill="#333" font-weight="normal">Si el bit de presencia es 0 → fallo de página (el SO carga la página y reinicia la instrucción).</text>
+</svg>
