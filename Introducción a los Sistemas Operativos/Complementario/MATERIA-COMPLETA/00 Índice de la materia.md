@@ -5,6 +5,8 @@ tipo: indice
 
 > [!abstract] Cómo está organizada
 > **Unidad → Tema → Subtema.** Cada subtema es una nota. Cada unidad tiene su índice y su archivo de lectura de corrido. El archivo que une todo está en [[Materia completa (las 4 unidades en un archivo)]].
+>
+> **Fuente principal:** las diapositivas de cátedra (ver [[00 Fuente - Temario de diapositivas]]). La teoría se desarrolla siguiendo el temario de las diapositivas y se complementa con explicación, ejemplos, trampas de examen y libro (Tanenbaum).
 
 | Unidad | Qué cubre | Fuentes principales | Índice |
 |---|---|---|---|
