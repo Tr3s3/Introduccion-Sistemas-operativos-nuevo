@@ -10,7 +10,7 @@ Esta bóveda reúne el material de la materia organizado para estudiar de forma 
 
 | Área | Para qué sirve | Entrada |
 |---|---|---|
-| **FINALES** | Todo lo principal para preparar el final | [[Índice del final]] |
+| **FINALES** | Todo lo principal para preparar el final | [[00 EMPEZAR ACA - Ruta de estudio]] · [[Índice del final]] |
 | **Ejercicios** | Practicar enunciados y luego ver resoluciones | [[09 Ejercicios de finales (solo enunciados)]] · [[10 Ejercicios de finales (resoluciones)]] |
 | **Gráficos** | Diagramas/figuras de apoyo | `FINALES/Gráficos/` |
 | **Complementario** | Teoría completa y material de respaldo (consultar si hace falta) | `Complementario/` |

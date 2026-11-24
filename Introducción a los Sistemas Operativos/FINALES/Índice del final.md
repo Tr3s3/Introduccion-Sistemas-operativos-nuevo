@@ -4,14 +4,18 @@ tipo: indice
 
 # Índice del final
 
+> [!important] Empezar por acá
+> Seguí la [[00 EMPEZAR ACA - Ruta de estudio|Ruta de estudio (leer en orden)]]: agrupa todo lo que hay que estudiar para el final, con la planificación y la secuencia estricta.
+
 Entrada principal para preparar el final. Usalo junto con [[00 Índice de la materia]] para la teoría.
 
 ## Ruta rápida
 
-1. [[00 Cómo atacar el final (plan)]] — estrategia y prioridades.
-2. [[01 Temas que más se repiten]] — ranking por frecuencia.
-3. [[09 Ejercicios de finales (solo enunciados)]] — práctica sin ver resolución.
-4. [[10 Ejercicios de finales (resoluciones)]] — corrección con pasos, resultado y trampas.
+1. [[00 EMPEZAR ACA - Ruta de estudio]] — **guía única en orden** (plan + qué estudiar + práctica).
+2. [[00 Cómo atacar el final (plan)]] — estrategia y prioridades.
+3. [[01 Temas que más se repiten]] — ranking por frecuencia.
+4. [[09 Ejercicios de finales (solo enunciados)]] — práctica sin ver resolución.
+5. [[10 Ejercicios de finales (resoluciones)]] — corrección con pasos, resultado y trampas.
 
 ## Material completo
 
