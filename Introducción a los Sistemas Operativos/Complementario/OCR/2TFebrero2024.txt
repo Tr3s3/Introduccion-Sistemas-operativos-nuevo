@@ -1,0 +1,254 @@
+===== /tmp/arena-coding-uploads/2TFebrero2024.pdf =====
+--- page 1 (ocr) ---
+Universidad Catolica de Salta
+saco 8
+Facultad de Ingenieria
+Carreras:Ingenieria en informatica
+Catedra de Introduccion a los Sistemas Operativos-Ano 2024
+Final de Introduccion a los Sistemas Operativos-21-02-2024
+ApellidoyNombre
+DNI
+Emall
+us9smod.om.....
+ta de lon
+1) Explique en que consiste una maquina virtual en el mas amplio sentido de la palabra.Que
+hace una maquina virtual para que se puedan ejecutar instrucciones de otras plataformas?De3
+ejemplos de maquinas virtuales,cada una con distintos propositos.
+2)Cual es la ventaja de aplicar el algoritmo LRU (menos usada recientemente) con respecto a
+otros algoritmos? Que problema puede tener aplicar el algoritmo LRu (menos usada
+recientemente)?Como lo solucionaria?De un ejemplo numerico del problema.
+3)Que es un fallo de pagina? Que hace el Sistema Operativo ante un fall de pagina y donde
+debe registrarinformar lo realizado?Si esta toda la memoria fisica ocupada que decision debe
+tomarel Soy enque sebasa parapoder tomaresa decision?
+4)En un sistema de direccionamiento de memoria de 16 bits,donde la tabla completa de
+paginas es la siguiente:
+00
+0O
+00
+10
+00
+00
+01
+Donde cada numero de fila representa una pagina (nros. de O a 7),la siguiente columna es el
+marco de pagina (siguientes dosbits)y el ultimo bit es el de presencia o ausencia en memoria
+fisica.
+Cuanta memoria (en bytes) se puede direccionar?Cuantos bits se utilizan para el acceso a la
+tamano (en bytes) de la memoria ffsica si se encuentra ocupada en su totalidad?&Cuantos
+marcosdepagina posee la memoria?
+5)En un sistema damemoriavirtual de56bits,conpaginas de16Ky16Gbdememoria fisica
+Cual es el problema?Como lo solucionaria?Justifique sus respuestas y compare el problema
+y la solucion numericamente.
+
+--- page 2 (ocr) ---
+softwore
+simuiaret
+virtual
+eun
+capae
+Unamaquiog
+fisica
+funcionamlcntode
+una
+maguina
+JVH(guaUirta machne)elCal
+Por
+eemplo
+exisle
+Uun
+frcdsce
+el
+lenguajeoe
+Programacojaudal
+entorno
+lenguag
+maguinc
+e
+VM390
+gue
+Simulaun So
+EHU808G
+Troobce
+ellenguak
+Un
+asenblera
+Softuare
+qe
+lenguak
+magUna.
+Som
+emulaobnos".
+La
+vontagai
+oel
+algoritmo LRu
+Con
+resoecto
+aofo
+es
+al
+Ser
+manz
+den
+asignarle
+y
+en
+las
+Columnas
+A.las
+correspondieots
+caa
+espaaooe
+menona
+bene
+exoctamenk
+U
+Unico
+humeo
+Lo
+denkfca
+lo
+ge
+hace
+mas
+facalla
+busgreob
+cel
+menos
+usadb
+LC
+desuentaya
+es
+menona
+e
+demasiod
+la
+malnE
+Se
+hnace
+muygrande
+0
+groocup
+grande
+es
+mas
+lenta
+a
+busgrecaoel
+mas
+mneros
+memono
+USb
+redaemenk
+fallo
+de
+da
+S1
+una_pagina
+noSe
+Un
+pagirna
+Se
+pnocioa
+Ise
+les
+encuentic
+en
+la
+Stsemade
+archuos
+Isishra
+opeatiodebe
+memona
+psica
+el
+Si
+esda
+foob
+a
+la
+xmemona
+basaodose
+heemplatar
+de
+elog.c
+gue
+pagina
+menOna
+como
+asignaas
+alqunalgortmo
+UD
+por
+
+--- page 3 (ocr) ---
+Bpagioas
+sishna
+10613
+16
+b15=
+G4kb
+Ommonadirecconale
+16-13=3
+136
+paraelaccesonkao
+3bporq aceso
+gladablaol
+13
+RogunacAo
+819261455
+2
+8kb
+Se dluieea8f
+paginees
+994850
+68S36L。1R
+8192B=8kB
+8b
+1B
+Posee
+4marcol
+de
+pagipo
+00
+01,10,11
+memooa
+Uictuad
+56bit5
+Pagnas
+2
+lGGbmenonasicc
+S6
+menonc biceclonable
+ae
+2
+Conkdd
+pagrnau
+gue
+as
+poginaocupanuntarhao
+prolblenc
+es
+exstrle
+La
+Solucio
+fSiCG
+la
+memona
+mayo
+a
+Ser
+aumentar
+el
+famano
+padrio
+esle
+probikma
+pera
+konkoad
+olpeginor
+kner
+menor
+para
+de
+las
+paginas

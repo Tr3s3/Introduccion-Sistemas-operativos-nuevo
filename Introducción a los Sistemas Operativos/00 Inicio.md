@@ -10,11 +10,13 @@ Esta bóveda reúne el material de la materia organizado para estudiar de forma 
 
 | Área | Para qué sirve | Entrada |
 |---|---|---|
-| **MATERIA-COMPLETA** | Teoría completa por Unidad → Tema → Subtema | [[00 Índice de la materia]] |
-| **FINALES** | Plan de final, preguntas frecuentes, modelos y práctica | [[Índice del final]] |
+| **FINALES** | Todo lo principal para preparar el final | [[Índice del final]] |
 | **Ejercicios** | Practicar enunciados y luego ver resoluciones | [[09 Ejercicios de finales (solo enunciados)]] · [[10 Ejercicios de finales (resoluciones)]] |
 | **Gráficos** | Diagramas/figuras de apoyo | `FINALES/Gráficos/` |
-| **OCR** | Texto extraído de exámenes escaneados/fotos | `FINALES/OCR/` |
+| **Complementario** | Teoría completa y material de respaldo (consultar si hace falta) | `Complementario/` |
+
+> [!tip] Recomendación
+> Si tu objetivo es rendir el final, concentráte en **FINALES/**. Usá **Complementario/MATERIA-COMPLETA** solo cuando necesites profundizar un tema.
 
 ## Por dónde empezar
 

@@ -1,0 +1,24 @@
+===== /tmp/arena-coding-uploads/Junio2026.jpeg =====
+--- image Junio2026.jpeg (ocr) ---
+1) Que es la multiprogramacion? En que generacion de computadoras se incorpora? Qué
+es importante actualmente?
+2) En un sistema de 16 bits y paginas de 2 Kb se desea ejecutar un programa ademas del
+sistema operativo (Se tienen que ejecutar ambos en multiprogramacion). El sistema operativo
+pagina los segmentos (Segmentacion con paginacion).
+Si ei sistema operativo tiene un codigo 0 texto que ocupa 10648 bytes, los datos ocupan 4329
+bytes y el tamano de la pila es de 5633 bytes. Y si el progama tiene un c6digo o texto que ocupa
+10557 bytes, los datos 0cupan 21297 bytes y el tamano de la pila es de 9747 bytes.
+a.  Cuantas paginas ocupa el sistema operativo?
+b. i Cuantas paginas ocupa el Programa?
+c. i Se puede ejecutar el programa junto al sistema operativo?
+d. Si el tamano de la pagina es de 1 Kb en lugar de 2Kb se puede ejecutar el programa junto al
+SO?
+Considere que una pagina no puede contener datos de diferentes segmentos. Justifiquue sus
+respuestas.
+3) Grafique y explique los pasos que se dan en un fallo de pagina considerando que todos los
+marcos de memoria se encuentran ocupados.
+4) Si se administra la memoria virtual con una tabla de paginas invertidas (con factor 2, doble de
+la memoria fisica), en un sistema de 64 bits, donde la memoria fisica es de 16 Gb y el tamano de
+las paginas de memoria es de 8 Kb.
+-Grafique la tabla de paginas invertida indicando cantidad de paginas.
+- indique la cantidad de paginas de la tabla si no se utilizara una tabla invertida.

@@ -53,7 +53,7 @@ tipo: modelos
 **Tercera tanda (OCR de escaneados/fotos, 2026-11-23):**
 - Se implementó `scripts/extract_scanned_content.py` (PyMuPDF + RapidOCR + `opencv-python-headless`) para extraer texto de PDFs escaneados y JPEG/PNG.
 - Se auditaron 33 archivos en `/tmp/arena-coding-uploads`: 15 con texto embebido, 18 requerían OCR.
-- Los 18 OCR quedaron en `FINALES/OCR/` y se usaron para integrar preguntas/ejercicios faltantes. **Nota:** el OCR puede tener errores en símbolos, fórmulas y manuscrito; ante duda, contrastar con la imagen/PDF original.
+- Los 18 OCR quedaron en `Complementario/OCR/` y se usaron para integrar preguntas/ejercicios faltantes. **Nota:** el OCR puede tener errores en símbolos, fórmulas y manuscrito; ante duda, contrastar con la imagen/PDF original.
 - Modelos extraídos por OCR: `1TFebrero2024`, `1TFebrero2025`, `2TFebrero2024`, `2TFebrero2025`, `Diciembre2023/2024/2025`, `Junio2026`, `Noviembre2023/2024`, `Parcial2022/2023/2024/2025`, `Recu 2024`, `Recu2025`, `junio2024`, `image-1` (captura/listado).
 
 ## Lo que más se repite (en los exámenes revisados)

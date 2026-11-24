@@ -1,0 +1,22 @@
+===== /tmp/arena-coding-uploads/Diciembre2023.jpeg =====
+--- image Diciembre2023.jpeg (ocr) ---
+1) Que es una llamada al sistema?El comando time que utilizamos en la linea de comandos
+es una llamada al sistema o que llamada/s al sistema utiliza?Expliquey justifique.
+2) En un sistema de multiprogramacion se sabe que el tiempo promedio de espera de E/S es del
+90%. Se desea saber los momentos (en horas y minutos) en que finalizara cada uno de los
+siguientes procesos.Realice un Gantt para mostrar la ejecucion de los procesos en el tiempo,
+Proceso A:Inicia 15:00 hs,Duracion:1,38 minutos
+Proceso B:Inicia 15:10 hs,Duracion:1,38 minutos
+3) Si tiene un sistema de 52 bits y paginas de 2 KB. Hay algun problema?Cual? &Qué
+solucion aplicaria a dicho problema?Justifique numericamente cada pregunta.
+4)Que defecto tiene el algoritmo de reemplazo depagina:Primero en EntrarPrimero en Salir o
+First In First Out(FiFO)?Como se soluciona dicho problema?Que algoritmo busca hacer mas
+eficiente la solucion anterior?
+5) En un sistema de 25 bits con gestion de memoria por demanda de pagina que utiliza tablas
+multinivel (3 niveles), si se utilizan 4 bits para la tabla de paginas del nivel superior y 5 bits para
+las tablas depaginas del segundo y tercer nivel.
+a)Cual es el tamano de laspaginas?
+b)Cuantas paginas diferentes puede administrar el sistema?
+c) En cuantas sub-tablas se divide la tabla de paginas? (considere los 3 niveles y justifique)
+d) Con 2Gb de memoria fisica &Cuantosmarcos depagina puede haber?
+e) Cuanta memoria puede administrar el sistema?  Puede utilizar toda la memoria fisica?
