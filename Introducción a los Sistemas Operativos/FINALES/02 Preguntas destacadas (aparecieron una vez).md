@@ -38,6 +38,9 @@ tipo: excepcionales
 | **TP1-22** | JVM y .NET CLR vs. hipervisor | La JVM/CLR no simulan hardware; son VM de **proceso** |
 | **TP1-17** | Multiprogramación sin DMA | La CPU copia byte a byte y no hay solapamiento: la multiprogramación pierde sentido |
 | **TP2-9** | Programa que simula multiprogramación | Entender el modelo (p, n, reparto) para poder escribir la simulación; el código no se pide literal en el oral |
+| **SAE** | Monolítico vs. microkernel | Monolítico: todo en modo kernel, rápido pero frágil. Microkernel: solo lo esencial en kernel, el resto en modo usuario; más robusto pero más lento por IPC |
+| **SAE** | Creación y finalización de procesos | Creación: arranque del sistema, llamada (`fork`), solicitud de usuario, trabajo por lotes. Fin: salida normal, error voluntario, error fatal, muerte por otro proceso/SO |
+| **SAE** | Buddy system y Quick Fit | Buddy: bloques en potencias de 2, facilita fusión. Quick Fit: listas separadas por tamaños frecuentes, rápido pero difícil de fusionar |
 
 > [!warning] Cuidado con los enunciados de la cátedra
 > Algunos ejercicios tienen **datos que no cierran** (por ejemplo, la tabla de TP3-8 o la cantidad de bits de la tabla de TP3-6). En el parcial, decí cuál es el supuesto que usás y seguí. La cátedra valora el método.

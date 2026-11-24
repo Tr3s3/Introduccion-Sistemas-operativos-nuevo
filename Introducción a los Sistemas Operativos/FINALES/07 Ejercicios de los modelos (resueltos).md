@@ -1,129 +1,180 @@
 ---
 tipo: ejercicios
 ---
-# Ejercicios de los modelos (resueltos)
+
+# Ejercicios de modelos: lo justo para el examen
 
 > [!abstract] Cómo usar esta nota
-> Cada bloque es un **tipo de ejercicio** que se repite en los exámenes. Primero el método, después el caso real con su resultado. Los resultados fueron recalculados. Donde el examen o la resolución manuscrita tenía un error, se indica.
+> Cada bloque tiene: **cuándo aparece**, **método**, **ejemplo resuelto** y **trampa**. Si tenés poco tiempo, hacé en orden: 1, 4, 5, 6, 7, 8.
 
-## 1. Bits de una dirección (el ejercicio que más se repite)
-**Método (4 pasos):**
-1. Desplazamiento = log₂(tamaño de página).
-2. Bits de página = bits totales − desplazamiento.
-3. Páginas virtuales = 2^(bits de página).
-4. Marcos = memoria física ÷ tamaño de página.
+## Checklist rápido (antes de entregar)
 
-| Enunciado | Desplazamiento | Bits de página | Páginas | Marcos | Memoria direccionable |
-|---|---|---|---|---|---|
-| 16 bits, 8 K, memoria física 32 K (Modelos) | 13 | 3 | 8 | 4 | 2¹⁶ = 64 KB |
-| 22 bits, 2 K, 16 M (Modelos y Parcial 2022) | 11 | 11 | 2 K (2¹¹) | 8 K (2¹³) | 4 MB |
-| 42 bits, 8 K, 8 GB (Parcial 2023) | 13 | 29 | 2²⁹ | 2²⁰ | 2⁴² = 4 TB |
-| 9 bits, páginas de 8 bytes (Final de Diciembre 2024) | 3 | 6 | 64 | 2 GB ÷ 8 = 2²⁸ | **512 bytes** |
-| 52 bits, 2 K (Recuperatorio 2025 y Diciembre 2024) | 11 | 41 | 2⁴¹ | depende de la memoria física | 2⁵² = 4 PB |
-| 36 bits, 16 K, 16 GB (Parcial 2024, con páginas de 5 K como trampa) | 14 | 22 | 2²² | 16 GB ÷ 16 K = 2²⁰ | 2³⁶ = 64 GB |
-| 25 bits, 13 de desplazamiento (Noviembre 2023) | 13 | 12 | 2¹² = 4096 | 1 GB ÷ 8 K = 131 072 | **32 MB** (2²⁵) |
+- [ ] Escribí **dato → fórmula → sustitución → resultado + unidad**.
+- [ ] En paginación: calculé **desplazamiento** antes que bits de página.
+- [ ] Verifiqué si el tamaño de página es **potencia de 2**.
+- [ ] En memoria: comparé **direccionable vs. física** (la usable es la menor).
+- [ ] En Gantt: recalculé **U = 1 − pⁿ** y **U/n** cada vez que llega/termina un proceso.
+- [ ] En reemplazo: dije **qué criterio usa** cada algoritmo (carga, última ref, R/M, puntero).
 
-> [!warning] El error de la pregunta "¿cuánta memoria puede utilizar el sistema?"
-> La memoria que se puede **usar** es la **menor** entre la direccionable (virtual) y la física. Con 25 bits y 1 GB de RAM, solo se pueden usar **32 MB**. Con 9 bits y 2 GB de RAM, solo **512 bytes**. Esto aparece en los finales y casi todos lo pierden.
+## 1. Bits, páginas y marcos (sale casi siempre)
 
-Teoría: [[4.1.3 Cálculo de bits, páginas y marcos]].
+**Método**
+1. `desplazamiento = log2(tamaño_página)`
+2. `bits_página = bits_virtuales − desplazamiento`
+3. `páginas = 2^(bits_página)`
+4. `marcos = memoria_física / tamaño_página`
+5. `memoria_direccionable = 2^(bits_virtuales)`
 
-## 2. Tabla de páginas completa (dada en el enunciado)
-**Método:** cada fila es una página. Los bits de marco van en el medio y el último bit es **presente (1) o ausente (0)**.
+**Ejemplos rápidos**
 
-Tabla de 8 bits del examen 1T Febrero 2024 (verificada contra la hoja original). Cada fila es una página, con marco de 2 bits y una columna aparte de presencia:
+| Caso | Despl. | Bits pág. | Páginas | Marcos | Ojo |
+|---|---:|---:|---:|---:|---|
+| 42 bits, 8 KB, 8 GB | 13 | 29 | 2^29 | 2^20 | Parcial 2023 |
+| 36 bits, 16 KB, 128 GB | 14 | 22 | 2^22 | 2^23 | 1T Feb 2024 |
+| 31 bits, desp. 13, 512 MB | 13 | 18 | 2^18 | 2^16 | 2T Feb 2025 |
+| 25 bits, desp. 13, 1 GB | 13 | 12 | 4096 | 131072 | direccionable 32 MB < 1 GB |
+| 22 bits, 2 K, 16 M | 11 | 11 | 2048 | 8192 | direccionable 4 MB |
+| 9 bits, pág. 8 B, 2 GB | 3 | 6 | 64 | 2^28 | direccionable 512 B |
+| 52 bits, 2 KB | 11 | 41 | 2^41 | depende | tabla enorme si es de 1 nivel |
+| 56 bits, 16 K, 16 GB | 14 | 42 | 2^42 | 2^20 | tabla lineal inviable |
 
-| Página | Marco | En memoria |
+**Trampas**
+- Página **5 KB** (Parcial 2024): no es potencia de 2 → desplazamiento no entero. Es un problema de definición del sistema.
+- “¿Cuánta memoria se puede utilizar?” → `min(direccionable, física)`.
+
+## 2. Traducir dirección virtual (tabla dada)
+
+**Método**
+1. `página = dir_virtual div tamaño_página`
+2. `desplazamiento = dir_virtual mod tamaño_página`
+3. Buscar marco de esa página en la tabla.
+4. `dir_física = marco * tamaño_página + desplazamiento`
+
+**Ejemplo (Final 27-11-2024 / TP3):** 16 bits, 4 KB, dir. virtual 20500.
+- 20500 / 4096 = 5, resto 20.
+- Página 5 → marco 3 (según tabla).
+- Física = 3 × 4096 + 20 = **12308**.
+- Binario (16 bits): 20500 = `0101 0000 0001 0100`; física = `0011 0000 0001 0100`.
+
+**Trampa:** si el desplazamiento es mayor o igual al tamaño de página, la dirección es inválida.
+
+## 3. Tabla multinivel (cantidad de tablas)
+
+**Método**
+- Repartí los bits de página entre niveles (ej. 10+10+12, o 4+5+5).
+- Tablas totales = `1 + 2^(n1) + 2^(n1+n2) + ...`
+- Subtablas = totales − 1 (si no cuentan la raíz).
+
+**Ejemplos**
+- **32 bits, 4 KB, 10+10+12** (Final julio 2024): despl. 12, bits pág. 20. 1 + 2^10 = 1025 tablas si se usan los dos niveles de 10; justificar que evita tabla única de 2^20 entradas.
+- **25 bits, 3 niveles 4+5+5** (Recuperatorio): despl. 11 (2 KB), páginas 2^14=16384. Tablas = 1 + 2^4 + 2^4×2^5 = 1+16+512 = **529** (528 subtablas).
+- **32 bits, 16 KB, 3 niveles 6+6+6** (1T Feb 2024/2025): despl. 14, páginas 2^18. Tablas = 1+64+4096 = **4161**.
+- **2 niveles de 14 bits, páginas 64 B, 32 GB** (Recu 2025 T2): offset 6, bits tabla 28, virtual 2^34=16 GB, páginas 2^28, marcos 2^29. Problema: física > direccionable; no se usa toda la RAM.
+
+**Trampa:** aclarar si te piden “tablas” o “subtablas”.
+
+## 4. Tabla invertida
+
+**Método**
+- Tabla normal: 1 entrada por **página virtual**.
+- Tabla invertida: 1 entrada por **marco físico**.
+- `marcos = memoria_física / tamaño_página`
+- Si piden factor 2: `entradas = 2 × marcos`
+
+**Ejemplos**
+- **64 bits, 16 GB, 8 KB, factor 2** (Junio 2026 / Final julio 2024): marcos = 2^34/2^13 = 2^21. Invertida con factor 2 = **2^22 entradas**. Normal = 2^51 entradas → inviable.
+- **64 bits, 64 GB, 16 KB** (Parcial 2025): marcos = 2^36/2^14 = 2^22. Despl. 14, bits pág. 50.
+
+**Trampa:** la invertida ahorra porque escala con RAM, no con espacio virtual.
+
+## 5. Fallo de página (todos los marcos ocupados)
+
+**Respuesta modelo (6 pasos)**
+1. La MMU detecta bit de presencia = 0 → **fallo de página**.
+2. Se genera **trap** al SO; se guarda estado del proceso.
+3. SO localiza la página en disco/swap.
+4. Elige **marco víctima** (FIFO/LRU/NRU/reloj). Si no hay libres, hay que reemplazar.
+5. Si la víctima tiene **M=1**, se escribe a disco; si M=0, se descarta. Se carga la página nueva y se actualiza tabla (P=1, marco, R/M).
+6. Se **reinicia la instrucción** que causó el fallo.
+
+**Trampa:** si todos los marcos están ocupados, el paso 4 siempre implica reemplazo.
+
+## 6. Reemplazo: FIFO, reloj, NRU, LRU, Aging
+
+| Algoritmo | Reemplaza | Problema | Solución / nota |
+|---|---|---|---|
+| **FIFO** | más vieja por carga | Belady; puede sacar página muy usada | Segunda oportunidad / reloj |
+| **2ª oportunidad** | FIFO + bit R | puede dar vueltas | Reloj |
+| **Reloj** | puntero circular; R=0 sale, R=1 se limpia | aproximación | eficiente |
+| **NRU** | clase más baja (R,M): 00,01,10,11 | pocas clases | limpiar R periódicamente |
+| **LRU** | menos usada recientemente | caro exacto (matriz/contador) | Aging/NFU |
+| **Aging** | contador más chico; shift + R | aproximación | buen costo |
+
+**Respuesta corta de examen**
+- FIFO malo porque “solo mira antigüedad”. Solución: **FIFO con bit R / segunda oportunidad**; más eficiente: **reloj**.
+- NRU malo porque “solo 4 clases”. Solución: **Aging** o LRU con mejor hardware.
+- LRU HW malo por costo en memoria/hardware. En 32 bits, 4 KB: páginas = 2^20; una matriz n×n o contadores por página son costosos; se aproxima con **Aging**.
+
+## 7. Multiprogramación y Gantt (U = 1 − pⁿ)
+
+**Fórmulas**
+- `U = 1 − pⁿ`
+- `n >= log(1−U_obj) / log(p)`
+- Si `p` distintos: `U = 1 − ∏pᵢ`
+- Reparto por intervalo: **cada proceso avanza `U/n` minutos de CPU por minuto de reloj** (convención SAE/cátedra). Al llegar/terminar, recalcular `n` y `U`.
+
+**Ejemplos**
+- p=0,5, n=3 → U=87,5%. CPU por proceso = 29,17%.
+- p=0,75, U objetivo 90% → n=8.
+- **60%, 3 procesos** (1T Feb 2024): 13:00 P1(2,32); 13:05 P2(2,32); 13:12 P3(4,00). Hacer tabla por intervalos, sin redondear.
+- **90%, 2 procesos** (Recu 2024 T1): 15:00 y 15:10, 1,38 min c/u. U1=0,1; U2=1−0,9²=0,19; velocidad por proceso 0,095.
+
+**Trampa:** no confundir p=E/S con CPU. No usar duración como reloj si el enunciado la da como CPU.
+
+## 8. Segmentación, paginación y segmentación paginada
+
+**Para responder en 3 líneas**
+- **Paginación pura**: divide en páginas fijas. Elimina fragmentación externa, pero tiene interna y tablas grandes.
+- **Segmentación pura**: divide en segmentos lógicos variables. Buena para protección/compartición lógica, pero genera **fragmentación externa**.
+- **Segmentación con paginación**: segmenta lógicamente y pagina cada segmento. Reduce externa de segmentación y facilita manejo; es la más usada en la práctica.
+
+**Ejercicio típico (cabe/no cabe)**
+- Páginas por segmento = `ceil(tamaño / página)`, por cada segmento por separado.
+- Total páginas necesarias × tamaño página vs. espacio direccionable.
+- **Caso Junio 2026**: 16 bits, 2 KB (32 páginas direccionables). SO 6+3+3=12; Prog 6+11+5=22; total 34 → **no entra**. Con 1 KB (64 páginas): 22+42=64 → **entra justo**.
+
+## 9. Fragmentación, bitmap vs. listas, asignación
+
+**Fragmentación**
+- **Interna**: sobra dentro del bloque asignado (particiones fijas/paginación). Ej: proceso 200 KB en bloque 320 KB → 120 KB internos.
+- **Externa**: huecos libres dispersos, no alcanza uno contiguo (particiones variables/segmentación). Solución: compactación/paginación.
+
+**Bitmap vs. listas**
+- Bitmap: 1 bit por unidad. Tamaño fijo; buscar k ceros seguidos puede ser lento.
+- Listas: nodo por segmento (P/H, inicio, tamaño, siguiente). Más flexible; crece con segmentos; fusión fácil.
+
+**Asignación**: first fit (primero que alcanza), next fit (desde último), best fit (menor sobra), worst fit (mayor hueco). Nombrar también Quick Fit y Buddy si piden alternativas.
+
+## 10. Teoría corta que siempre suma
+
+- **Syscall**: interfaz controlada de modo usuario a kernel; provoca trap/cambio de modo. `time` no es syscall: es comando/programa que usa syscalls/servicios del SO.
+- **Spooling**: bufferiza trabajos en disco para dispositivos lentos (impresora). Surge fuerte en 3ª generación; desacopla CPU de E/S.
+- **TLB**: caché de traducciones página→marco. Acelera acceso; en TLB se guarda página virtual porque la búsqueda es por página virtual.
+- **VM**: abstrae hardware; hipervisor/VMM. JVM/CLR son VM de proceso, no de hardware.
+- **Estados**: nuevo, listo, ejecución, bloqueado, terminado; con swapping: listo suspendido, bloqueado suspendido. No hay bloqueado→ejecución directo.
+
+## 11. Casos adicionales extraídos por OCR (verificar con original si hay duda)
+
+> Fuente: `FINALES/OCR/`. El OCR puede contener errores en símbolos/números; estos casos se incluyen cuando el enunciado es interpretable.
+
+| Caso (según OCR) | Datos | Resultado clave |
 |---|---|---|
-| 7 | 00 | 0 |
-| 6 | 00 | 0 |
-| 5 | 00 | 0 |
-| 4 | 10 | 1 |
-| 3 | 00 | 1 |
-| 2 | 11 | 1 |
-| 1 | 00 | 0 |
-| 0 | 01 | 1 |
+| Recu 2025 T2 | 64 bits, página 64 B, RAM 32 GB | Offset 6, tabla 58, 2^58 páginas, 2^29 marcos; tabla lineal inviable → multinivel/invertida |
+| Noviembre 2024 | 12 bits, página 32 B, RAM 256 B | Offset 5, página 7 bits=128 páginas, 8 marcos, 4 KB direccionables |
+| Junio/Julio 2024 / 2TFeb2025 | 64 bits, 8 KB, 16 GB, invertida factor 2 | Offset 13, 2^21 marcos, 2^22 entradas invertida; directa sería 2^51 |
+| Diciembre 2025 | 64 bits, 16 KB, 64 GB | Offset 14, tabla 50, 2^50 páginas, 2^22 marcos; tabla lineal inviable |
+| 2T Febrero 2024 | 56 bits, 16 KB, 16 GB | Offset 14, tabla 42, 2^42 páginas, 2^20 marcos; tabla lineal muy grande |
+| Recu 2024 / Junio 2026 | Gantt con 90% E/S | `Tcpu = n/0.1`, dividir CPU entre `n` procesos activos; no CPU ociosa si hay listo |
 
-**Resultados (memoria de 256 bytes, páginas de 32 bytes), como están en la hoja:**
-- Memoria direccionable: 2⁸ = **256 bytes**.
-- Desplazamiento: 5 bits (32 = 2⁵). Acceso a la tabla de páginas: log₂(256 ÷ 32) = **3 bits**.
-- Páginas virtuales: **8**. Marcos totales: 256 ÷ 32 = **8**.
-- Marcos ocupados: **4** (páginas 4, 3, 2 y 0 están en memoria).
-
-**Resultados base (memoria de 256 bytes, páginas de 32 bytes):**
-- Memoria direccionable: 2⁸ = **256 bytes**.
-- Desplazamiento: 5 bits (32 = 2⁵). Bits para la página: **3 bits**.
-- Páginas virtuales: **8**. Marcos: 256 ÷ 32 = **8**.
-
-Con la tabla de 16 bits del mismo bloque (páginas de **8 K**, 13 bits de desplazamiento, 3 bits para la página, 8 páginas), la memoria direccionable es 64 KB.
-
-**Traducción de una dirección** (el que se pide en el final de 16 bits con 4 K): dirección virtual 20500 en binario = `0101 0000 0001 0100`. Página = 20500 ÷ 4096 = **5** (`0101`), desplazamiento = **20** (`0000 0000 0001 0100`). La página 5 está en el **marco 3** (según la tabla dada). Dirección física = 3 × 4096 + 20 = **12308** = `0011 0000 0001 0100`.
-
-Teoría: [[4.1.2 Paginación y la MMU]].
-
-## 3. Tablas multinivel: cantidad de tablas y de páginas
-**Caso 32 bits, páginas de 16 K, 3 niveles de 6 bits (1T Febrero 2024 y 1T Febrero 2025):**
-- Desplazamiento: 32 − 14 = **18 bits** para páginas (6 + 6 + 6). Páginas: 2¹⁸ = **262 144**.
-- Tablas: 1 principal + 2⁶ tablas de nivel 2 + 2⁶ × 2⁶ tablas de nivel 3 = 1 + 64 + 4096 = **4161 tablas en total**. Sin contar la principal: **4160 subtablas**.
-
-> [!note] Cuidado con la pregunta
-> Si el enunciado pide "subtablas", no cuentes la tabla principal. Si pide "tablas", sumala. Aclaralo en el final.
-
-**Caso 25 bits, 3 niveles de 4, 5 y 5 bits (Recuperatorio 2025):**
-- Desplazamiento: 25 − 14 = **11 bits**, así que las páginas son de **2 K**.
-- Páginas: 2¹⁴ = **16 384**.
-- Tablas: 1 + 2⁴ + 2⁴ × 2⁵ = 1 + 16 + 512 = **529 tablas** (528 subtablas sin contar la principal).
-- Con 2 GB de RAM: 2³¹ ÷ 2¹¹ = **2²⁰ marcos** (1 048 576). Memoria direccionable: 2²⁵ = 32 MB, así que **no se puede usar toda la RAM**.
-
-Teoría: [[4.2.2 Tablas multinivel e invertidas]].
-
-## 4. Tabla invertida vs. tabla normal (Junio 2026)
-**Caso:** 64 bits, memoria física 16 GB, páginas de 8 K.
-- Marcos: 16 GB ÷ 8 K = 2³⁴ ÷ 2¹³ = **2²¹ entradas** (una por marco). Con factor 2 (como pide el examen), la tabla invertida tiene 2 × 2²¹ = **2²² entradas**.
-- Sin tabla invertida: 2⁶⁴ ÷ 2¹³ = **2⁵¹ entradas** (una por página virtual), que es un número imposible de guardar.
-
-**Por qué es necesaria:** la tabla normal crece con el espacio **virtual** (2⁵¹ entradas), y la invertida crece con la **física** (2²¹). Cuando la memoria virtual es mucho más grande que la RAM, la invertida es la que entra.
-
-Teoría: [[4.2.2 Tablas multinivel e invertidas]].
-
-## 5. Tamaño de página: problemas y casos especiales
-- **Página que no es potencia de 2** (Parcial 2024, 36 bits con páginas de **5 KB**): el tamaño tiene que ser 2^k para que el desplazamiento sea una cantidad exacta de bits. Con 5 KB el desplazamiento no es entero. Esa es la respuesta al "¿encuentra algún problema?".
-- **Tabla de páginas muy grande** (Parcial 2022, 32 bits, 4 K, PC de 4 MB, entrada de 4 bytes): 2²⁰ páginas × 4 bytes = **4 MB**, o sea **toda la memoria física**. Solución: tablas multinivel o invertidas.
-- **Tabla de 56 bits con páginas de 16 K** (2T Febrero 2024): 2⁴² páginas. La respuesta "aumentar el tamaño de página" es correcta pero incompleta: lo que realmente se usa son **tablas multinivel** o **invertidas**.
-- **Tamaño óptimo de página** (Modelos, PP): s = √(2PE) con P = 2 MB y E = 16 bytes da **8 KB**, con la fórmula de [[4.5.1 Tamaño de página óptimo — s = √(2PE)]].
-
-## 6. Multiprogramación: segmentación con paginación (Junio 2026)
-**Caso:** 16 bits, páginas de **2 K**. Sistema operativo: código 10 648, datos 4 329, pila 5 633. Programa: código 10 557, datos 21 297, pila 9 747.
-- Cada segmento se redondea hacia arriba a páginas (una página no mezcla segmentos).
-- Con páginas de 2 K: SO = 6 + 3 + 3 = **12 páginas**. Programa = 6 + 11 + 5 = **22 páginas**. Total **34 páginas**. El espacio direccionable de 16 bits son 2¹⁶ ÷ 2¹¹ = **32 páginas**. **No entra.**
-- Con páginas de 1 K: SO = 11 + 5 + 6 = 22, programa = 11 + 21 + 10 = 42. Total **64 páginas** = 64 de 64. **Entra justo**, sin margen. Decilo así, con el número.
-
-Teoría: [[4.6.2 Segmentación con paginación y su combinación]].
-
-## 7. Modelo probabilístico y Gantt de E/S
-**Fórmula:** U = 1 − pⁿ.
-- Grado mínimo de multiprogramación para un objetivo: pⁿ ≤ 1 − U_objetivo ⇒ n ≥ log(1 − U) ÷ log(p).
-- **Ejemplo de los Modelos:** p = 0,75 y U = 0,90 ⇒ 0,75ⁿ ≤ 0,1 ⇒ **n = 8** (log 0,1 ÷ log 0,75 ≈ 7,96).
-- **Ejemplo del Parcial 2023:** p = 0,5, tres procesos ⇒ U = 1 − 0,5³ = **87,5 %**. Uso de CPU por proceso = 87,5 % ÷ 3 ≈ **29,2 %** cada uno, si se reparten por igual.
-- **Ejemplo con dos procesos (p = 0,5 y p = 0,9):** U = 1 − 0,5 × 0,9 = **55 %**.
-
-**Gantt (método del resumen SAE, con reparto round robin):** al llegar un trabajo, se recalcula U = 1 − pⁿ con el n actual. Cada proceso recibe U ÷ n de CPU por minuto de reloj. El tiempo que tarda un proceso es su duración de CPU dividido ese reparto. Los exámenes piden **no redondear** (usar todos los decimales) y mostrar el cálculo antes del Gantt. Confirmá la convención con la cátedra antes del final, porque hay variantes.
-
-Teoría: [[2.5.2 Modelo probabilístico — U = 1 − pⁿ]] · [[2.4.2 FIFO, SJF y Round Robin (quantum)]].
-
-## 8. Reemplazo de páginas (con tabla)
-- **FIFO:** la página con menor tiempo de carga.
-- **LRU:** la página con menor tiempo de última referencia.
-- **NRU:** la de clase más baja (R, M): (0,0) < (0,1) < (1,0) < (1,1).
-- **Reloj:** puntero circular. R = 0 se reemplaza; R = 1 pasa a R = 0 y el puntero avanza.
-
-Teoría: [[4.4.1 Óptimo, FIFO y anomalía de Belady]] · [[4.4.2 Segunda oportunidad y algoritmo del reloj]] · [[4.4.3 NRU, LRU y aging]].
-
-## 9. Asignación de procesos a memoria (la técnica de la hoja de cuentas)
-En los exámenes de 2025 se pide la cantidad de **páginas que ocupa cada segmento** (código, datos, pila): redondear hacia arriba, por segmento. Cuando el total de páginas es mayor que las páginas del espacio direccionable, el programa **no entra**. Ver el caso del punto 6.
-
-## 10. Un error de los modelos que conviene conocer
-La resolución de la 3.ª pregunta del Modelo (sistema de 32 bits, 4 K, PC de 4 MB) habla de la tabla en la que 2²⁰ entradas de 4 bytes ocupan 4 MB. Eso es exactamente toda la memoria física, y el problema no es solo "la tabla es grande": **la tabla no entra**. Así se explica al final.
-
-> [!tip] Cronómetro de examen
-> Un bloque de bits = 2 minutos si lo tenés practicado. Escribí siempre: **datos → desplazamiento → bits de página → páginas → marcos → lo que pidan**.
+> [!tip] Si te trabás en el oral
+> Decí la definición, el criterio del algoritmo, y una trampa típica. Eso muestra dominio aunque no recuerdes un número.

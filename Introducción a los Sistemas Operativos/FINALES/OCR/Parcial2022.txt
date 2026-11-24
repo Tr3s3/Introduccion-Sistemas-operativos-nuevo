@@ -1,0 +1,23 @@
+===== /tmp/arena-coding-uploads/Parcial2022.jpeg =====
+--- image Parcial2022.jpeg (ocr) ---
+Universidad Catolica de Salta
+Facultad deIngenieria
+Carrera deIngenieria en Informatica
+Catedra de Introducciona losSistemasOperativos-Ano2022
+Parcial-2022
+ApellidoyNombre
+DNI
+Email
+1) Explique el concepto de spooling.En quegeneracion de computadoras de incorpora?Por
+que seagrega?Por queesimportanteactualmente?
+2)Si tiene unsistema de32bits,paginas de4Kb,unapccon4MBdememoriafisicaycada
+entrada de la tabla depaginasocupa 4bytes.Hay algunproblema?Cual?Que solucion
+aplicariaadichoproblema?
+1) Explique uncasoque tenga fragmentacion interna dememoriay otro enque tenga
+fragmentacion externa.Justifique su respuesta.Explique ambos conceptos.
+4)Enunsistema de22bits,conpaginasdememoria de2Kymemoria fisica de16M.Cuantos
+bitsseutilizanparaelaccesoala tabla depaginacionycuantospara el acceso internodela
+pagina?En cuantaspaginasse divideel espacio de direccionamiento virtual?Cuantos marcos
+depaginaposee la memoria?iCuanta memoria sepuede direccionar?
+5) Explique el algoritmo NRu (No usada recientemente) Como surge cada categoriia?Cual es
+el problema dedicho algoritmo?Como sepuede solucionar?

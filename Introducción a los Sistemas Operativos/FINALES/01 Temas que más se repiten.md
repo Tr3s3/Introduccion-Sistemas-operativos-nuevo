@@ -38,6 +38,9 @@ tipo: frecuencia
 | 27 | Sincronización | Baja | PP20 | [[2.6.2 Sincronización y condiciones de carrera]] |
 | 28 | Thrashing y conjunto de trabajo | Baja | Cát | [[4.5.2 Conjunto de trabajo y thrashing]] |
 | 29 | Tiempo medio de acceso con caché | Baja | TP1-19 | [[03 Ejercicios tipo con resultado]] |
+| 30 | LRU exacto vs. aproximaciones (Aging/NFU) | Media-baja | RS, PP30 | [[08 Ejercicios frecuentes paso a paso]] |
+| 31 | Buddy system y Quick Fit | Baja | SAE | [[3.5.1 Primer ajuste, próximo ajuste, mejor ajuste y peor ajuste]] |
+| 32 | Monolítico vs. microkernel; creación/fin de procesos | Baja | SAE | [[1.1.1 Definición y funciones]] · [[2.1.1 Programa vs. proceso]] |
 
 > [!tip] Para el oral
 > Los **primeros 15** temas explican casi todas las preguntas. Si tenés que elegir qué mirar dos veces, son esos.
@@ -60,6 +63,7 @@ tipo: frecuencia
 | E9 | Asignación de memoria: first, next, best, worst | 2 o 3 | [[08 Ejercicios frecuentes paso a paso]] |
 | E10 | Fragmentación interna vs. externa | 3 o más | [[08 Ejercicios frecuentes paso a paso]] |
 | E11 | Mapa de bits vs. listas enlazadas | 3 | [[08 Ejercicios frecuentes paso a paso]] |
+| E13 | LRU, NRU y Aging (matriz y contadores) | 2 o 3 | [[08 Ejercicios frecuentes paso a paso]] |
 
 **Ejercicios nuevos identificados en esta revisión** (no estaban en la versión anterior): **E2** (tamaño óptimo, con los dos casos de Parcial 2025), **E4** (Gantt con llegadas escalonadas, que es el ejercicio más pedido del 2025), **E5** (invertida con 64 bits en tres exámenes) y **E7** (fallo de página con todos los marcos ocupados, pedido en julio 2024).
 

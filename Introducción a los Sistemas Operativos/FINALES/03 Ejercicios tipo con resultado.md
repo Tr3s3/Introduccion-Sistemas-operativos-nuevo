@@ -72,8 +72,18 @@ Teoría: [[3.5.1 Primer ajuste, próximo ajuste, mejor ajuste y peor ajuste]].
 - p = 0,5, objetivo 90 % → n = **4**.
 - p = 0,75, n = 4 → U = 68,4 %; desperdicio **31,6 %** (TP2-6).
 - p = 0,7, n = 3 → 65,7 %; n = 5 → 83,2 % (aumento de 26,6 % al agregar memoria, TP2-7).
+- Si cada proceso tiene **p distinto**, U = 1 − ∏pᵢ. Ejemplo: p = 0,5 y 0,9 → U = 1 − 0,45 = **55 %**.
 
-Teoría: [[2.5.2 Modelo probabilístico — U = 1 − pⁿ]].
+**Gantt SAE (p = 0,8, 4 trabajos, llegadas 10:00/10:10/10:15/10:20, 4 min de CPU c/u):**
+- 10:00–10:10, n=1, U=0,2: T1 avanza 2,0.
+- 10:10–10:15, n=2, U=0,36, 0,18 c/u: T1 queda 1,1; T2 queda 3,1.
+- 10:15–10:20, n=3, U=0,488, 0,1627 c/u: T1 queda ~0,287; T2 ~2,287; T3 ~3,187.
+- 10:20+, n=4, U=0,5904, 0,1476 c/u: T1 termina ~10:21:56; luego recalcular con n=3.
+
+> [!note] Regla del Gantt
+> En cada intervalo, velocidad por proceso = U/n minutos de CPU por minuto de reloj. Al terminar o llegar un proceso, se recalcula n y U.
+
+Teoría: [[2.5.2 Modelo probabilístico — U = 1 − pⁿ]]. Pasos detallados: [[08 Ejercicios frecuentes paso a paso]].
 
 ## 8. Round Robin: sobrecarga por cambio de contexto
 Sobrecarga = cambio / (cambio + quantum). Caso: 6 ms y 25 ms → 6 / 31 ≈ **19,4 %**.

@@ -1,0 +1,126 @@
+===== /tmp/arena-coding-uploads/2TFebrero2025.pdf =====
+--- page 1 (ocr) ---
+gCNocve
+Universidad Catolica de Salta
+Facultad de Ingenieria
+Carreras: Ingenieria en Informatica
+Apellido y Nombre
+INO
+..
+Email
+multiprogramacion.
+ 2) Explique los conceptos de fragmentaci6n de memoria externa e interna. Ejemplifique un caso 
+3) Explique en que consiste una maquina virtual. De 3 ejemplos de maquinas virtuales.
+Relacione los3ejemplos antesmencionados.
+4) Si tiene un sistema de 32 bits, paginas de 4Kb, una pc con 4 MB de memoria fisica y cada
+entrada de la tabla de paginas ocupa 4 bytes. Hay algun problema? Cual? Que soluci6n
+aplicaria a dichoproblema?
+desplazamiento dentro de la pagina y los restantes el numero de pagina.
+a)Cual es el tamano de la pagina?
+b) Cuantas paginas diferentes puede tener el sistema?
+
+--- page 2 (ocr) ---
+26102/2025
+Lamelteroogous
+(erloqua0ocab）aecoc
+esooodthegip
+hx
+SeLmallrance
+fue aloea
+kcomavbdonr
+eb
+om omboua
+rocaretrayecdnemee
+MogeJerd
+cadm
+ellena xcode
+Froumentes
+Jememea
+paranrmemn
+Loelceboboger
+@ebrerpuer
+Son Fageememoca etene
+
+--- page 3 (ocr) ---
+18od5d3
+Kaneseeyeumre/Jeyanb
+oeobmnelepeeoxead
+Lolne.
+LFognebeynlera
+Loveededo
+me
+2aeecevbrodeperaconb
+lolamayoc
+MProcero
+emelenonmelagnehtonede
+rcenaoPoce
+ceOuecasosseduestesbuuiroa？
+teoendoleetodeele/sigeacedatomanne
+Cmdueecopeursr eco telareaee
+Alaumee
+eempledeMegunCinoley copocrSon
+JavourshlMacioemy sl ycueQemlegeutrarans
+oNinledo ou
+Woomdeacer
+n
+Semdooncelvlaratover JeemoSoe
+
+--- page 4 (ocr) ---
+WDah
+5420
+Meora FsluMo
+20
+22
+euomems
+33
+20
+Cnisoa e Pogar
+?
+2
+Pysen
+TanePyer
+22
+20
+2
+UMb
+EpoeecafabbkpgNoml
+hansergenrobyaneecuolcedmubfula
+1abbliazadelamerraFrno
+Paaiau Mu1ti
+Menona Fasle
+12
+Sihay
+A2
+uko
+ocv
+ser
+Baceluls
+omvloa
+
+--- page 5 (ocr) ---
+orheg
+oognlaoangaemeoentmer
+13dsdeDerpla20nhb:13bbs
+Damoro
+-8KG
+34-13
+29
+Fnsrva
+512H=>
+CJGWTW
+Memono Fasag
+16
+65536
+ConLee
+Horerkpm
+3
+6556o
+9
+85110
+
+--- page 6 (ocr) ---
+uo
+15
+1048570b小e5
+=1M3
+Condento31on6y
