@@ -16,13 +16,13 @@ unidad: 2
 
 ## Diapositiva de cátedra
 
-![[slide_02.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_02.png]]
 
 La diapositiva define: “Un proceso es la abstracción de un programa en ejecución”. No es solo el código: incluye lo necesario para ejecutar ese código en un momento dado.
 
 ## Diapositiva: modelo de proceso
 
-![[slide_03.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_03.png]]
 
 El modelo de proceso muestra que cada proceso tiene su propia “vista” de ejecución (contador de programa, registros, pila, memoria). Esto permite que varios procesos avancen de forma independiente.
 
@@ -64,9 +64,9 @@ Tanenbaum enfatiza la analogía: el programa es como una receta; el proceso es l
 
 ## Diapositivas de cátedra: implementación de procesos
 
-![[slide_12.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_12.png]]
 
-![[slide_13.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_13.png]]
 
 Las diapositivas de “Implementación de procesos” muestran que el SO mantiene una tabla/estructura por proceso con la información necesaria para gestionarlo y cambiar de contexto.
 
@@ -110,7 +110,7 @@ Tanenbaum describe la tabla de procesos como el corazón de la implementación m
 
 ### Creación de procesos
 
-![[slide_04.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_04.png]]
 
 La diapositiva enumera causas típicas de creación:
 - Inicialización del sistema.
@@ -120,7 +120,7 @@ La diapositiva enumera causas típicas de creación:
 
 ### Terminación de procesos
 
-![[slide_05.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_05.png]]
 
 Causas típicas de terminación:
 - Salida normal (voluntaria).
@@ -130,7 +130,7 @@ Causas típicas de terminación:
 
 ### Jerarquía y señales
 
-![[slide_06.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_06.png]]
 
 La diapositiva muestra:
 - Los procesos padres crean procesos hijos.
@@ -176,9 +176,9 @@ Tanenbaum distingue creación por evento del sistema, por usuario, por batch y p
 
 ### Estados
 
-![[slide_07.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_07.png]]
 
-![[slide_08.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_08.png]]
 
 Las diapositivas presentan los estados y transiciones. El modelo clásico incluye:
 - **Listo (Ready):** puede ejecutar, espera CPU.
@@ -187,9 +187,9 @@ Las diapositivas presentan los estados y transiciones. El modelo clásico incluy
 
 ### Transiciones
 
-![[slide_09.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_09.png]]
 
-![[slide_10.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_10.png]]
 
 Transiciones típicas:
 - **Listo → Ejecutando:** el planificador lo despacha.
@@ -199,7 +199,7 @@ Transiciones típicas:
 
 ### Suspensión (swapping)
 
-![[slide_11.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_11.png]]
 
 La diapositiva muestra que el movimiento entre memoria y disco introduce estados **suspendidos**:
 - **Listo/Suspendido**
@@ -240,7 +240,7 @@ Nombrá los estados, dibujá o describí transiciones, y aclaralo: **bloqueado n
 
 ## Diapositiva de cátedra
 
-![[slide_14.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_14.png]]
 
 La diapositiva muestra los pasos que sigue el nivel inferior del SO cuando ocurre una interrupción:
 
@@ -431,17 +431,17 @@ Tanenbaum presenta prioridades como mecanismo flexible, pero advierte que deben 
 
 ### Monoprogramación vs. multiprogramación
 
-![[slide_19.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_19.png]]
 
 Con **monoprogramación** hay un proceso usuario + SO en memoria; cuando el proceso espera E/S, la CPU queda ociosa.
 
-![[slide_20.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_20.png]]
 
 Con **multiprogramación** hay varios procesos usuarios en memoria: mientras uno espera E/S, otro puede usar la CPU. Se incrementa el uso de CPU. Se debe decidir cuántos procesos mantener en memoria → modelo probabilístico.
 
 ### Organización de memoria
 
-![[slide_24.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_24.png]]
 
 La diapositiva plantea la pregunta clave: ¿cómo organizar la memoria para tener más de un proceso en ejecución? Primera aproximación: particiones fijas (sin swapping).
 
@@ -475,7 +475,7 @@ Tanenbaum vincula multiprogramación con el grado de multiprogramación, planifi
 
 ### Fórmula
 
-![[slide_21.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_21.png]]
 
 La diapositiva define:
 - $n$: cantidad de procesos en memoria.
@@ -485,9 +485,9 @@ La diapositiva define:
 
 ### Ejemplo y análisis
 
-![[slide_22.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_22.png]]
 
-![[slide_23.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_23.png]]
 
 Las diapositivas muestran el análisis para 4 procesos con 80% de espera de E/S: a medida que aumenta $n$, sube la utilización, pero con rendimientos decrecientes. También se analiza la secuencia de eventos/llegadas.
 

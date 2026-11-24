@@ -1,249 +1,443 @@
 ---
-tipo: unidad-completa
+tipo: lectura-corrida
 unidad: 3
 ---
-# Unidad 3 — Administración de memoria (asignación contigua) — completa
+# Unidad 3 — completa (lectura de corrido)
 
-> [!abstract] Qué pide la unidad
-> Cómo el SO reparte la memoria RAM entre varios procesos sin paginación: relocación y protección, particiones fijas y variables, fragmentación, control de huecos (mapa de bits y listas enlazadas) y algoritmos de asignación. Es la base para entender por qué apareció la memoria virtual (Unidad 4).
-
-> [!info] Cómo leer este archivo
-> Es la unidad entera, en orden: Tema → Subtema. Cada subtema tiene su nota propia en la carpeta del tema, por si querés estudiar uno solo.
-
+> [!abstract] Fuente
+> Desarrollada a partir de las **diapositivas de cátedra** (Procesos y Memoria, sección administración de memoria) y complementada con explicaciones, ejemplos, trampas de examen y libro (Tanenbaum). Ver [[00 Fuente - Temario de diapositivas]].
 
 ---
 
-## Tema 3.1 — La memoria como recurso
-
-
-### 3.1.1 Funciones del administrador de memoria
+# 3.1.1 Funciones del administrador de memoria
 
 > [!abstract] En una frase
-> El **administrador de memoria** lleva la cuenta de qué memoria está en uso y cuál libre, la asigna y desasigna a los procesos, y permite **intercambiar** procesos con el disco cuando no alcanza la RAM.
+> El **administrador de memoria** del SO controla qué partes de la RAM están libres u ocupadas, asigna y libera memoria para procesos, y soporta mecanismos como swapping, protegiendo y usando eficientemente el recurso.
 
-#### Desarrollo
-Funciones (cátedra, Procesos y memoria):
-1. Registrar la memoria **en uso**.
-2. Registrar la memoria **disponible**.
-3. **Asignar** memoria a los procesos.
-4. **Desasignar** memoria al terminar.
-5. **Swapping:** intercambio entre memoria principal y disco.
+## Diapositivas de cátedra
 
-**Requisitos de diseño:**
-- **Transparencia:** varios procesos conviven en memoria y ninguno debe saber que es compartida; cada uno corre sin importar cuántos hay ni dónde están.
-- **Seguridad:** ningún proceso puede corromper a otro.
-- **Eficiencia:** ni la CPU ni la memoria deben desperdiciarse por ser compartidas.
+### Introducción a memoria
 
-> [!note] Ley de Parkinson (cátedra)
-> "Los programas van creciendo de forma tal que ocupan la memoria disponible." La memoria es un recurso **escaso** aunque cada vez sea más grande.
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_15.png]]
 
-#### Cómo responderlo en el final
-Enumerar las 5 funciones y, para el "por qué", los tres requisitos: transparencia, seguridad y eficiencia.
+Un programa debe cargarse en memoria para ejecutarse. La CPU accede directamente a memoria principal y registros; la memoria es más lenta que los registros, y el cache se ubica en el medio.
 
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_16.png]]
 
-### 3.1.2 Monoprogramación y sin abstracción de memoria
+La memoria ideal sería grande, rápida y no volátil. En la práctica es un **recurso escaso**: los programas crecen (Ley de Parkinson) y se necesitan mecanismos eficientes de administración.
 
-> [!abstract] En una frase
-> Sin abstracción de memoria, el programa usa **direcciones físicas** directamente. La forma más simple es la **monoprogramación**: un proceso de usuario más el SO en memoria. Cuando ese proceso espera E/S, la CPU queda ociosa.
+### Funciones del administrador
 
-#### Desarrollo
-Tres formas de organizar la memoria con un solo proceso (Tanenbaum y cátedra):
-- **(a)** SO en la parte baja de la RAM (usado en mainframes; hoy casi no).
-- **(b)** SO en ROM en la parte alta y el resto en RAM (palmtops e integrados).
-- **(c)** Parte del SO en ROM (**BIOS**) y el resto en RAM abajo (primeras PC con MS-DOS).
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_17.png]]
 
-**Problemas:**
-- **Ineficiencia:** mientras espera E/S, la CPU no hace nada.
-- **Riesgo:** en (a) y (c) un error del programa de usuario puede sobrescribir el SO.
+La diapositiva enumera las funciones:
+- Registro de la memoria en uso.
+- Registro de la memoria disponible.
+- Asignación de memoria a los procesos.
+- Desasignación de memoria a los procesos.
+- **Swapping:** intercambio entre memoria principal y disco.
 
-**Multiprogramación sin abstracción:** es posible con **intercambio** (guardar todo el contenido de la memoria en disco y traer el siguiente programa) o con **hardware especial**: la IBM 360 dividía la RAM en bloques de 2 KB con una **llave de protección de 4 bits** cada uno.
+### Consideraciones
 
-#### Cómo responderlo en el final
-"Sin abstracción, el programa ve la memoria física. Con un solo proceso la CPU se desperdicia en las E/S; para varios hace falta intercambio o protección por hardware."
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_18.png]]
 
+- **Transparencia:** varios procesos deben coexistir sin necesitar saber que la memoria es compartida.
+- Cada proceso debe ejecutarse sin considerar cuántos procesos hay ni su ubicación.
+- **Seguridad:** ningún proceso debe corromper a otro.
+- **Eficiencia:** CPU y memoria no deben usarse menos eficientemente por ser compartidas.
 
----
+## Complemento de libro (Tanenbaum)
+Tanenbaum enmarca la administración de memoria como un problema de abstracción, asignación, protección y eficiencia. Estas funciones son la base de particiones, paginación y memoria virtual.
 
-## Tema 3.2 — Relocación y protección
-
-
-### 3.2.1 Registros base y límite
-
-> [!abstract] En una frase
-> La multiprogramación plantea dos problemas: **relocación** (el mismo programa debe poder cargarse en cualquier dirección) y **protección** (ningún proceso debe acceder a la memoria de otro). Se resuelven con dos registros de hardware: **base** y **límite**.
-
-#### Desarrollo
-- **Relocación:** las direcciones del programa son **relativas**. Al cargarlo, se suma la base. Dos procesos con las mismas direcciones relativas viven en lugares distintos.
-- **Protección:** antes de usar una dirección, el hardware verifica que caiga dentro del límite. Si no, hay una **trampa** (excepción) y el SO aborta el proceso.
-- **Funcionamiento:** cuando el planificador elige un proceso, el SO **carga** base y límite con los valores de ese proceso.
-
-**Dirección física = base + dirección generada por el programa**, con la condición de que la dirección generada sea menor que el límite.
-
-> [!note] Dos formas de ver el límite
-> La cátedra lo llama "registro límite" y lo describe como el **tamaño** de la partición; Tanenbaum lo describe como la **dirección superior**. En el examen, decí cuál usás y verificá que la comparación sea coherente.
-
-#### Cómo responderlo en el final
-Dibujar la suma base + dirección, marcar la comparación con el límite y decir que el SO recarga ambos registros en cada cambio de proceso.
+## Cómo responderlo en el final
+Enumerá funciones (registrar, asignar, liberar, swapping) y consideraciones (transparencia, protección, eficiencia). Si te piden ejemplo, usá asignación/liberación ante creación/terminación de procesos.
 
 > [!warning] Errores típicos
-> - Decir que el registro base guarda la dirección del proceso: guarda el **inicio de la partición**.
+> - Limitar el administrador de memoria a “reservar RAM” sin mencionar protección o transparencia.
+> - Olvidar swapping como mecanismo de apoyo.
 
 
 ---
 
-## Tema 3.3 — Particiones fijas y variables
-
-
-### 3.3.1 Particiones fijas
+# 3.1.2 Monoprogramación y sin abstracción de memoria
 
 > [!abstract] En una frase
-> Con **particiones fijas** la memoria se divide, antes de empezar, en bloques de tamaño fijo. Cada trabajo ocupa una partición; si no cabe en ninguna libre, espera en cola. Su defecto es la **fragmentación interna**.
+> En **monoprogramación** hay un solo proceso de usuario en memoria junto al SO; es simple pero desaprovecha la CPU cuando el proceso espera E/S.
 
-#### Desarrollo
-- Se divide la RAM en N particiones de tamaño fijo (en TP2, 128 MB).
-- Llega un trabajo: si cabe en una partición libre, entra. Si no hay ninguna libre pero el trabajo **no excede el tamaño de la partición**, espera a que una se libere (TP2, pregunta 3b).
-- **Problema:** un trabajo de 100 MB en una partición de 128 MB desperdicia 28 MB dentro de la partición: **fragmentación interna**.
+## Diapositiva de cátedra
 
-#### Cómo responderlo en el final
-Describir la división fija, la cola de espera y el desperdicio dentro de la partición, con el ejemplo de 128 MB.
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_19.png]]
+
+La diapositiva muestra monoprogramación sin abstracción de memoria:
+- Uso ineficiente de la CPU.
+- Un proceso usuario + SO en memoria.
+- Cuando el proceso espera por E/S → CPU ociosa.
+- Presenta tres formas de organizar la memoria con un solo proceso.
+
+## Limitaciones
+
+| Aspecto | Monoprogramación |
+|---|---|
+| Simplicidad | Alta |
+| Uso de CPU | Bajo si hay E/S |
+| Protección/reubicación | Más simple, pero limitada |
+| Concurrencia | No hay múltiples procesos de usuario |
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum contrasta este esquema con multiprogramación: cargar varios procesos permite solapar CPU y E/S, pero obliga a resolver reubicación, protección y asignación dinámica.
+
+## Cómo responderlo en el final
+“Monoprogramación: un solo proceso usuario en memoria. Es simple, pero si espera E/S la CPU queda ociosa. Por eso se pasa a multiprogramación”.
+
+> [!warning] Errores típicos
+> - Confundir monoprogramación con monousuario.
+> - No mencionar el motivo principal para abandonarla: CPU ociosa por E/S.
 
 
-### 3.3.2 Particiones variables, swapping y compactación
+---
+
+# 3.2.1 Registros base y límite
 
 > [!abstract] En una frase
-> Con **particiones variables** cada proceso recibe exactamente lo que pide, y las particiones cambian de tamaño y de ubicación a medida que entran y salen procesos. Cuando la memoria queda con huecos dispersos, se usa **compactación** para juntarlos.
+> Los registros **base** y **límite** permiten reubicar un proceso en memoria y protegerlo: la dirección física se calcula como base + dirección lógica, controlando que no supere el límite.
 
-#### Desarrollo
-- Cada trabajo recibe un bloque a su medida: no hay fragmentación interna, pero sí aparecen **huecos** entre procesos.
-- **Swapping:** un proceso completo se mueve a disco para liberar RAM y se trae de vuelta después. Es costoso por la lentitud del disco (Tanenbaum: un disco SATA de 100 MB/s tarda ~10 s en mover 1 GB).
-- **Compactación:** se mueven los procesos para juntar los huecos en un bloque libre contiguo. Su costo es copiar memoria byte a byte.
-- Un segmento que **crece** (pila o heap) necesita espacio libre contiguo al final, o se reubica (cátedra, Swapping).
+## Diapositivas de cátedra
 
-### Costo de la compactación (TP2, pregunta 5)
-Con 1 GB, compactación cada 3 minutos y 150 ns por byte copiado: el tiempo de CPU es (bytes copiados × 150 ns) / 180 s. Si el 75 % de la memoria está en uso, se copian ≈ 805 MB ≈ 120 s por compactación: **≈ 67 % del tiempo de CPU**. Mostrá el método; el número depende de qué bytes asumas copiados.
+### Problemas de multiprogramación
 
-#### Cómo responderlo en el final
-Explicar el beneficio (sin fragmentación interna) y el costo (huecos externos, swapping, compactación), y cerrar con que la compactación es cara.
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_25.png]]
 
+La multiprogramación introduce dos problemas:
+- **Relocación:** direcciones relativas según la partición donde se carga el programa.
+- **Protección:** impedir que un proceso acceda a memoria de otro.
 
-### 3.3.3 Fragmentación interna y externa
+### Solución por hardware
 
-> [!abstract] En una frase
-> **Fragmentación interna:** se asigna más de lo que se necesita y lo sobrante queda adentro del bloque, sin uso. **Fragmentación externa:** hay memoria libre total suficiente, pero repartida en huecos no contiguos que ninguno alcanza solo.
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_26.png]]
 
-#### Desarrollo
-| | Interna | Externa |
+- **Registro base:** almacena la dirección de inicio de la partición.
+- **Registro límite:** almacena el tamaño de la partición.
+- Al planificar un proceso, el SO carga ambos registros.
+- Dirección física = **base + dirección generada por el programa**.
+- El SO/hardware controla que no supere el límite.
+
+### Ejemplos de reubicación
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_27.png]]
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_28.png]]
+
+Las diapositivas muestran procesos con mismas direcciones relativas cargados en distintas posiciones físicas, resolviendo la relocación.
+
+## Resumen
+
+| Registro | Función | Protege/Resuelve |
 |---|---|---|
-| Dónde aparece | Particiones fijas, paginación | Particiones variables, segmentación |
-| Qué pasa | El bloque es más grande que el pedido | Hay huecos chicos sueltos |
-| Ejemplo | Partición de 128 KB para 100 KB: **28 KB perdidos** | Huecos de 10, 5 y 12 KB con total 27 KB; llega un proceso de 20 KB: **no entra** |
-| Solución | Bloques más chicos | Compactación, o paginación |
+| **Base** | Suma al offset lógico | Relocación |
+| **Límite** | Verifica tamaño máximo | Protección |
 
-**Cuidado:** la misma memoria puede tener las dos según el esquema. La paginación elimina la externa, pero deja la interna (la última página de un proceso no se llena).
+## Complemento de libro (Tanenbaum)
+Tanenbaum explica esta técnica como la forma simple de dar a cada proceso un espacio de direcciones propio en asignación contigua. Es eficiente, pero limitada frente a fragmentación y necesidades de memoria virtual.
 
-#### Cómo responderlo en el final
-Dar la definición de cada una con su ejemplo numérico y la tabla de dónde aparece.
+## Cómo responderlo en el final
+“Base contiene inicio de partición y límite su tamaño. Dirección física = base + lógica. Si supera límite, hay protección/fallo. Así se resuelve relocación y protección en particiones contiguas”.
 
 > [!warning] Errores típicos
-> - Decir que la paginación no tiene fragmentación: tiene **interna**.
+> - Olvidar verificar el límite (solo sumar base no protege).
+> - Confundir dirección lógica con física.
 
 
 ---
 
-## Tema 3.4 — Control de la memoria libre
-
-
-### 3.4.1 Mapa de bits
+# 3.3.1 Particiones fijas
 
 > [!abstract] En una frase
-> El **mapa de bits** divide la memoria en unidades de asignación fijas; cada unidad tiene un bit (0 = libre, 1 = ocupada). Para asignar un proceso de k unidades hay que buscar **k ceros consecutivos**.
+> En **particiones fijas**, la memoria se divide previamente en bloques de tamaño fijo (iguales o distintos); son simples, pero pueden generar **fragmentación interna**.
 
-#### Desarrollo
-- **Tamaño del mapa:** 1 bit por unidad; **no depende** de cuántos procesos haya.
-- **Elegir la unidad:** si es muy chica, el mapa crece; si es muy grande, se desperdicia memoria por fragmentación interna. No conviene agrandarla solo para achicar el mapa.
-- **Desventaja principal:** la búsqueda de k ceros consecutivos es **lenta**, porque puede recorrer todo el mapa.
+## Diapositiva de cátedra
 
-#### Cómo responderlo en el final
-Dibujar un mapa con 0/1 y explicar que buscar k ceros seguidos es el costo. Remarcar que su tamaño es fijo.
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_24.png]]
+
+La diapositiva plantea la organización de memoria para multiprogramación y menciona como primera aproximación las **particiones fijas** (sin swapping o intercambio de páginas).
+
+## Características
+
+| Aspecto | Particiones fijas |
+|---|---|
+| Tamaño | Definido al inicio (fijo) |
+| Asignación | Un proceso ocupa una partición |
+| Ventaja | Simple de administrar |
+| Desventaja | Fragmentación interna; límite de procesos/tamaños |
+
+## Fragmentación interna
+
+Si un proceso ocupa menos que su partición, el sobrante dentro de la partición se desperdicia. Ej.: partición 128 KB, proceso 100 KB → 28 KB internos.
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum distingue particiones fijas de igual tamaño y de tamaños distintos, y analiza colas por partición o cola única. El problema principal es la rigidez frente a cargas variables.
+
+## Cómo responderlo en el final
+“Particiones fijas: memoria dividida en bloques predefinidos. Simples, pero generan fragmentación interna y poca flexibilidad”.
+
+> [!warning] Errores típicos
+> - Confundir fragmentación interna (dentro de la partición) con externa (huecos entre particiones/procesos).
 
 
-### 3.4.2 Listas enlazadas
+---
+
+# 3.3.2 Particiones variables, swapping y compactación
 
 > [!abstract] En una frase
-> Una **lista enlazada** recorre la memoria por segmentos, cada uno marcado como **P** (proceso) o **H** (hueco), ordenados por dirección. Su tamaño crece con la cantidad de procesos, pero se pueden agregar optimizaciones para buscar más rápido.
+> En **particiones variables**, cada proceso recibe el tamaño que necesita; al entrar/salir procesos aparecen huecos, por lo que se usan **swapping** y a veces **compactación**.
 
-#### Desarrollo
-- Cada entrada indica: si es **P** o **H**, dirección de inicio y tamaño (y un puntero al siguiente).
-- **Al terminar un proceso** hay cuatro casos: el hueco se une con el de arriba, con el de abajo, con ambos, o queda aislado (H P P H → se fusiona según vecinos).
-- **Ventaja en espacio:** con pocos procesos ocupa menos que un mapa de bits. **Desventaja:** con muchos procesos supera al mapa.
-- **Optimizaciones** (sacrificando espacio): mantener la lista **ordenada por tamaño**, usar **dos listas** (procesos y huecos), o un índice de huecos.
+## Diapositivas de cátedra
 
-### Mapa vs. lista (comparación del Repaso)
-| | Mapa de bits | Lista enlazada |
+### Particiones variables y swapping
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_30.png]]
+
+La diapositiva indica:
+- La cantidad de particiones, sus tamaños y ubicaciones cambian dinámicamente.
+- **Swapping/intercambio:** mover un proceso entre memoria y disco.
+- **Compactación:** unir procesos en memoria para que el espacio disponible quede adyacente.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_31.png]]
+
+La asignación cambia a medida que procesos entran o salen de memoria.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_32.png]]
+
+También se considera el caso de segmentos/procesos que pueden crecer, lo que complica la asignación.
+
+## Swapping
+
+| Acción | Efecto |
+|---|---|
+| **Swap out** | Saca proceso de RAM a disco |
+| **Swap in** | Trae proceso de disco a RAM |
+| **Beneficio** | Más procesos activos lógicamente que RAM disponible |
+| **Costo** | E/S de disco, tiempo, reubicación |
+
+## Compactación
+
+- Junta huecos libres en uno solo.
+- Reduce fragmentación externa.
+- Costosa: hay que mover memoria y actualizar referencias/base.
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum resalta que las particiones variables eliminan la fragmentación interna fija, pero introducen **fragmentación externa** y la necesidad de algoritmos de asignación.
+
+## Cómo responderlo en el final
+“Particiones variables asignan tamaño exacto al proceso. Con el tiempo quedan huecos: swapping mueve procesos a disco y compactación junta huecos, pero compactar es costoso”.
+
+> [!warning] Errores típicos
+> - Decir que compactación es gratis.
+> - Confundir swapping con paginación.
+
+
+---
+
+# 3.3.3 Fragmentación interna y externa
+
+> [!abstract] En una frase
+> La **fragmentación interna** es espacio desperdiciado dentro de una unidad asignada; la **fragmentación externa** son huecos libres dispersos que impiden asignar un bloque contiguo grande.
+
+## Diapositiva de cátedra (contexto)
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_30.png]]
+
+El cambio dinámico de particiones y los huecos que quedan al entrar/salir procesos explican la aparición de fragmentación externa y la necesidad de compactación.
+
+## Comparación
+
+| Tipo | Dónde ocurre | Causa típica | Ejemplo | Mitigación |
+|---|---|---|---|---|
+| **Interna** | Dentro del bloque asignado | Partición fija/página mayor que lo necesario | Bloque 128 KB, proceso 100 KB → 28 KB | Tamaños adecuados, paginación |
+| **Externa** | Entre bloques asignados | Huecos dispersos en particiones variables | Huecos 10+5+12 KB, proceso 20 KB no entra | Compactación, paginación |
+
+## Regla práctica
+
+- Si el sobrante está **dentro** de lo asignado → interna.
+- Si el sobrante está **fuera**, en huecos libres separados → externa.
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum relaciona fragmentación externa con asignación contigua variable y segmentación; la paginación la elimina casi por completo, pero deja fragmentación interna en la última página.
+
+## Cómo responderlo en el final
+Definí ambas, da un ejemplo numérico breve y mencioná la mitigación: compactación para externa, mejor ajuste de tamaños/paginación para interna.
+
+> [!warning] Errores típicos
+> - Invertir las definiciones.
+> - Decir que la paginación elimina toda fragmentación (queda interna en la última página).
+
+
+---
+
+# 3.4.1 Mapa de bits
+
+> [!abstract] En una frase
+> Un **mapa de bits** representa la memoria como unidades fijas: cada bit indica si la unidad está libre (0) u ocupada (1).
+
+## Diapositivas de cátedra
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_33.png]]
+
+La diapositiva explica:
+- Divide la memoria en unidades de asignación fija.
+- A cada unidad le corresponde un bit: 0 = no usado, 1 = usado.
+- Asignar implica buscar $k$ bits consecutivos en 0.
+- **Desventaja:** lento buscar huecos.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_35.png]]
+
+Ejemplo con mapa de bits y lista enlazada para los mismos procesos/huecos.
+
+## Características
+
+| Aspecto | Mapa de bits |
+|---|---|
+| Estructura | Vector de bits |
+| Tamaño | Fijo, depende de memoria/unidad |
+| Búsqueda | Buscar corrida de 0s |
+| Ventaja | Simple, tamaño fijo |
+| Desventaja | Búsqueda puede ser lenta |
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum compara mapa de bits con listas enlazadas: el mapa es compacto cuando la unidad es chica, pero la búsqueda de una corrida puede costar. El tamaño de unidad es un compromiso: chica = mapa grande; grande = más fragmentación interna.
+
+## Cómo responderlo en el final
+“Mapa de bits: 1 bit por unidad de asignación. 0 libre, 1 ocupado. Para asignar se busca una corrida de 0s. Es simple, pero buscar puede ser lento”.
+
+> [!warning] Errores típicos
+> - Olvidar que el tamaño del mapa depende del tamaño de unidad elegida.
+> - Confundir 0/1 al revés (aclarar convención).
+
+
+---
+
+# 3.4.2 Listas enlazadas
+
+> [!abstract] En una frase
+> Una **lista enlazada** de memoria mantiene nodos para huecos (H) y procesos (P), indicando inicio, tamaño y enlace; facilita fusión de huecos al liberar memoria.
+
+## Diapositivas de cátedra
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_34.png]]
+
+La diapositiva muestra la estructura: P = proceso, H = hueco; ordenada por dirección.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_35.png]]
+
+Compara mapa de bits y lista enlazada para el mismo estado de memoria.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_36.png]]
+
+Cuando un proceso termina, hay 4 posibles casos de unión con huecos adyacentes:
+1. Huecos a ambos lados → fusionar en uno.
+2. Hueco a la izquierda → fusionar.
+3. Hueco a la derecha → fusionar.
+4. Sin huecos adyacentes → crear nodo hueco.
+
+## Comparación con mapa de bits
+
+| Aspecto | Mapa de bits | Lista enlazada |
 |---|---|---|
-| Tamaño | Fijo (depende de la memoria) | Crece con los procesos |
-| Velocidad | Lenta (buscar ceros) | Rápida con optimizaciones |
-| Pocos procesos | Ocupa lo mismo | Ocupa menos |
+| Tamaño | Fijo | Variable |
+| Representa | Unidades | Segmentos P/H |
+| Fusión | Ajustar bits | Fusionar nodos |
+| Búsqueda | Corrida de 0s | Recorrer lista |
 
-#### Cómo responderlo en el final
-Comparar con la tabla y decir que el mapa es fijo y lento, la lista crece pero se puede acelerar.
+## Complemento de libro (Tanenbaum)
+Tanenbaum señala que las listas pueden ordenarse por dirección (facilita coalescing) o por tamaño (facilita best/worst fit). La elección impacta en velocidad y fragmentación.
+
+## Cómo responderlo en el final
+“Lista enlazada: nodos P/H con dirección y tamaño. Al liberar, se fusionan huecos adyacentes. Es flexible, pero su tamaño depende de la cantidad de segmentos”.
+
+> [!warning] Errores típicos
+> - No considerar los 4 casos de fusión al terminar un proceso.
+> - Confundir lista ordenada por dirección con ordenada por tamaño.
 
 
 ---
 
-## Tema 3.5 — Algoritmos de asignación
-
-
-### 3.5.1 Primer ajuste, próximo ajuste, mejor ajuste y peor ajuste
+# 3.5.1 Primer ajuste, próximo ajuste, mejor ajuste y peor ajuste
 
 > [!abstract] En una frase
-> Cuando llega un proceso, el SO elige un hueco entre los que alcanzan: **first fit** el primero que sirva; **next fit** el primero desde la última búsqueda; **best fit** el más chico que sirva; **worst fit** el más grande.
+> Son algoritmos para elegir en qué hueco colocar un proceso: **first fit**, **next fit**, **best fit** y **worst fit**.
 
-#### Desarrollo
-| Algoritmo | Criterio | Velocidad | Efecto sobre la memoria |
+## Diapositiva de cátedra
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_37.png]]
+
+La diapositiva define:
+- **Primer ajuste (first fit):** el primer hueco en que cabe.
+- **Próximo ajuste (next fit):** similar, pero empieza desde el último encontrado.
+- **Mejor ajuste (best fit):** busca el hueco que más se ajusta; más lento porque recorre toda la lista; puede dejar huecos muy chicos.
+- **Peor ajuste (worst fit):** busca que resulten huecos grandes.
+
+## Comparación
+
+| Algoritmo | Estrategia | Velocidad | Fragmentación típica |
 |---|---|---|---|
-| **First fit** | El primer hueco que alcanza | Rápido (se detiene al encontrar) | Tiende a dejar huecos chicos al principio de la lista |
-| **Next fit** | Como first fit, pero arranca donde terminó la última búsqueda | Rápido | Reparte mejor los huecos |
-| **Best fit** | El hueco más chico que alcanza | **Lento** (recorre toda la lista) | Deja muchos huecos **muy chicos**, inutilizables |
-| **Worst fit** | El hueco más grande | Lento (también recorre todo) | Deja huecos grandes para futuros procesos |
+| **First fit** | Primer hueco suficiente | Rápido | Huecos chicos al inicio |
+| **Next fit** | Desde última posición | Rápido/medio | Distribuye, puede fragmentar más |
+| **Best fit** | Hueco más chico suficiente | Lento | Muchos restos pequeños |
+| **Worst fit** | Hueco más grande | Lento | Rompe huecos grandes |
 
-### Ejercicio resuelto (TP2, pregunta 4)
-Huecos en orden: 800, 300, 1500, 600, 700, 1000, 1200 KB. Procesos: 1000, 800 y 700 KB.
+## Complemento de libro (Tanenbaum)
+Tanenbaum comenta que first fit suele funcionar bien en la práctica; best fit tiende a crear muchos huecos diminutos; worst fit no es tan bueno como suena. La performance depende de la carga.
 
-| Algoritmo | 1000 KB | 800 KB | 700 KB |
-|---|---|---|---|
-| First fit | 1500 (sobran 500) | 800 (exacto) | 700 (exacto) |
-| Next fit | 1500 (sobran 500) | 1000 (sobran 200) | 1200 (sobran 500) |
-| Best fit | 1000 (exacto) | 800 (exacto) | 700 (exacto) |
-| Worst fit | 1500 (sobran 500) | 1200 (sobran 400) | 1000 (sobran 300) |
-
-**Lectura:**
-- **Más rápido:** first fit (se detiene en el primero que sirve). **Más lento:** best fit y worst fit (recorren toda la lista). Next fit es rápido, aunque puede recorrer más que first fit.
-- **Mejor aprovechamiento en este caso:** **best fit**, porque no deja sobrante en ninguna asignación.
-- **Mejora de worst fit (d):** conservar el hueco sobrante como lista de huecos grandes; es lo que lo hace útil. Estadísticamente, deja huecos grandes que sirven para procesos grandes futuros.
-
-> [!note] Cómo se responde "¿cuál es más rápido?"
-> La cátedra no da una proporción exacta; decí "first fit se detiene en el primer hueco que sirve; best y worst recorren los n huecos siempre" y, si te piden un número, usá n como factor.
-
-#### Cómo responderlo en el final
-Mostrar la tabla de los cuatro algoritmos con el ejemplo y decir cuál aprovecha mejor y por qué.
+## Cómo responderlo en el final
+Definí los 4, nombrá criterio y una ventaja/desventaja. Si te dan ejemplo, simulá la lista de huecos paso a paso y mostrala.
 
 > [!warning] Errores típicos
-> - Decir que best fit es el más rápido: es el que más recorre.
+> - Confundir best fit con “mejor en general”.
+> - Olvidar que next fit continúa desde la última asignación.
 
 
-### 3.5.2 Quick fit y buddy system
+---
+
+# 3.5.2 Quick fit y buddy system
 
 > [!abstract] En una frase
-> **Quick fit** mantiene listas separadas de los tamaños más pedidos para acelerar la búsqueda. **Buddy system** usa bloques de tamaño **potencia de 2** que se dividen en "compañeros" (buddies) y se vuelven a unir al liberar, lo que facilita la fusión.
+> **Quick fit** mantiene listas separadas para tamaños frecuentes; **buddy system** asigna bloques en potencias de 2, facilitando la fusión.
 
-#### Desarrollo
-- **Quick fit:** listas de huecos por tamaño frecuente. Búsqueda rápida, pero **cuesta unir huecos vecinos** al liberar.
-- **Buddy:** listas de bloques libres de tamaños 2⁰, 2¹, …, 2ᵏ hasta el tamaño de la memoria. Para una memoria de 1 MB hacen falta **21 listas** (de 1 byte a 1 MB, potencias de 2 que van de 2⁰ a 2²⁰).
-- **Ejemplo:** un proceso de 70 KB usa un bloque de **128 KB**, que es el que más se aproxima (la potencia de 2 superior). Si no hay de 128, se divide uno de 256 en dos de 128.
-- **Ventaja:** dos buddies libres se unen fácilmente, porque solo hay que mirar el compañero.
-- **Desventaja:** cada asignación se redondea a potencia de 2, y eso produce **fragmentación interna**.
+## Diapositivas de cátedra
 
-#### Cómo responderlo en el final
-Dar el ejemplo de 70 KB → 128 KB y decir que la unión es sencilla. Mencionar la fragmentación interna como costo.
+### Quick fit
 
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_38.png]]
+
+- Listas separadas para huecos de medidas requeridas frecuentemente.
+- Es rápido para esos tamaños.
+- Dificulta la unión al terminar, porque está ordenado por medida/tipo.
+
+### Buddy system
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 2/slide_39.png]]
+
+- Listas de bloques libres de $2^0, 2^1, 2^2, ..., 2^k$ hasta el tamaño de memoria.
+- Ejemplo: memoria de 1 MB → 21 listas de 1 byte a 1 MB.
+- Un proceso de 70 KB usa un bloque de 128 KB (potencia de 2 más cercana).
+- Si no hay de 128 KB, toma uno de 256 KB, lo divide en dos de 128 KB y usa uno.
+- Se facilita la unión de bloques contiguos (buddies).
+
+## Comparación
+
+| Algoritmo | Ventaja | Desventaja |
+|---|---|---|
+| **Quick fit** | Asignación rápida para tamaños comunes | Fusión/coalescing difícil |
+| **Buddy system** | Fusión simple (buddies) | Fragmentación interna por redondeo a potencia de 2 |
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum describe buddy system como un compromiso práctico: rápido para asignar/liberar y fusionar, pero con desperdicio interno. Se usa en allocators reales (variantes en kernels).
+
+## Cómo responderlo en el final
+“Quick fit: listas por tamaños frecuentes, rápido pero difícil de fusionar. Buddy: potencias de 2, fácil fusión, pero puede desperdiciar por redondeo”.
+
+> [!warning] Errores típicos
+> - Decir que buddy no tiene fragmentación interna.
+> - No mencionar la condición de “buddy” (mismo tamaño y alineación adecuada) al fusionar.
+
+
+---

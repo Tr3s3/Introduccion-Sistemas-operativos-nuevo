@@ -16,25 +16,25 @@ unidad: 1
 
 ## Diapositiva de cátedra: qué es un SO
 
-![[slide_02.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_02.png]]
 
 La diapositiva define el punto de partida: con su software, una computadora puede almacenar, procesar y entregar información. Hay **programas del sistema** (administran la operación; el más importante es el SO) y **programas de aplicación** (dan servicio a los usuarios).
 
 ## Diapositiva: hardware y complejidad
 
-![[slide_03.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_03.png]]
 
 Una computadora está formada por uno o más procesadores, memoria principal, discos, impresoras y dispositivos de entrada/salida. Es un sistema complejo que debe ser administrado: escribir programas sin una capa de abstracción implicaría controlar cada componente de hardware.
 
 ## Diapositiva: ubicación del SO
 
-![[slide_04.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_04.png]]
 
 El SO se ubica entre el **hardware** y los **programas de usuario** (editores, compiladores, shell, etc.). Abstrae el hardware y ofrece una interfaz más cómoda y segura para las aplicaciones.
 
 ## Las dos funciones principales (diapositiva de cátedra)
 
-![[slide_06.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_06.png]]
 
 | Función | Qué significa | Ejemplo de la cátedra / típico |
 |---|---|---|
@@ -43,7 +43,7 @@ El SO se ubica entre el **hardware** y los **programas de usuario** (editores, c
 
 ## Conceptos que el SO debe manejar
 
-![[slide_17.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_17.png]]
 
 La diapositiva de conceptos de SO resume el alcance de la materia: **procesos, espacios de direcciones, archivos, entrada/salida, protección, intérprete de comandos (shell) y llamadas al sistema**. Estos temas se desarrollan en las unidades siguientes.
 
@@ -73,7 +73,7 @@ Las imágenes usadas son capturas de la diapositiva de cátedra “Introducción
 
 ## Diapositiva de cátedra: el shell
 
-![[slide_34.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_34.png]]
 
 La diapositiva es clara:
 - **No es parte del sistema operativo** (no es el kernel).
@@ -92,7 +92,7 @@ La diapositiva es clara:
 
 ## Relación con llamadas al sistema
 
-![[slide_26.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_26.png]]
 
 Los programas (incluido el shell) se comunican con el SO mediante **llamadas al sistema**. El shell típicamente usa `fork/exec/wait` para ejecutar comandos: lee el comando, crea un proceso, ejecuta el programa y espera el resultado.
 
@@ -116,13 +116,13 @@ Tanenbaum distingue entre el kernel (modo supervisor) y el resto del software de
 
 ## Diapositiva de cátedra: ubicación y modos
 
-![[slide_04.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_04.png]]
 
 La diapositiva muestra la separación: arriba los programas de usuario (modo usuario), debajo el sistema operativo (modo kernel), y en la base el hardware. Esta separación protege al sistema.
 
 ## Diapositiva: por qué existe el modo kernel
 
-![[slide_05.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_05.png]]
 
 La cátedra explica que a bajo nivel los dispositivos de E/S se controlan ingresando valores en registros. El **sistema operativo es la parte de software que se ejecuta en modo supervisor o kernel**, con protección de hardware. Así se evita que cualquier programa manipule directamente el hardware crítico.
 
@@ -135,7 +135,7 @@ La cátedra explica que a bajo nivel los dispositivos de E/S se controlan ingres
 
 ## Cambio de modo
 
-![[slide_26.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_26.png]]
 
 El cambio a modo kernel ocurre de forma controlada:
 - **Syscall / TRAP:** el programa pide un servicio.
@@ -164,7 +164,7 @@ Tanenbaum lo presenta como el mecanismo básico de protección: el bit de modo e
 
 ## Diapositiva de cátedra: qué es una syscall
 
-![[slide_26.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_26.png]]
 
 La diapositiva destaca:
 - Los programas se comunican con el SO por medio de **llamadas al sistema**.
@@ -175,17 +175,17 @@ La diapositiva destaca:
 
 ## Diapositiva: flujo de una syscall
 
-![[slide_27.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_27.png]]
 
 El diagrama muestra el paso de espacio de usuario a espacio de kernel: el programa llama a la biblioteca, esta ejecuta TRAP, el kernel despacha el handler correspondiente y luego retorna a modo usuario.
 
 ## Syscalls POSIX (diapositivas)
 
-![[slide_28.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_28.png]]
 
-![[slide_29.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_29.png]]
 
-![[slide_31.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_31.png]]
 
 La cátedra agrupa llamadas POSIX por categoría:
 - **Procesos:** `fork`, `execve`, `waitpid`, `exit`, etc.
@@ -194,7 +194,7 @@ La cátedra agrupa llamadas POSIX por categoría:
 
 ## Ejemplo: shell simple
 
-![[slide_32.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_32.png]]
 
 La diapositiva muestra un shell simple: lee comando, hace `fork()`; el hijo ejecuta `execve()` y el padre hace `waitpid()`. Esto conecta syscalls con el funcionamiento real del shell.
 
@@ -230,7 +230,7 @@ Tanenbaum explica que la API oculta el mecanismo de trap: el programador ve una 
 
 ### 1ª generación (1945–1955) — Tubos al vacío
 
-![[slide_07.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_07.png]]
 
 - Gran tamaño, alto mantenimiento.
 - Programación en lenguaje de máquina.
@@ -239,22 +239,22 @@ Tanenbaum explica que la API oculta el mecanismo de trap: el programador ve una 
 
 ### 2ª generación (1955–1965) — Transistores y sistemas por lotes
 
-![[slide_08.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_08.png]]
 
 - Se pueden vender a clientes; menor mantenimiento.
 - Aparecen roles: constructores, programadores, operadores.
 - Tiempos elevados de operación: programar, perforar tarjetas, cinta, procesar, cinta, impresión.
 - **Sistemas por lotes (batch):** antecesor del SO (ej. 1401/7094).
 
-![[slide_09.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_09.png]]
 
-![[slide_10.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_10.png]]
 
 Las diapositivas muestran el flujo batch: trabajos agrupados, entrada en cinta/tarjetas, procesamiento secuencial y salida.
 
 ### 3ª generación (1965–1980) — Circuitos integrados y multiprogramación
 
-![[slide_11.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_11.png]]
 
 - Se busca unificar líneas incompatibles (científica/ingeniería vs. comercial).
 - Aparece **multiprogramación**.
@@ -264,7 +264,7 @@ Las diapositivas muestran el flujo batch: trabajos agrupados, entrada en cinta/t
 
 ### 4ª generación (desde 1980) — Computadora personal
 
-![[slide_12.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_12.png]]
 
 - LSI: miles de transistores en 1 cm².
 - Bajo precio, facilidad de uso, poco mantenimiento.
@@ -300,7 +300,7 @@ Nombrá generación, tecnología de hardware, problema/necesidad y la solución/
 
 ## Diapositiva de cátedra
 
-![[slide_11.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_11.png]]
 
 La diapositiva de 3ª generación introduce juntos estos conceptos:
 - **Multiprogramación**: varios trabajos en memoria.
@@ -352,7 +352,7 @@ Definí cada técnica, el problema que resuelve y una diferencia: “spooling de
 
 ## Diapositiva de cátedra
 
-![[slide_16.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_16.png]]
 
 La diapositiva enumera tipos de sistemas operativos:
 - De mainframe: gran capacidad de E/S.
@@ -397,7 +397,7 @@ Elegí el tipo según el escenario: si hay plazos estrictos, tiempo real; si hay
 
 ## Diapositiva de cátedra: archivos
 
-![[slide_21.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_21.png]]
 
 La diapositiva indica que una función principal del SO es la **abstracción** del funcionamiento de discos y otras E/S.
 - Se usan **llamadas al sistema** para administrar archivos.
@@ -408,19 +408,19 @@ La diapositiva indica que una función principal del SO es la **abstracción** d
 
 ## Diapositiva: jerarquía
 
-![[slide_22.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_22.png]]
 
 La imagen muestra la organización jerárquica típica: directorio raíz, subdirectorios y archivos.
 
 ## Diapositiva: archivos montados
 
-![[slide_23.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_23.png]]
 
 En Unix, los sistemas de archivos de dispositivos externos (CD/DVD, discos, USB) se **montan** sobre el directorio raíz. Esto elimina dependencia de prefijos de unidad y unifica la vista del árbol.
 
 ## Diapositiva: pipes
 
-![[slide_25.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_25.png]]
 
 Un **canal o pipe** es un pseudo-archivo relacionado con procesos y archivos: permite la **comunicación entre procesos**.
 
@@ -455,7 +455,7 @@ Tanenbaum detalla implementación (inodos, bloques, journaling), permisos, enlac
 
 ## Diapositiva de cátedra
 
-![[slide_24.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_24.png]]
 
 La diapositiva explica:
 - Se utilizan para **modelar dispositivos de E/S**.
@@ -499,13 +499,13 @@ Tanenbaum agrega que los drivers de dispositivo implementan la interfaz específ
 
 ### Jerarquía de memoria (contexto)
 
-![[slide_14.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_14.png]]
 
 La diapositiva muestra tiempos de acceso y capacidades: registros, caché, memoria principal, disco. Esta jerarquía explica por qué la E/S de disco es mucho más lenta que la CPU/memoria y por qué conviene solapar trabajo.
 
 ### Dispositivos de E/S e interrupciones
 
-![[slide_15.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_15.png]]
 
 La diapositiva presenta la relación entre dispositivos de E/S e interrupciones: el hardware de E/S necesita coordinarse con la CPU sin obligarla a esperar inútilmente.
 
@@ -543,7 +543,7 @@ Nombrá las tres técnicas en orden de evolución, explicá quién mueve los dat
 
 ## Diapositiva de cátedra
 
-![[slide_41.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_41.png]]
 
 La diapositiva de “Estructura de un sistema operativo – Máquinas virtuales” menciona:
 - **VM/370**
@@ -621,7 +621,7 @@ Las diapositivas de Introducción cierran con las estructuras típicas de un SO.
 
 ## 1. Monolítico
 
-![[slide_36.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_36.png]]
 
 **Idea de la diapositiva:** todo el sistema operativo se ejecuta como un solo programa en modo kernel. Es la organización más común.
 
@@ -630,7 +630,7 @@ Las diapositivas de Introducción cierran con las estructuras típicas de un SO.
 - Los procedimientos pueden llamarse entre sí, pero conviene estructurarlos.
 - Hay **procedimientos utilitarios** que ayudan a los de servicio.
 
-![[slide_37.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_37.png]]
 
 **Estructura típica (diapositiva):** programa de usuario → programa principal → procedimientos de servicio → procedimientos utilitarios; debajo, el hardware. La llamada entra al kernel y se despacha internamente.
 
@@ -641,7 +641,7 @@ Las diapositivas de Introducción cierran con las estructuras típicas de un SO.
 
 ## 2. Sistemas por capas
 
-![[slide_38.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_38.png]]
 
 **Idea de la diapositiva:** el SO se organiza en niveles, donde cada capa usa servicios de la inferior. Ejemplo clásico de la cátedra:
 
@@ -663,7 +663,7 @@ Las diapositivas de Introducción cierran con las estructuras típicas de un SO.
 
 ## 3. Microkernel
 
-![[slide_39.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_39.png]]
 
 **Idea de la diapositiva:** el kernel se reduce al mínimo; servicios como drivers, sistemas de archivos o servidores corren en modo usuario como procesos separados. La cátedra menciona **Symbian** y **Minix**.
 
@@ -676,7 +676,7 @@ Las diapositivas de Introducción cierran con las estructuras típicas de un SO.
 
 ## 4. Cliente–servidor
 
-![[slide_40.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_40.png]]
 
 **Idea de la diapositiva:** los servicios del sistema se ofrecen como servidores; los clientes (programas o componentes) piden servicios mediante mensajes. Es una forma natural de organizar sistemas distribuidos o basados en microkernel.
 
@@ -690,7 +690,7 @@ Las diapositivas de Introducción cierran con las estructuras típicas de un SO.
 
 ## 5. Máquinas virtuales
 
-![[slide_41.png]]
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 1/slide_41.png]]
 
 **Idea de la diapositiva:** se presenta la virtualización como estructura/técnica de SO. La cátedra menciona **VM/370**, virtualización, y también **JVM / CLR**.
 
