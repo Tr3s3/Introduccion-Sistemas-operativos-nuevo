@@ -37,7 +37,7 @@ tipo: excepcionales
 | **TP1-13** | Explicar el shell de código (`fork`, `waitpid`, `execve`) | Explicar qué devuelve `fork` en padre y en hijo, y que `execve` reemplaza la imagen |
 | **TP1-22** | JVM y .NET CLR vs. hipervisor | La JVM/CLR no simulan hardware; son VM de **proceso** |
 | **TP1-17** | Multiprogramación sin DMA | La CPU copia byte a byte y no hay solapamiento: la multiprogramación pierde sentido |
-| **TP2-9** | Programa que simula multiprogramación | Entender el modelo (p, n, reparto) para poder escribir la simulación; el código no se pide literal en el oral |
+| **TP2-9** | Programa que simula multiprogramación | Entender el modelo (p, n, reparto) para poder escribir la simulación; el código no se pide literal en el examen escrito |
 | **SAE** | Monolítico vs. microkernel | Monolítico: todo en modo kernel, rápido pero frágil. Microkernel: solo lo esencial en kernel, el resto en modo usuario; más robusto pero más lento por IPC |
 | **SAE** | Creación y finalización de procesos | Creación: arranque del sistema, llamada (`fork`), solicitud de usuario, trabajo por lotes. Fin: salida normal, error voluntario, error fatal, muerte por otro proceso/SO |
 | **SAE** | Buddy system y Quick Fit | Buddy: bloques en potencias de 2, facilita fusión. Quick Fit: listas separadas por tamaños frecuentes, rápido pero difícil de fusionar |

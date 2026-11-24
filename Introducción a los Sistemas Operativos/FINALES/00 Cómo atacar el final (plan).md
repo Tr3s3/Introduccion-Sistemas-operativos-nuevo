@@ -4,7 +4,7 @@ tipo: estrategia
 # Cómo atacar el final: plan de estudio por frecuencia
 
 > [!abstract] La idea
-> El final de Introducción a los SO mezcla **teoría oral** (definir, explicar un mecanismo, comparar) y **ejercicios de cálculo** (bits de dirección, fallos de página, algoritmos de asignación, modelo probabilístico). Las preguntas **se repiten**: de los 35 parciales posibles, unas 15 aparecen en varias fuentes y el resto son variaciones. Estudiar **por patrón** (no por pregunta) ahorra tiempo.
+> El final de Introducción a los SO mezcla **teoría escrita** (definir, explicar un mecanismo, comparar) y **ejercicios de cálculo** (bits de dirección, fallos de página, algoritmos de asignación, modelo probabilístico). Las preguntas **se repiten**: de los 35 parciales posibles, unas 15 aparecen en varias fuentes y el resto son variaciones. Estudiar **por patrón** (no por pregunta) ahorra tiempo.
 
 ## Las fuentes que usamos
 | Código | Fuente |
@@ -44,7 +44,7 @@ Estas son las que, combinadas, cubren la mayoría de lo que se pregunta:
 ## Plan de ataque en el día del final
 - **Primero** lo que sabés de memoria (las 10 núcleo) para ganar confianza.
 - **Después** los cálculos: anotá la fórmula antes de sustituir.
-- **Si te trabás,** decí lo que sabés del tema y el criterio ("el algoritmo X busca minimizar Y"): en oral vale más que el silencio.
+- **Si te trabás,** decí lo que sabés del tema y el criterio ("el algoritmo X busca minimizar Y"): en el examen escrito vale más que el silencio.
 
 > [!warning] Errores que más se repiten en las correcciones
 > - Confundir **p** (fracción en E/S) con la fracción de CPU.

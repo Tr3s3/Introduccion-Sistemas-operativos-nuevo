@@ -158,7 +158,7 @@ Pasos (cátedra y Tanenbaum):
 8. La instrucción que falló vuelve a su estado previo y el contador apunta a ella: **se reinicia**.
 9. Al volver a planificar el proceso, la rutina de ensamblador restaura registros y sigue.
 
-> [!tip] Frase para el oral
+> [!tip] Frase para responder en el examen
 > "Interrumpe, valida, libera (guardando si M = 1), trae, actualiza la tabla y reinicia la instrucción."
 
 #### Cómo responderlo en el final
@@ -294,7 +294,7 @@ Modelo (cátedra, parcial 12 y Tanenbaum):
 | s = 128 KB, E = 8 bytes (Tanenbaum) | ≈ **1448 bytes**; en la práctica se elige 1 KB o 2 KB |
 
 > [!note] En la práctica
-> El modelo da un número teórico. Los sistemas reales usan potencias de 2 cercanas (1, 2, 4 u 8 KB). Decilo en el oral.
+> El modelo da un número teórico. Los sistemas reales usan potencias de 2 cercanas (1, 2, 4 u 8 KB). Decilo en el examen escrito.
 
 #### Cómo responderlo en el final
 Escribir W(s), derivar, dar s = √(2PE) y resolver el ejemplo de 8 KB y 4 bytes → 256 bytes.

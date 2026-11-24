@@ -84,4 +84,4 @@ tipo: modelos
 - **Pila y datos en 16 bits y segmentación con paginación** (Junio 2026): exige sumar páginas por segmento y decidir si entra.
 
 > [!tip] Cómo usar esto
-> Si tenés tiempo para una sola cosa: los **cálculos de bits** y el **modelo probabilístico**. Son los que casi siempre tocan y los que más puntos dan en el oral.
+> Si tenés tiempo para una sola cosa: los **cálculos de bits** y el **modelo probabilístico**. Son los que casi siempre tocan y los que más puntos dan en el examen escrito.

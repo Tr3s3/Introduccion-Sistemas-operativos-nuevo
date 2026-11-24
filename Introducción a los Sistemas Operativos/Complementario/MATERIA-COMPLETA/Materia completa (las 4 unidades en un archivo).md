@@ -372,7 +372,7 @@ Secuencia (válida para Linux y Windows):
 
 **Qué pasa dentro del SO** (pasos 3–4) y **qué pasa fuera** (el shell, el programa, la pantalla). La pregunta 6 pide lo mismo desde un programa propio (C#, VB .NET o C): el código llama a la API de fecha y la biblioteca de .NET termina en una syscall.
 
-> [!tip] Para el oral
+> [!tip] Para el examen escrito
 > Describí la cadena: **usuario → shell → proceso hijo → biblioteca → syscall (TRAP) → kernel → reloj de hardware → vuelta a modo usuario → pantalla**.
 
 ##### Cómo responderlo en el final
@@ -681,7 +681,7 @@ Supone que los procesos son independientes (cátedra, Procesos y memoria; parcia
 - p = 0,75 y **4 procesos** (TP2, pregunta 6): la CPU desperdicia 0,75⁴ = **31,6 %**, o sea U ≈ 68,4 %.
 - p = 0,7 (TP2, pregunta 7): con 3 procesos U = 1 − 0,7³ = **65,7 %**; con 5, U = 1 − 0,7⁵ = **83,2 %**.
 
-#### Limitaciones que conviene decir en el oral
+#### Limitaciones que conviene decir en el examen escrito
 - Supone independencia entre procesos.
 - No modela la **memoria**: en la práctica, n está limitado por cuántos procesos entran en RAM (ver Unidad 3).
 - Es una **estimación**; las simulaciones (TP2, pregunta 9) reproducen el comportamiento con más detalle.
@@ -1140,7 +1140,7 @@ Pasos (cátedra y Tanenbaum):
 8. La instrucción que falló vuelve a su estado previo y el contador apunta a ella: **se reinicia**.
 9. Al volver a planificar el proceso, la rutina de ensamblador restaura registros y sigue.
 
-> [!tip] Frase para el oral
+> [!tip] Frase para responder en el examen
 > "Interrumpe, valida, libera (guardando si M = 1), trae, actualiza la tabla y reinicia la instrucción."
 
 ##### Cómo responderlo en el final
@@ -1276,7 +1276,7 @@ Modelo (cátedra, parcial 12 y Tanenbaum):
 | s = 128 KB, E = 8 bytes (Tanenbaum) | ≈ **1448 bytes**; en la práctica se elige 1 KB o 2 KB |
 
 > [!note] En la práctica
-> El modelo da un número teórico. Los sistemas reales usan potencias de 2 cercanas (1, 2, 4 u 8 KB). Decilo en el oral.
+> El modelo da un número teórico. Los sistemas reales usan potencias de 2 cercanas (1, 2, 4 u 8 KB). Decilo en el examen escrito.
 
 ##### Cómo responderlo en el final
 Escribir W(s), derivar, dar s = √(2PE) y resolver el ejemplo de 8 KB y 4 bytes → 256 bytes.

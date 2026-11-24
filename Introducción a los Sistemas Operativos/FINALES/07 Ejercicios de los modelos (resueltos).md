@@ -176,5 +176,5 @@ tipo: ejercicios
 | 2T Febrero 2024 | 56 bits, 16 KB, 16 GB | Offset 14, tabla 42, 2^42 páginas, 2^20 marcos; tabla lineal muy grande |
 | Recu 2024 / Junio 2026 | Gantt con 90% E/S | `Tcpu = n/0.1`, dividir CPU entre `n` procesos activos; no CPU ociosa si hay listo |
 
-> [!tip] Si te trabás en el oral
+> [!tip] Si te trabás en el examen escrito
 > Decí la definición, el criterio del algoritmo, y una trampa típica. Eso muestra dominio aunque no recuerdes un número.

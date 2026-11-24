@@ -42,7 +42,7 @@ tipo: frecuencia
 | 31 | Buddy system y Quick Fit | Baja | SAE | [[3.5.1 Primer ajuste, próximo ajuste, mejor ajuste y peor ajuste]] |
 | 32 | Monolítico vs. microkernel; creación/fin de procesos | Baja | SAE | [[1.1.1 Definición y funciones]] · [[2.1.1 Programa vs. proceso]] |
 
-> [!tip] Para el oral
+> [!tip] Para el examen escrito
 > Los **primeros 15** temas explican casi todas las preguntas. Si tenés que elegir qué mirar dos veces, son esos.
 
 ## Ejercicios que más se repiten (cruzado con todos los exámenes)
