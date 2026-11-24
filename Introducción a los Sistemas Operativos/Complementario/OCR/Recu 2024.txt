@@ -1,0 +1,18 @@
+===== /tmp/arena-coding-uploads/Recu 2024.jpeg =====
+--- image Recu 2024.jpeg (ocr) ---
+Universidad Catolica de Salta
+Facultad de Ingenieria
+Carrera de IngenieriaenInformatica
+Catedra de IntroduccionalosSistemasOperatvos-Ano2024
+Recuperatorio-2024-Tema1
+ApellidoyNombre
+INO
+Email
+multiprogramacion?Puederespondercon un ejemplo.
+Justifique susrespuestasnumericamente.
+4Kbymemoriafisicade96Gb.
+a.Cuantos bits se utilizan para el acceso interno de la pagina?
+d.iCuantos marcos de pagina posee la memoria?
+e.Cuantamemoriasepuededireccionar?
+f.Sepuede utilizar toda lamemoria fisica?Justifique surespuesta.
+respuestas

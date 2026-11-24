@@ -165,7 +165,7 @@ tipo: ejercicios
 
 ## 11. Casos adicionales extraídos por OCR (verificar con original si hay duda)
 
-> Fuente: `FINALES/OCR/`. El OCR puede contener errores en símbolos/números; estos casos se incluyen cuando el enunciado es interpretable.
+> Fuente: `Complementario/OCR/`. El OCR puede contener errores en símbolos/números; estos casos se incluyen cuando el enunciado es interpretable.
 
 | Caso (según OCR) | Datos | Resultado clave |
 |---|---|---|

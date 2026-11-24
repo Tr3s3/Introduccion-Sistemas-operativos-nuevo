@@ -1,0 +1,23 @@
+===== /tmp/arena-coding-uploads/Parcial2024.jpeg =====
+--- image Parcial2024.jpeg (ocr) ---
+Universidad Catolica de Salta
+Facultad de Ingenieria
+Parcial-2024-Tema2
+Apellidoy Nombre
+INO
+..mohm.ma..
+Email
+Proceso1:Inicia12:00hs,Duracion:2minutos
+Proceso2:Inicia12:01hs,Duracion:5minutos
+Proceso3:Inicia12:20hs,Duraci6n:25minutos
+b.Cuantos bits se utiizan para el acceso interno de la pagina?
+c.En cuantas paginas se divide el espacio de direccionamiento virtual?
+d.Cuanlos marcos de pagina posee la memoria?
+e.Cuantamemoria sepuededireccionar?
+f.Encuentra algun problema en la definiciondel sistema?-
+3)Que es la fragmentacion externa?Enque tipos de administracion dememoria se da la
+fragmentacionexterna?En la administracion dememoria virtual conpaginacionhay
+fragmentacion externa?Justifique susrespuestas.
+4)Quees la multiprogramacion?Que esel spooling?Cual es la relacion entre la
+5)Cual es laventajadel algoritmoSegundaOportunidad?Cual es elproblemadel algoritmo
+Segunda Oportunidad?Que algoritmo soluciona dichoproblema yporque?

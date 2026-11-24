@@ -1,0 +1,247 @@
+===== /tmp/arena-coding-uploads/1TFebrero2024.pdf =====
+--- page 1 (ocr) ---
+NUSVS
+Universidad Catolica de Salta
+Facultad de Ingenieria
+Carreras:Ingenieria en Informatica
+Catedra de Introduccion a los Sistemas Operativos-Ano 2024
+Final de Introduccion a losSistemas Operativos-07-02-2024
+Apellido y Nombre
+INO
+Email
+wo.Yowo"
+1) Que es unallamada al sistema o system call? Que no es una llamada al sistema? De
+ejemplos dellamadas al sistema en POSiXy en Win32.
+2) En que consiste el modelado de multiprogramacion?C6mo se calcula en dicho modelo el
+uso de CPU en base al grado de multiprogramacion?Que beneficios tiene dicho modelo?Que
+falencias o desventajas tiene?
+3) Explique la administracion dememoria pormapa de bitsQue registra este tipo de
+administracion? Considera que es mejor o peor que la administracion por listas enlazadas?
+4) En un sistema de direccionamiento de memoria de 8bits,donde la tabla completa de paginas
+es la siguiente:
+00
+00
+00
+10
+00
+00
+01
+fisica.
+Cuantamemoria (en bytes) se puede direccionar?Cuantos bits se utilizan para el acceso a la
+hce /au Pas
+5)En un sistema dememoria virtual de32bitsconpaginasde6K,administrado con tablasde
+paginasmultinivel.Modele y grafique una tabla depaginasmultinivel con3niveles del mismo
+tamano. Cual es la cantidad de sub tablas que se utilizan?Cual es la cantidad de paginas?
+Justifique
++op0g=16k=2²bits
+TP=2x
+10248
+AH3
+Z=24L
+22P
+TP3=2W
+cautpags=22y.2
+32-x-y-W=4
+=232/
+18
+/16.1024=2pa3=2
+x+y+EU
+
+--- page 2 (ocr) ---
+Pocotolodoeitouanoscono
+istesWeoodenwches moeifcacioues
+puudodecouporgcion
+Meutacianlo
+guxigmfcendepediciodeneuong
+sisteuadeBbits
+Esposible direcioror2bytes2S6bytes
+En memo
+Acceroalatobia depoginacin-g2
+6S43
+tau merc
+Hsca
+ac+dp-log2
+2S6B/32B)-3hts
+accintenoag=dep1=loo（32B）=Shi+s
+Z
+人
+E
+epacioediuideenepagines
+caut mewo direccionahle
+32B
+caut poginas
+8
+Hisicac2s6bytey
+meuu
+8moros depagines.enmenong
+33yes
+HISHO TAHAUO
+96
+631
+tp1=2cuhodos2efrodes
+2
+63
+TP2=2y0d02ee
+63
+TP3=2ehad0)26cfraolj
+2
+485
+三
+X+
+18
+32
+coutpags.
+2
+32
+=218
+paos
+6=x=9=
+husa
+16.1024
+
+--- page 3 (ocr) ---
+KeiS
+07102124
+CxowenFuoll:lntmedocs
+o
+Sisteuas-Opercdioos
+Uka
+Hauadaal ciStcuaesel mediode couui oakcn edreloproonaueideulua
+no
+propona,calseucargg depaeer
+y da mcoa
+parduehoj
+orgsesnecelaio
+oforpa
+odrolalso
+alizg
+do
+uanoLaslaadoiasre
+anafeccdesporel
+calondo
+opog
+eeplos couoreod(fd,huffer,nhytes),waitpid0execve()
+fok（)
+euheotms
+Cowo
+opvestoawalauwadaal sitens
+wosnowbracaguellas nstnc
+cdoues
+E/S
+pu-esto
+Modio
+Femel
+elmccto
+a
+todas lasiastrcciorejwea
+CewA
+harduare
+Ror
+en.
+Linux
+ornoyr
+yeh
+windous
+Datetiwe
+uando
+utiliegmwhipogaeao,euodelacpU
+puede
+serana
+lizaalo
+devita
+pohabilisticoconel
+fnole
+rorohm
+wud
+Jeldo
+micucto
+vAa
+traccioh
+opaQcon de∈/s
+Cy
+poceyos
+en
+buO
+PF
+gue
+dlekeona
+olecc
+imachiva
+doraute
+CPU
+eucontae
+nplefe
+Le cpengcich
+Los
+setmadu
+esp
+sradlo
+once
+recihe
+a
+nwubrcde
+=A-cPUinacha-boce
+Torotat
+e
+CPU
+demaneashwplemeoliautun dagrwede
+Esfe modelo
+pemuite refear
+pseudo cencwneL
+Gqntt.c5mo
+Rncioua
+agraudesraiposelpncesauwcutontemo
+tedk
+deuasiodo siuple en cuoutoapofundidad,puestoe
+locoooideteupo
+tadpcxdesalerotou
+e
+difci de epreseutar.ouolneute,esMuy Stl paa
+especdo
+thaydo bmesde
+foune hinemica
+Cusondo
+mewona
+ellos
+eselnapade
+cuoles
+leao
+12omom
+LRS
+a8gnauon
+la
+evte
+metod
+meuena
+en
+bit
+Dmes
+ppa
+hlen
+baits
+conkcuhioj
+d
+Mede
+alpopontoo
+ceapvenlo
+wual
+le
+lazeces
+leveloxielad,lqs lsfgj euloeg
+LOA
+Pevpecto
+ore
+paranetros
+asvelo
+ade lo he
+acosygceuey
+su rencdiaieg
+gperon
+foruo
+krrdeneute
+vnefa
+separodor
+Asiwusuo
+pocLa
+Hiep
+expuceuon

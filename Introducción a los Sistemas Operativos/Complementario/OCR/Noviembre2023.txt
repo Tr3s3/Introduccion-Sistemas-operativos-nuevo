@@ -1,0 +1,19 @@
+===== /tmp/arena-coding-uploads/Noviembre2023.jpeg =====
+--- image Noviembre2023.jpeg (ocr) ---
+UniversidadCatolica de Salta
+Facultad de Ingenieria
+Carreras:Ingenieria en Informatica
+Final dr
+ApellidoyNombre
+INO
+Email
+multiprogramacion.
+ejemplos demaquinas virtualescada una con distintos propositos.
+aplicariaadichoproblema?
+desplazamiento dentro delapaginaylosrestantesel numero depagina.
+a)Cualesel tamano delapagina?
+b)Cuantas paginas diferentes puede tener el sistema?
+Yc) Si se tienen 1Gb de memoria fisica Cuantosmarcos de pagina puede haber?
+d)Cual sera el tamano de la tabla depaginas querequiera traducir toda la memoria
+virtual si lasentradas de la tabladepagina sonde32bits?
+Xe)&Cuanta memoria fisica se puede utilizar en el sistema propuesto?Justifique.

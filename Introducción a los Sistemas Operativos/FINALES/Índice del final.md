@@ -32,5 +32,5 @@ Entrada principal para preparar el final. Usalo junto con [[00 Índice de la mat
 ## Recursos
 
 - **Gráficos:** `FINALES/Gráficos/` (diagramas, figuras de diapositivas, esquemas).
-- **OCR:** `FINALES/OCR/` (textos extraídos de exámenes escaneados/fotos; verificar ante duda).
+- **OCR:** `Complementario/OCR/` (textos extraídos de exámenes escaneados/fotos; verificar ante duda).
 - **Materia:** [[00 Índice de la materia]].

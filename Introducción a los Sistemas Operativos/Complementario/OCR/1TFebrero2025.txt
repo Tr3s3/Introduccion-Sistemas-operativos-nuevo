@@ -1,0 +1,347 @@
+===== /tmp/arena-coding-uploads/1TFebrero2025.pdf =====
+--- page 1 (ocr) ---
+Universidad Catolica de Salta
+Faoultad de Ingenieria
+Carreras: Ingenieria en Informatica
+Catedra de Introduccion a los Sistemas Operativos-Ario 2025
+Final de IntroduccioIne-Sistemas Operativos-12-02-2025
+Apellidoy Nombre
+INO
+Email
+1) Que es una llamada al sistema o system call? Que no es una llamada al sistema? De
+ejemplos de llamadas al sistema en PosiXy en Win32.
+2)En que consiste el modelado de multiprogramacion?Como se calcula en dicho modelo el
+uso de CPU en base al grado de multiprogramacion?Que beneficios tiene dicho modelo?Que
+falenciaso desventajas tiene?
+3) Expllque la administracion de memoria por mapa de bits Que registra este tipo de
+administracion?Considera que es mejor o peor que la administracion por listas enlazadas?
+4) En un sistema de direccionamiento de memoria de 8 bits,donde la tabla completa depaginas
+es la siguiente:
+Donde cada numero de fila representa una pagina (nros. de-O a 7),la siguiente columna es el
+marco de pagina (siguientes dos bits)y el uiltimo bit es el de presenicia o ausencia en memoria
+fisica.
+Cuanta memoria (en byies) se puede direccionar? Cuantos bits se utilizan para el acceso a la
+pagina? En cuantas paginas se divide el espacio de direccionamiento virtual? Cual es el
+tamano (en bytes) de la memoria fisica sl se encuentra ocupada en su totalidad?Cuantos
+marcos de pagina posee la memoria?
+5) En un sistema de memoria virtual de 32bitscon paginas de 16kadministrado con tablas de
+lamano. yCual es la cantidad de sub tablas que se utilian?Cual es la cantidad de paginas?
+Justifique
+
+--- page 2 (ocr) ---
+Sut21a
+Bzmcs
+Uas
+uemade1sstem
+essgoelle
+procesb
+epewell
+21
+Se(ealie>
+Uns
+ce/aca
+de
+detos
+parae
+Dosteriae
+ejecuciou
+lIostcuceie
+TAAP.
+gve
+es.
+AO
+2
+sstera
+Scn
+de
+po.glm2s
+Ususfuo
+libreiias7
+procesos
+1mot（5
+procesusletc
+UALgUAaS
+ejemplds
+de
+sepewell
+s,stemd
+puedta
+sec
+sistem)
+Posixcead
+Para
+wicite
+yue
+el
+prioneco
+se
+eac2198
+deleer
+Soop
+de
+stehvo
+el
+otro号
+dealm.cenac
+dstoseaua
+Ecchno.Su
+eqoitdlen1e
+pecapecoelsistenWin32
+seria
+Beadfile
+r Waite Ele
+El modelomultiprog(amcic
+Caasiste
+ensimulerge
+dceesmoley
+plocesas.
+5ee)ecutaa
+anb
+1c
+gue
+realidad
+0250
+Cuedo
+Seecueateg
+Ua
+pcuceso
+especendelas
+seaelesde
+E/5,Se
+oolocy
+otro
+proceSGea
+12
+Cpuycamo
+iotcveluscatasde
+esto
+acurre
+ea
+tpenpo
+deurre
+13
+ilusi
+yuese
+e)eccteo
+vaaes
+pacsas12
+de
+ealcular
+dicho
+modeloesgrzcas
+2uaestudio
+pcobeilistcc
+donde
+auestrpeciable
+se（ael+rempode
+c2dg
+proCtso
+sercleceatidadd
+proceSes
+simul teneus
+CPU=1-p
+S07
+beaeprcias
+26
+tiae
+18
+mv1+pcgamcion
+15
+reducee
+getlempo,
+es
+qa donde
+totel dev>asprecesas
+Vetsecla
+meAor
+yke
+se
+ejecutere
+2p
+(moaop(agamzcic)Y
+prdcesa
+maeo
+Seeuereigl
+3estc
+peroitiresecuter
+dplicecicpes
+9126.25
+Cemplejesde
+repidalesfelcacos
+
+--- page 3 (ocr) ---
+esventejes
+Sue
+tieee]
+aadele
+es
+pracesa
+denoremas
+guesiseejecuterd
+deMne12
+Secotacialjovede
+acaducir.
+Sabie
+（2rgen）
+procesa.dor
+den1d0a1a
+cdatidde
+puedeoAbecfallesdcbido
+山
+c)ecuccr de
+se
+eyecvtee
+dos
+procesos
+A-B
+dp
+el
+prdctSo
+del
+resultedo
+del
+prclesa
+A1
+hbcVo
+ticnpede
+P2pat4oeur
+hasta
+2n6
+Aaseteraici
+deeeautar
+el
+proceso
+3E1m2pde
+bits
+sisfem?deddniaistiocoa
+dememoc
+ea.
+el
+cual
+Sevti liza
+m）t
+ddnde
+eacda
+bit
+26
+indicaro
+de
+memccl
+21025
+ocupado
+encueatilbceLvctej²
+se
+deestesistene
+es
+SuSimpleida
+ygeees
+encaatiar
+pleseneid
+da
+espco
+alal
+desvcateye
+deeste
+mt
+es
+gue
+ereceis
+de
+Larad
+Sgoiicti
+meddeguc2emtate
+2
+remar
+i3iclocu/
+Sigcifregcocopor
+1025
+tamnadememor2
+sewrape
+serequenrs
+1mlniatac
+eclezades
+porlistes
+m>scamolej
+oeroCadc>gunbespecespariadic
+eseccnjuatoadc
+hey un
+oraceSo
+(P)
+langitud
+del
+dieecion
+gue
+eraitnZd.Pac
+Cu2len
+sp-iaien
+es.
+efectivalo1steelz02
+peLasstems
+ComplejoS1
+el
+m2pdebits
+paresstemasmds
+Simples
+de
+memaris
+
+--- page 4 (ocr) ---
+9
+2
+PNIn
+h0=2
+82
+ap
+so)jew h
+pasee
+es128bytes
+2p
+Jc Bzo4bytes
+se12
+memore
+pese
+Mictuslsedivide
+26
+54195
+do5
+ap
+2n1551275
+S44sva
+501
+050222
+2720
+1at2b1
+2
+decie
+Sa
+RA
+Elradece
+256b4tes
+pueje
+35
+=2S.6
+R-12405
+
+--- page 5 (ocr) ---
+1e618
+pprinc.p2
+Caatidaddesub
++b12s1+26+22
+-1=4160
+Subt2bhs.ye
+fil>dilecciad
+UA
+12b12
+C2nt1d2d
+/e
+Rns
+14p、1422/
+91025
+deci12sgeh21l
+el
+tecceraivel
+ead
+hh2292=9+9+92
+en
+tot21
+sev'Ged

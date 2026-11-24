@@ -1,0 +1,33 @@
+===== /tmp/arena-coding-uploads/Diciembre2024.jpeg =====
+--- image Diciembre2024.jpeg (ocr) ---
+MUSvB
+Universidad Catolica de Salta
+Facultadde Ingenieria
+Carrera de Ingenieria en Informatica
+Catedra de Introduccion a los Sistemas Operativos-Ano 2024
+Final-11-12-2024
+ApellidoyNombre
+BobledoLauteroMicoles
+DNI
+Email
+:Aealx.ty..gm.zil..Com..
+1)Enun sistema demultiprogramacion sesabe que el tiempo promedio deespera de E/Sesdel
+50%. Se desea saber los momentos (en horas y minutos) en que finalizara cada uno de los
+siguientesprocesos.Realice un Gantt para mostrar la ejecucion de losprocesos en el tiempo.
+Proceso1:Inicia12:00hs,Duraci6n:2minutos
+Proceso2:Inicia12:01hs,Duracion:5minutos
+Proceso3:Inicia 12:09hs,Duracion:2,5minutos
+Quebeneficio tiene?Porque no es necesario tener indicada la pagina virtual en una tabla de
+paginas convencional y en la TLBsies necesario indicar la pagina virtual?
+3)Si tiene un sistema de52bitsy paginas de2KB.Hay algun problema?Cual?Que
+solucion aplicariaa dichoproblema?Justifique numericamentecada pregunta.
+4)Que defecto tieneel algoritmo dereemplazo de pagina:Primero en Entrar Primero enSalir o
+First InFirst Out(FIFO)?Como se soluciona dicho problema?Que algoritmo buscahacer mas
+eficientelasolucion anterior?
+5) En un sistema de9bits con gestion de memoria por demanda de pagina y se sabe que las
+paginasson de8bytes.
+a)Cuantosbitsse utilizanpara el direccionamiento dentro de lapagina?
+b)iCuantaspaginas diferentespuede administrar el sistema?
+c)Cuantos bitsse utilizan para la cantidad de paginas?
+d) Con2Gb dememoria fisicaCuantosmarcosdepagina puede haber?
+e)Cuanta memoria puedeadministrar el sistema?Puede utilizar toda la memoria fisica?

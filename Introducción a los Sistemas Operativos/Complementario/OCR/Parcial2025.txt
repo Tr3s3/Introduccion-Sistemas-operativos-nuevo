@@ -1,0 +1,60 @@
+===== /tmp/arena-coding-uploads/Parcial2025.pdf =====
+--- page 1 (ocr) ---
+Parcial-2025-Tema1
+ApellidoyNombre
+INO
+Email
+1)&Cual es la diferencla entre un programa y un proceso?Donde se almacena un programa y
+proceso?Como le pasa datos un proceso a otro?
+2)Que factores inciden en la decision del tamano de pagina? Como modela matematicamente
+cada uno de dichas incidencias?&Como obtiene la formula para calcular el tamano de pagina
+basandose en los factores antes mencionados? Indique el paso a paso. Si se sabe que el
+tamano promedio de losprocesos es de 8Kb y el tamano de cada entrada de la tabla de paginas
+es de 4 bytes:Cual esel tamano de pagina 6ptimo?
+3) En un sistema de multiprogramacion se sabe que el tiempo promedio de espera de E/S es del
+50%. Se desea saber los momentos (en horas y minutos) en que finalizara cada uno de los
+siguientes procesos.Realice un Gantt para mostrar la ejecucion de los procesos en el tiempo.
+Proceso 1:Inicia 12:00 hs,Duraci6n:2 minutos
+Proceso2:Inicia 12:01hs,Duraci6n:5minutos
+Proceso 3:Inicia 12:15hs,Duracion:3,5 minutos
+4) En un sistema de 64 bits,con paginas de memoria de 16kb y memoria fisica de 64Gb.
+a.tQue tipo de tabla utilizaria en este caso?
+b.Cuantos bits se utilizan para el acceso a la tabla de paginacion?
+c.Cuantosbits se utilizan para el acceso interno de la pagina?
+d.En cuantas paginas se divide el espacio de direccionamiento virtual?
+e.Cuantos marcos de pagina posee la memoria?
+f.Cuanta memoria se puede direccionar?
+5) Cual es el problema del algoritmo de reemplazo de paginas FiFO(Primero en entrar,primero
+en salir)? Que algoritmo soluciona dicho problema y porque?
+
+--- page 2 (ocr) ---
+Universidad Catolica de Salta
+Facultad de Ingenieria
+Carrera de Ingenieria en Informatica
+Catedra de Introduccion a los Sistemas Operativos-Ano 2025
+Parcial-2025-Tema2
+Apellidoy Nombre
+DNI
+Email
+1) En un sistema de multiprogramacion se sabe que el tiempo promedio de espera de E/S es del
+50%. Se desea saber los momentos (en horas y minutos) en que finalizara cada uno de los
+siguientes procesos. Realice un Gantt para mostrar la ejecucion de los procesos en el tiempo.
+Proceso 1:Inicia 17:00 hs,Duraci6n:9 minutos
+Proceso2:Inicia 17:15hs,Duracion:2,5 minutos
+Proceso 3:Inicia 17:23 hs,Duracion:2minutos
+2) Si se sabe que el tamanopromedio de los procesos es de 1Kby el tamano de cada entrada
+de la tabla depaginas es de 8 bytes:Cual es el tamano de pagina optimo?
+iQue factores inciden en la decision del tamano de pagina?:Como modela matematicamente
+cada uno de dichas incidencias?:Como obtiene la formula para calcular el tamano de pagina
+basandose en los factores antes mencionados? Indique el paso a paso.
+3) Cual es el problema del algoritmo de reemplazo de paginas FiFO con bit R (Primero en entrar,
+primero en salir con bit R)? Que algoritmo soluciona dicho problema y porque?
+4) Como le pasa datos un proceso a otro? Cual es la diferencia entre un programa y un
+proceso? Donde se almacena un programa y donde se almacena un proceso?Que
+5) En un sistema de 64 bits,conpaginas dememoria de 8Kby memoria fisica de 32Gb.
+a.Que tipo de tabla utilizaria en este caso?
+b.Cuantos bits se utilizan para el acceso a la tabla de paginacion?
+c.Cuantos bits se utilizan para el acceso interno de la pagina?
+d.En cuantaspaginas se divide el espacio de direccionamiento virtual?3
+e.Cuantos marcos de pagina posee la memoria?y
+f.Cuanta memoria se puede direccionar?
