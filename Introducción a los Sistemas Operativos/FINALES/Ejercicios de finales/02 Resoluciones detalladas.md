@@ -34,14 +34,42 @@ tipo: resolucion
 
 ## E1. Bits, páginas y marcos
 
-**Contexto.** La dirección virtual se parte en dos: el número de página (bits altos) y el desplazamiento dentro de la página (bits bajos). La memoria física se parte en marcos del mismo tamaño que las páginas.
+**Contexto.** En paginación, la CPU genera **direcciones virtuales**. La MMU las traduce a **direcciones físicas** usando la tabla de páginas. Para eso, la dirección virtual se parte en dos campos: número de página (bits altos) y desplazamiento dentro de la página (bits bajos). La memoria física se divide en marcos del mismo tamaño que las páginas.
 
-**Teoría mínima.**
-- Desplazamiento = log₂(tamaño de página).
-- Bits de página = bits de la dirección − desplazamiento.
-- Páginas virtuales = 2^(bits de página).
-- Marcos = memoria física ÷ tamaño de página.
-- **Memoria que el sistema puede usar = la menor** entre la direccionable (2^bits) y la física.
+**Teoría mínima (parámetros y fórmulas).**
+
+| Símbolo / dato | Significado |
+|---|---|
+| $V$ | Cantidad de bits de la dirección virtual (tamaño del espacio virtual del proceso). |
+| $T_p$ | Tamaño de página, en bytes. Debe ser potencia de 2 para que el desplazamiento sea entero. |
+| $d$ | Bits de desplazamiento (offset): indican la posición dentro de la página. |
+| $p$ | Bits de número de página: identifican qué página virtual se referencia. |
+| $F$ | Memoria física total instalada, en bytes. |
+| $T_m$ | Tamaño de marco. En paginación, $T_m = T_p$. |
+
+Fórmulas:
+
+$$
+d = \log_2(T_p)
+$$
+
+$$
+p = V - d
+$$
+
+$$
+\text{Páginas virtuales} = 2^p
+$$
+
+$$
+\text{Marcos físicos} = \frac{F}{T_p}
+$$
+
+$$
+\text{Memoria virtual direccionable} = 2^V
+$$
+
+**Interpretación importante:** la memoria que el proceso puede *direccionar* depende de $V$, pero la memoria física que el sistema puede *usar* a la vez está limitada por $F$. Si $2^V > F$, el espacio virtual es mayor que la RAM real y por eso tiene sentido la memoria virtual/paginación por demanda.
 
 ![[traduccion_direccion.svg]]
 
@@ -77,13 +105,32 @@ tipo: resolucion
 
 ## E2. Tamaño óptimo de página: s = √(2 · P · E)
 
-**Contexto.** Una página grande desperdicia memoria en la última página de cada proceso (fragmentación interna). Una página chica necesita una tabla grande. El tamaño óptimo equilibra las dos cosas.
+**Contexto.** Elegir el tamaño de página es un trade-off: páginas grandes reducen la cantidad de entradas de tabla pero aumentan el desperdicio interno promedio; páginas chicas hacen lo contrario. El modelo clásico minimiza la suma de ambos costos.
 
-**Teoría mínima.**
-- P = tamaño promedio de un proceso.
-- E = tamaño de cada entrada de la tabla de páginas.
-- Fragmentación interna promedio ≈ s/2 por proceso. Tamaño de la tabla ≈ (P/s) · E.
-- Minimizando s/2 + PE/s da **s = √(2PE)**.
+**Teoría mínima (parámetros y fórmula).**
+
+| Símbolo | Significado | Unidad |
+|---|---|---|
+| $s$ | Tamaño de página (lo que queremos optimizar). | bytes |
+| $P$ | Tamaño promedio de un proceso en memoria. | bytes |
+| $E$ | Tamaño de cada entrada de la tabla de páginas (PTE). | bytes |
+| $P/s$ | Cantidad aproximada de páginas que ocupa un proceso. | páginas |
+| $s/2$ | Fragmentación interna promedio por proceso (última página medio vacía). | bytes |
+| $(P/s)\cdot E$ | Tamaño aproximado de la tabla de páginas del proceso. | bytes |
+
+Sobrecarga total aproximada:
+
+$$
+C(s) = \frac{s}{2} + \frac{P}{s}E
+$$
+
+Minimizando $C(s)$ respecto de $s$:
+
+$$
+\frac{dC}{ds} = \frac{1}{2} - \frac{PE}{s^2} = 0
+\qquad \Rightarrow \qquad
+s = \sqrt{2PE}
+$$
 
 **Pasos.**
 1. Pasá P y E a la misma unidad (bytes).
@@ -104,13 +151,42 @@ tipo: resolucion
 
 ## E3. Multiprogramación: U = 1 − pⁿ
 
-**Contexto.** Un proceso pasa parte de su tiempo esperando E/S. Si la fracción de espera es p, la probabilidad de que los n procesos estén esperando todos a la vez es pⁿ, así que la CPU queda ociosa con probabilidad pⁿ.
+**Contexto.** En multiprogramación, mientras un proceso espera E/S, otro puede usar la CPU. El modelo probabilístico estima qué tan probable es que la CPU tenga trabajo útil cuando hay varios procesos en memoria.
 
-**Teoría mínima.**
-- U = 1 − pⁿ (utilización de la CPU).
-- Para un objetivo U_obj: pⁿ ≤ 1 − U_obj ⇒ **n ≥ log(1 − U_obj) ÷ log(p)**.
-- Con p = 0,5: n = 1 → 50 %, n = 2 → 75 %, n = 3 → 87,5 %, n = 4 → 93,75 %.
-- Si los procesos tienen **p distinto**, la CPU queda ociosa solo cuando **todos** esperan: U = 1 − ∏pᵢ. Ejemplo: p₁ = 0,5 y p₂ = 0,9 ⇒ U = 1 − 0,5 × 0,9 = **55 %**.
+**Teoría mínima (parámetros y fórmula).**
+
+| Símbolo | Significado |
+|---|---|
+| $p$ | Fracción de tiempo que un proceso pasa esperando E/S (bloqueado). Valor entre 0 y 1. |
+| $n$ | Grado de multiprogramación: cantidad de procesos en memoria compitiendo por CPU. |
+| $p^n$ | Probabilidad de que los $n$ procesos estén esperando E/S al mismo tiempo (CPU ociosa). |
+| $U$ | Utilización de CPU: fracción del tiempo en que la CPU está ejecutando algún proceso. |
+| $U_{obj}$ | Utilización objetivo que se quiere alcanzar. |
+
+Fórmula base (procesos con el mismo $p$):
+
+$$
+U = 1 - p^n
+$$
+
+Despeje para hallar la cantidad mínima de procesos:
+
+$$
+p^n \le 1 - U_{obj}
+\qquad \Rightarrow \qquad
+n \ge \frac{\log(1-U_{obj})}{\log(p)}
+$$
+
+> [!note] Sobre el logaritmo
+> Como $p < 1$, $\log(p)$ es negativo. Al dividir por un número negativo, el sentido de la desigualdad se invierte; por eso conviene trabajar con cuidado o usar valores absolutos. En la práctica, se calcula el cociente y se toma el **menor entero $n$** que cumple el objetivo.
+
+Si los procesos tienen **distinta** fracción de E/S ($p_1, p_2, ..., p_n$), la CPU queda ociosa solo cuando todos esperan:
+
+$$
+U = 1 - \prod_{i=1}^{n} p_i
+$$
+
+**Referencia rápida (p = 0,5):** n = 1 → 50 %, n = 2 → 75 %, n = 3 → 87,5 %, n = 4 → 93,75 %. Ejemplo con $p$ distintos: $p_1=0,5, p_2=0,9 \Rightarrow U = 1 - 0,5\times 0,9 = 55\%$.
 
 ![[utilizacion_cpu_1_menos_p_n.svg]]
 
@@ -131,18 +207,31 @@ tipo: resolucion
 
 ## E4. Gantt de procesos que llegan (E/S del 50 %)
 
-**Contexto.** Los procesos llegan en distintos momentos y comparten la CPU. Cuando hay n procesos, la CPU da U = 1 − pⁿ de su capacidad, repartida en partes iguales (round robin).
+**Contexto.** Este ejercicio combina multiprogramación con una línea de tiempo: los procesos llegan en distintos momentos, se bloquean por E/S y comparten la CPU. No es lo mismo que un Gantt de planificación FIFO/SJF/RR puro; acá el reparto de CPU sale del modelo $U = 1-p^n$.
+
+**Parámetros y fórmulas.**
+
+| Símbolo | Significado |
+|---|---|
+| $p$ | Fracción de tiempo en E/S de cada proceso (en estos ejercicios suele ser igual para todos). |
+| $n$ | Cantidad de procesos activos en memoria en un intervalo. |
+| $U$ | Utilización total de CPU en ese intervalo: $U = 1-p^n$. |
+| $U/n$ | Fracción de CPU que recibe cada proceso por minuto de reloj, bajo reparto equitativo (round robin). |
+| $C_i$ | Tiempo de CPU que todavía le falta al proceso $i$. |
+| $\Delta t$ | Duración de un intervalo donde $n$ no cambia. |
+| Avance de CPU | $\text{avance}_i = \frac{U}{n}\cdot \Delta t$ (mientras el proceso esté activo en ese intervalo). |
+| Tiempo hasta terminar | Si $n$ se mantiene constante, $t_{fin,i} = \frac{C_i}{U/n}$. |
 
 **Convención que usa la cátedra (resumen SAE).**
-- Con n procesos en memoria, **cada proceso avanza U/n de CPU por minuto de reloj**.
-- Si un proceso necesita d minutos de CPU, tarda d ÷ (U/n) minutos de reloj **mientras sea n el grado de multiprogramación**.
-- Cada vez que llega o termina un proceso, **recalculá n y U** y seguí desde ese momento.
+- Con $n$ procesos en memoria, **cada proceso avanza $U/n$ de CPU por minuto de reloj**.
+- Si un proceso necesita $C_i$ minutos de CPU, tarda $C_i / (U/n)$ minutos de reloj **mientras se mantenga el mismo $n$**.
+- Cada vez que llega o termina un proceso, **recalculá $n$ y $U$** y seguí desde ese momento.
 - No redondees: usá los decimales completos.
 
 **Pasos.**
-1. Armá una tabla con llegadas, duraciones (CPU) y hora de inicio.
-2. Entre dos eventos (llegada o fin), n es constante: U = 1 − pⁿ, velocidad por proceso = U/n.
-3. Calculá cuánto CPU avanza cada proceso en el intervalo, restale a su duración y mirá quién termina primero.
+1. Armá una tabla con llegadas, CPU requerida y hora de inicio.
+2. Entre dos eventos (llegada o fin), $n$ es constante: calculá $U = 1-p^n$ y la velocidad por proceso $U/n$.
+3. Calculá cuánto CPU avanza cada proceso en el intervalo, restale a su $C_i$ y mirá quién termina primero.
 4. Dibujá el Gantt y anotá los momentos de fin.
 
 **Caso resuelto (Parcial 2025 T1 — p = 0,5).**
@@ -198,7 +287,17 @@ tipo: resolucion
 
 ## E16. Gantt 60% y 90% (sin redondear)
 
-**Contexto.** Son los mismos pasos que E4, pero cambian `p` y los tiempos. La clave es no redondear y recalcular en cada evento.
+**Contexto.** Son los mismos pasos que E4, pero cambian $p$ y los tiempos. La clave es no redondear y recalcular en cada evento.
+
+**Parámetros (mismos que E4).**
+
+| Símbolo | Significado |
+|---|---|
+| $p$ | Fracción de tiempo en E/S por proceso. |
+| $n$ | Cantidad de procesos activos en el intervalo. |
+| $U = 1-p^n$ | Utilización total de CPU en el intervalo. |
+| $U/n$ | CPU por proceso por minuto de reloj. |
+| $C_i$ | CPU restante del proceso $i$. |
 
 ### Caso A — 1T Febrero 2024 (p = 0,6)
 
@@ -235,14 +334,27 @@ tipo: resolucion
 
 ## E5. Tabla de páginas invertida
 
-**Contexto.** Con direcciones de 64 bits, una tabla normal tiene una entrada por página virtual: 2⁵¹ entradas, imposible de guardar. La **invertida** tiene una entrada por **marco** físico y la búsqueda se hace por hash.
+**Contexto.** En paginación tradicional hay una entrada por página virtual. Con espacios virtuales enormes (ej. 64 bits), eso es inviable. La **tabla de páginas invertida** invierte la idea: tiene una entrada por **marco físico** y se busca qué (proceso, página virtual) ocupa ese marco.
 
-**Teoría mínima.**
-- Entradas = cantidad de marcos (memoria física ÷ tamaño de página).
-- Bits para acceder a la tabla = bits necesarios para indicar un marco.
-- Si el enunciado pide "factor 2": la tabla tiene el doble de entradas que marcos.
-- La tabla normal crece con el espacio **virtual**; la invertida crece con la memoria **física**. Por eso la invertida es la opción cuando el espacio virtual es enorme.
-- **TLB (Translation Lookaside Buffer)**: caché de hardware con las traducciones recientes (página→marco). Si la traducción está en la TLB (*hit*), se evita ir a la tabla en memoria.
+**Teoría mínima (parámetros y fórmulas).**
+
+| Símbolo | Significado |
+|---|---|
+| $V$ | Bits de dirección virtual. |
+| $T_p$ | Tamaño de página. |
+| $d = \log_2(T_p)$ | Bits de desplazamiento. |
+| $p_{v} = V-d$ | Bits del número de página virtual. |
+| $2^{p_v}$ | Cantidad de páginas virtuales (entradas de una tabla tradicional). |
+| $F$ | Memoria física. |
+| $M = F/T_p$ | Cantidad de marcos físicos. |
+| Entradas tabla invertida | Normalmente $M$; si el enunciado pide factor $k$, entonces $k\cdot M$. |
+| $\log_2(M)$ | Bits necesarios para identificar un marco (índice físico). |
+
+**Comparación clave:**
+- Tabla tradicional: crece con el espacio **virtual** ($2^{p_v}$ entradas).
+- Tabla invertida: crece con la memoria **física** ($M$ entradas).
+
+**TLB (Translation Lookaside Buffer):** caché de hardware con traducciones recientes página→marco. Si hay *hit*, se evita ir a la tabla en memoria.
 
 ![[tabla_invertida.svg]]
 
@@ -275,11 +387,20 @@ tipo: resolucion
 
 ## E6. Tabla multinivel
 
-**Contexto.** Una tabla de un nivel con 2²⁰ entradas de 4 bytes ocupa 4 MB, es decir, **toda** la memoria física. La tabla de dos niveles divide la dirección y crea subtablas solo donde hacen falta.
+**Contexto.** Una tabla de un nivel necesita una entrada por página virtual, aunque gran parte del espacio no se use. La tabla multinivel divide los bits de página en varios niveles: solo se crean las subtablas necesarias.
 
-**Teoría mínima.**
-- Con dos niveles de 10 bits y desplazamiento de 12: el primer nivel tiene 1024 entradas, cada una apunta a una tabla de 1024 entradas.
-- Si una entrada del primer nivel está vacía, **no existe** su subtabla: eso ahorra memoria.
+**Teoría mínima (parámetros y fórmulas).**
+
+| Símbolo | Significado |
+|---|---|
+| $V$ | Bits de dirección virtual. |
+| $T_p$ | Tamaño de página. |
+| $d = \log_2(T_p)$ | Bits de desplazamiento. |
+| $p_v = V-d$ | Bits totales de número de página. |
+| $b_1, b_2, ..., b_k$ | Bits asignados a cada nivel de tabla; se cumple $b_1+b_2+...+b_k=p_v$. |
+| $2^{b_i}$ | Cantidad de entradas en una tabla del nivel $i$. |
+
+Ejemplo clásico (32 bits, página 4 KB, 2 niveles): $d=12$, $b_1=10$, $b_2=10$. La raíz tiene $2^{10}$ entradas; cada subtabla de segundo nivel tiene $2^{10}$ entradas. Si una entrada de raíz está vacía, **no existe** su subtabla: eso ahorra memoria.
 
 ![[tabla_multinivel_32_bits.svg]]
 
@@ -503,9 +624,20 @@ tipo: resolucion
 
 ## E15. Traducción de dirección con tabla (20500)
 
-**Contexto.** Te dan la tabla página→marco y una dirección virtual decimal. Tenés que descomponerla y traducirla.
+**Contexto.** Te dan la tabla página→marco y una dirección virtual decimal. Tenés que descomponerla en número de página y desplazamiento, buscar el marco, y recomponer la dirección física.
 
-**Caso (Final 27-11-2024 / TP3-3):** sistema de 16 bits, páginas de 4 KB. Dirección virtual = 20500.
+**Parámetros y fórmulas.**
+
+| Símbolo | Significado |
+|---|---|
+| $DV$ | Dirección virtual (la que genera la CPU). |
+| $T_p$ | Tamaño de página = tamaño de marco. |
+| $N_p = \lfloor DV / T_p \rfloor$ | Número de página virtual (división entera). |
+| $offset = DV \mod T_p$ | Desplazamiento dentro de la página. |
+| $N_m$ | Número de marco físico, obtenido de la tabla de páginas para $N_p$. |
+| $DF = N_m \cdot T_p + offset$ | Dirección física resultante. |
+
+**Caso (Final 27-11-2024 / TP3-3):** sistema de 16 bits, $T_p=4$ KB, $DV=20500$.
 
 1. **Tamaño de página:** 4 KB = 4096 bytes = 2^12 → desplazamiento 12 bits.
 2. **Número de página:** `20500 div 4096 = 5`.
@@ -533,15 +665,28 @@ tipo: resolucion
 
 ## E17. LRU por hardware: costo de memoria
 
-**Contexto.** LRU exacto es buen algoritmo, pero implementarlo en hardware es caro porque hay que registrar el orden de uso.
+**Contexto.** LRU exacto reemplaza la página menos recientemente usada. El problema no es el criterio, sino el costo de implementarlo exactamente en hardware.
+
+**Parámetros y fórmulas.**
+
+| Símbolo | Significado |
+|---|---|
+| $V$ | Bits de dirección virtual. |
+| $T_p$ | Tamaño de página. |
+| $d=\log_2(T_p)$ | Bits de desplazamiento. |
+| $N_{pag}=2^{V-d}$ | Cantidad de páginas virtuales. |
+| $n$ | Cantidad de elementos cuyo orden de uso se quiere registrar (páginas o marcos, según la implementación). |
+| $n\times n$ | Bits de una matriz LRU completa: una fila y una columna por elemento comparado. |
+| $b$ | Bits por contador/timestamp en una implementación por contadores. |
+| $N_{pag}\cdot b$ | Memoria total para contadores (si se guarda uno por página). |
 
 **Caso (Recu 2025 T2):** sistema de 32 bits, páginas de 4 KB. ¿Cuánta memoria necesita LRU por hardware para llevar registro de uso reciente?
 
-1. **Páginas del espacio virtual:** 2^32 / 2^12 = **2^20 páginas**.
+1. **Páginas del espacio virtual:** $N_{pag}=2^{32}/2^{12}=2^{20}$ páginas.
 2. **Problema de LRU HW:** para saber cuál fue la menos usada recientemente hay que mantener información de orden.
-   - **Matriz n×n bits** (para n elementos comparados): crece como n^2. Si se pensara sobre todas las páginas virtuales sería inviable; incluso sobre marcos físicos es costoso.
-   - **Contadores/timestamps por entrada:** cada página/marco necesita un contador suficientemente grande; también consume memoria y hardware de actualización.
-3. **Cálculo orientativo:** 2^20 páginas × N bits por contador. Por ejemplo, con 20 bits por entrada: 2^20 × 20 bits = 20.971.520 bits ≈ 2,5 MB solo para contadores (y todavía hay que actualizarlos en cada acceso).
+   - **Matriz $n\times n$ bits:** crece como $n^2$. Si se pensara sobre todas las páginas virtuales sería inviable; incluso sobre marcos físicos es costoso.
+   - **Contadores/timestamps por entrada:** cada entrada necesita $b$ bits y hardware para actualizarse en cada acceso.
+3. **Cálculo orientativo:** $2^{20}$ páginas $\times$ $b$ bits por contador. Por ejemplo, con $b=20$ bits por entrada: $2^{20}\times 20 = 20.971.520$ bits $\approx 2,5$ MB solo para contadores.
 4. **Conclusión:** es costoso en memoria y lógica de hardware. Por eso se usan aproximaciones: **NRU** (bits R/M) o **Aging/NFU** (contador con desplazamiento).
 
 > [!warning] Cómo responder sin trabarte
@@ -551,18 +696,31 @@ tipo: resolucion
 
 ## E18. Seg+pag: ¿cabe el proceso? (1 KB)
 
-**Contexto.** En segmentación paginada, cada segmento se divide en páginas. Una página no puede contener datos de segmentos distintos; por eso se redondea **hacia arriba por segmento**.
+**Contexto.** En segmentación paginada, el programa se divide lógicamente en segmentos (código, datos, pila) y cada segmento se divide internamente en páginas. Una página física no puede compartirse entre segmentos distintos; por eso cada segmento se redondea **hacia arriba** a páginas completas.
 
-**Caso (Recu 2025 T2):** sistema de 16 bits, páginas de 1 KB. Programa: código 30145 B, datos 18834 B, pila 14870 B. ¿Se puede ejecutar? (se puede asignar todo el direccionamiento de 16 bits al proceso).
+**Parámetros y fórmulas.**
 
-1. **Tamaño de página:** 1 KB = 1024 bytes.
+| Símbolo | Significado |
+|---|---|
+| $V$ | Bits de dirección virtual. |
+| $T_p$ | Tamaño de página. |
+| $S_i$ | Tamaño del segmento $i$ en bytes. |
+| $N_i = \lceil S_i / T_p \rceil$ | Páginas necesarias para el segmento $i$ (redondeo hacia arriba). |
+| $N_{total}=\sum N_i$ | Total de páginas necesarias por el proceso. |
+| $N_{disp}=2^V / T_p$ | Páginas disponibles en el espacio de direccionamiento. |
+
+Condición: el proceso entra si $N_{total} \le N_{disp}$.
+
+**Caso (Recu 2025 T2):** $V=16$, $T_p=1$ KB = 1024 B. Programa: código 30145 B, datos 18834 B, pila 14870 B.
+
+1. **Tamaño de página:** $T_p = 1024$ bytes.
 2. **Páginas por segmento** (techo):
-   - Código: `ceil(30145 / 1024) = ceil(29,438...) = 30` páginas. (29×1024=29696; sobran 449).
-   - Datos: `ceil(18834 / 1024) = ceil(18,393...) = 19` páginas. (18×1024=18432; sobran 402).
-   - Pila: `ceil(14870 / 1024) = ceil(14,521...) = 15` páginas. (14×1024=14336; sobran 534).
-3. **Total:** 30 + 19 + 15 = **64 páginas**.
-4. **Espacio direccionable:** 16 bits → 2^16 = 65536 bytes. En páginas de 1 KB: 65536 / 1024 = **64 páginas**.
-5. **Comparación:** 64 necesarias ≤ 64 disponibles → **entra justo**.
+   - Código: $\lceil 30145 / 1024 \rceil = \lceil 29,438... \rceil = 30$ páginas.
+   - Datos: $\lceil 18834 / 1024 \rceil = \lceil 18,393... \rceil = 19$ páginas.
+   - Pila: $\lceil 14870 / 1024 \rceil = \lceil 14,521... \rceil = 15$ páginas.
+3. **Total:** $N_{total}=30 + 19 + 15 = 64$ páginas.
+4. **Espacio direccionable:** $2^{16}=65536$ bytes. En páginas de 1 KB: $65536/1024 = 64$ páginas.
+5. **Comparación:** $64 \le 64$ → **entra justo**.
 
 **Respuesta modelo:** “Sí, se puede ejecutar. Cada segmento se pagina por separado: 30+19+15=64 páginas. El espacio de 16 bits con páginas de 1 KB tiene 64 páginas, por lo tanto entra justo. No sobra espacio, así que cualquier crecimiento requeriría más memoria o swapping.”
 
@@ -575,15 +733,26 @@ tipo: resolucion
 
 **Caso (Recu 2025 T2, Q1).**
 
-**Datos:** 2 niveles de 14 bits cada uno; página de 64 bytes; memoria física de 32 GB.
+**Parámetros.**
 
-1. **Offset (acceso interno a la página):** 64 B = 2^6 → **6 bits**.
-2. **Bits para tabla de paginación:** 14 + 14 = **28 bits**.
-3. **Dirección virtual total:** 28 + 6 = **34 bits**.
-4. **Memoria virtual direccionable:** 2^34 = **16 GB**.
-5. **Páginas:** 2^28 = **268.435.456 páginas**.
-6. **Marcos:** 32 GB / 64 B = 2^35 / 2^6 = **2^29 marcos**.
-7. **¿Problema?** Sí: la memoria física (32 GB) es mayor que la memoria direccionable (16 GB). El sistema no puede usar toda la RAM porque le faltan bits de dirección virtual. Además, páginas de 64 B implican muchísimas entradas de tabla.
+| Símbolo | Significado | Valor |
+|---|---|---|
+| $b_1, b_2$ | Bits de índice de tabla nivel 1 y nivel 2 | 14 y 14 |
+| $T_p$ | Tamaño de página | 64 B = $2^6$ |
+| $F$ | Memoria física | 32 GB = $2^{35}$ B |
+| $d=\log_2(T_p)$ | Bits de desplazamiento/offset | 6 |
+| $p_v=b_1+b_2$ | Bits de número de página virtual | 28 |
+| $V=p_v+d$ | Bits totales de dirección virtual | 34 |
+
+**Resolución.**
+
+1. **Offset:** $d=\log_2(64)=6$ bits.
+2. **Bits para tabla de paginación:** $p_v=14+14=28$ bits.
+3. **Dirección virtual total:** $V=28+6=34$ bits.
+4. **Memoria virtual direccionable:** $2^{34}=16$ GB.
+5. **Páginas virtuales:** $2^{28}=268.435.456$.
+6. **Marcos físicos:** $F/T_p=2^{35}/2^6=2^{29}$ marcos.
+7. **¿Problema?** Sí: la RAM física (32 GB) es mayor que lo direccionable por la dirección virtual (16 GB). Faltan bits de dirección virtual para aprovechar toda la RAM. Además, páginas de 64 B generan muchas entradas de tabla.
 
 **Respuesta corta:** “Se usan 28 bits para la tabla y 6 para el offset; se direccionan 16 GB en 2^28 páginas; hay 2^29 marcos, pero no se puede usar toda la memoria física porque la dirección virtual solo cubre 16 GB.”
 
@@ -593,15 +762,25 @@ tipo: resolucion
 
 **Caso (Recu 2025 T2, según OCR; verificar con original).**
 
-**Datos:** dirección virtual 64 bits; página 64 bytes; memoria física 32 GB.
+**Parámetros.**
 
-1. **Offset:** 64 B = 2^6 → **6 bits**.
-2. **Bits de tabla:** 64 - 6 = **58 bits**.
-3. **Páginas virtuales:** 2^58.
-4. **Marcos físicos:** 32 GB / 64 B = 2^35 / 2^6 = **2^29 marcos**.
-5. **Memoria direccionable:** 2^64 (teórica por arquitectura), pero la tabla lineal tendría 2^58 entradas: inviable.
+| Símbolo | Significado | Valor |
+|---|---|---|
+| $V$ | Bits de dirección virtual | 64 |
+| $T_p$ | Tamaño de página | 64 B = $2^6$ |
+| $F$ | Memoria física | 32 GB = $2^{35}$ B |
+| $d=\log_2(T_p)$ | Bits de desplazamiento | 6 |
+| $p_v=V-d$ | Bits de número de página | 58 |
 
-**Respuesta corta:** “El offset usa 6 bits y la tabla 58; hay 2^58 páginas virtuales y 2^29 marcos. El problema es el tamaño absurdo de la tabla lineal; se resuelve con tabla multinivel o tabla invertida.”
+**Resolución.**
+
+1. **Offset:** $d=\log_2(64)=6$ bits.
+2. **Bits de tabla:** $p_v=64-6=58$ bits.
+3. **Páginas virtuales:** $2^{58}$.
+4. **Marcos físicos:** $F/T_p=2^{35}/2^6=2^{29}$ marcos.
+5. **Memoria direccionable:** $2^{64}$ teórica por arquitectura, pero la tabla lineal tendría $2^{58}$ entradas: inviable.
+
+**Respuesta corta:** “El offset usa 6 bits y la tabla 58; hay $2^{58}$ páginas virtuales y $2^{29}$ marcos. El problema es el tamaño absurdo de la tabla lineal; se resuelve con tabla multinivel o tabla invertida.”
 
 ---
 
@@ -609,12 +788,22 @@ tipo: resolucion
 
 **Caso (Noviembre 2024, según OCR; verificar con original).**
 
-**Datos:** dirección virtual 12 bits; página 32 bytes; memoria física 256 bytes.
+**Parámetros.**
 
-1. **Offset:** 32 B = 2^5 → **5 bits**.
-2. **Número de página:** 12 - 5 = **7 bits** → 2^7 = **128 páginas**.
-3. **Marcos:** 256 B / 32 B = **8 marcos** → 3 bits de marco.
-4. **Memoria direccionable:** 2^12 = **4096 B = 4 KB**.
+| Símbolo | Significado | Valor |
+|---|---|---|
+| $V$ | Bits de dirección virtual | 12 |
+| $T_p$ | Tamaño de página | 32 B = $2^5$ |
+| $F$ | Memoria física | 256 B = $2^8$ |
+| $d=\log_2(T_p)$ | Bits de desplazamiento | 5 |
+| $p_v=V-d$ | Bits de número de página | 7 |
+
+**Resolución.**
+
+1. **Offset:** $d=\log_2(32)=5$ bits.
+2. **Número de página:** $p_v=12-5=7$ bits $\Rightarrow 2^7=128$ páginas virtuales.
+3. **Marcos:** $F/T_p=256/32=8$ marcos $\Rightarrow \log_2(8)=3$ bits de marco.
+4. **Memoria direccionable:** $2^V=2^{12}=4096$ B = 4 KB.
 
 **Lectura de examen:** aunque el espacio virtual sea chico, solo 8 marcos físicos pueden estar presentes a la vez; hay alta presión de reemplazo si se usan muchas páginas.
 
@@ -626,14 +815,26 @@ tipo: resolucion
 
 **Caso (junio/Julio 2024 y modelos OCR similares).**
 
-**Datos:** 64 bits virtuales; página 8 KB; RAM 16 GB; tabla invertida con factor 2.
+**Parámetros.**
 
-1. **Offset:** 8 KB = 2^13 → **13 bits**.
-2. **Marco:** 16 GB / 8 KB = 2^34 / 2^13 = **2^21 marcos**.
-3. **Entradas tabla invertida:** 2 × 2^21 = **2^22 entradas**.
-4. **Páginas virtuales (teóricas):** 2^(64-13) = **2^51**. Una tabla directa por proceso sería inviable; por eso se usa invertida.
+| Símbolo | Significado | Valor |
+|---|---|---|
+| $V$ | Bits de dirección virtual | 64 |
+| $T_p$ | Tamaño de página | 8 KB = $2^{13}$ B |
+| $F$ | Memoria física (RAM) | 16 GB = $2^{34}$ B |
+| $k$ | Factor de sobredimensionamiento de la tabla invertida | 2 |
+| $d=\log_2(T_p)$ | Bits de desplazamiento | 13 |
+| $M=F/T_p$ | Cantidad de marcos físicos | $2^{21}$ |
+| $k\cdot M$ | Entradas de la tabla invertida | $2^{22}$ |
 
-**Respuesta corta:** “13 bits de offset, 2^21 marcos, 2^22 entradas con factor 2; una tabla directa tendría 2^51 entradas por proceso, por eso conviene tabla invertida.”
+**Resolución.**
+
+1. **Offset:** $d=\log_2(2^{13})=13$ bits.
+2. **Marcos:** $M=2^{34}/2^{13}=2^{21}$ marcos.
+3. **Entradas tabla invertida:** $k\cdot M = 2\times 2^{21}=2^{22}$ entradas.
+4. **Páginas virtuales (teóricas):** $2^{V-d}=2^{64-13}=2^{51}$. Una tabla directa por proceso sería inviable; por eso se usa invertida.
+
+**Respuesta corta:** “13 bits de offset, $2^{21}$ marcos, $2^{22}$ entradas con factor 2; una tabla directa tendría $2^{51}$ entradas por proceso, por eso conviene tabla invertida.”
 
 ---
 
