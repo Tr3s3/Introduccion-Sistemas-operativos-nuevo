@@ -1,355 +1,597 @@
 ---
-tipo: unidad-completa
+tipo: lectura-corrida
 unidad: 1
 ---
-# Unidad 1 — Introducción al sistema operativo — completa
+# Unidad 1 — completa (lectura de corrido)
 
-> [!abstract] Qué pide la unidad
-> Qué es un sistema operativo, para qué existe, cómo se separa del hardware y de los programas de usuario, y cómo evolucionó. Base de todo lo demás: sin esto no se entiende por qué existen procesos, memoria virtual ni llamadas al sistema.
+> [!abstract] Fuente
+> Desarrollada a partir de las **diapositivas de cátedra** (Introducción a los Sistemas Operativos - Introducción) y complementada con explicaciones, ejemplos, trampas de examen y libro (Tanenbaum). Ver [[00 Fuente - Temario de diapositivas]].
 
-> [!info] Cómo leer este archivo
-> Es la unidad entera, en orden: Tema → Subtema. Cada subtema tiene su nota propia en la carpeta del tema, por si querés estudiar uno solo.
+---
+
+# 1.1.1 Definición y funciones
+
+> [!abstract] En una frase
+> El **sistema operativo (SO)** es el programa (o conjunto de programas) que se ubica entre el **hardware** y las **aplicaciones**: les da una máquina más simple (abstracción) y administra los recursos de forma ordenada y protegida.
+
+## Diapositiva de cátedra: qué es un SO
+
+![[slide_02.png]]
+
+La diapositiva define el punto de partida: con su software, una computadora puede almacenar, procesar y entregar información. Hay **programas del sistema** (administran la operación; el más importante es el SO) y **programas de aplicación** (dan servicio a los usuarios).
+
+## Diapositiva: hardware y complejidad
+
+![[slide_03.png]]
+
+Una computadora está formada por uno o más procesadores, memoria principal, discos, impresoras y dispositivos de entrada/salida. Es un sistema complejo que debe ser administrado: escribir programas sin una capa de abstracción implicaría controlar cada componente de hardware.
+
+## Diapositiva: ubicación del SO
+
+![[slide_04.png]]
+
+El SO se ubica entre el **hardware** y los **programas de usuario** (editores, compiladores, shell, etc.). Abstrae el hardware y ofrece una interfaz más cómoda y segura para las aplicaciones.
+
+## Las dos funciones principales (diapositiva de cátedra)
+
+![[slide_06.png]]
+
+| Función | Qué significa | Ejemplo de la cátedra / típico |
+|---|---|---|
+| **Máquina extendida o virtual** (abstracción) | Oculta el hardware y ofrece una vista más simple | Existen instrucciones de bajo nivel para disco; el SO permite trabajar con archivos/operaciones más simples |
+| **Administrador de recursos** | Administra piezas de un sistema complejo, asigna recursos de forma ordenada y mediando conflictos | Quién usa qué recurso y por cuánto tiempo; impresión simultánea, uso de memoria |
+
+## Conceptos que el SO debe manejar
+
+![[slide_17.png]]
+
+La diapositiva de conceptos de SO resume el alcance de la materia: **procesos, espacios de direcciones, archivos, entrada/salida, protección, intérprete de comandos (shell) y llamadas al sistema**. Estos temas se desarrollan en las unidades siguientes.
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum refuerza la misma idea con dos visiones: el SO como **máquina extendida** (abstracción) y como **administrador de recursos** (multiplexación en tiempo y espacio). También destaca que el SO debe proteger recursos y dar servicios mediante interfaces bien definidas.
+
+## Cómo responderlo en el final
+1. Definición: intermediario entre hardware y aplicaciones.
+2. Función 1: **abstracción/máquina extendida**, con ejemplo.
+3. Función 2: **administrador de recursos**, con ejemplo de conflicto/asignación.
+4. Cerrar con protección/servicios.
+
+> [!warning] Errores típicos
+> - Decir que el SO es solo “lo que ve el usuario” (eso confunde SO con GUI/shell).
+> - Confundir abstracción (simplificar) con administración (repartir/proteger).
+
+## Imágenes de la diapositiva
+Las imágenes usadas son capturas de la diapositiva de cátedra “Introducción a los Sistemas Operativos - Introducción”.
 
 
 ---
 
-## Tema 1.1 — Qué es un sistema operativo
-
-
-### 1.1.1 Definición y funciones
+# 1.1.2 Kernel, shell y programas del sistema
 
 > [!abstract] En una frase
-> El **sistema operativo (SO)** es el programa (o conjunto de programas) que se ubica entre el **hardware** y las **aplicaciones**: les da una máquina **más simple** (abstracción) y **administra** los recursos (CPU, memoria, E/S, archivos) de forma ordenada y protegida.
+> El **kernel** es el núcleo del SO que corre en modo privilegiado; el **shell** es la interfaz que interpreta comandos del usuario; los **programas del sistema** son utilidades que acompañan al SO pero no son el kernel.
 
-#### Desarrollo
-Una computadora es un sistema complejo: uno o más procesadores, memoria principal, discos, impresoras, teclado, red y otros dispositivos. Si cada programador tuviera que entender todo eso, no escribiría código. Por eso el SO cumple **dos funciones principales**:
+## Diapositiva de cátedra: el shell
 
-| Función | Qué significa | Ejemplo |
-|---|---|---|
-| **Abstracción** (máquina extendida) | Oculta el hardware y ofrece objetos simples: archivos, procesos, sockets | Un programa hace `read()` de un archivo; no necesita saber en qué sector del disco está |
-| **Administración de recursos** | Decide quién usa qué recurso, cuánto y cuándo; media en los conflictos | Dos impresiones simultáneas se encolan en vez de mezclarse en el papel |
+![[slide_34.png]]
 
-Funciones secundarias que suelen mencionarse: **protección y seguridad** (aislar procesos entre sí), **servicios a los programas** (llamadas al sistema), **contabilidad** del uso de recursos e **interfaz** con el usuario.
+La diapositiva es clara:
+- **No es parte del sistema operativo** (no es el kernel).
+- El sistema operativo es el código que lleva adelante las **llamadas al sistema**.
+- Es la **primera interfaz** entre el usuario y el sistema operativo.
+- Ejemplos: `time`, `date`, `dir`, `sort` (comandos/programas que usan servicios/syscalls).
 
-> [!note] Dato de escala (Tanenbaum)
-> El código de un SO como Linux o Windows ronda los **5 millones de líneas**. Por eso un SO evoluciona durante décadas y casi nunca se reescribe desde cero.
+## Diferencias clave
 
-#### Cómo responderlo en el final
-1. Definición en una frase: intermediario entre hardware y programas.
-2. Función 1, **abstracción**, con el ejemplo del archivo.
-3. Función 2, **administración de recursos**, con el ejemplo de la impresora o la memoria.
-4. Cerrar con protección como función secundaria.
-
-> [!warning] Errores típicos
-> - Decir que el SO **es** lo que ve el usuario (eso es el shell o la GUI; ver 1.1.2).
-> - Confundir **abstracción** (simplifica la vista) con **administración** (reparte el recurso real).
-
-
-### 1.1.2 Kernel, shell y programas del sistema
-
-> [!abstract] En una frase
-> El **kernel** es el núcleo del SO y corre en modo privilegiado. El **shell** (o la GUI) es un programa de **usuario** que traduce lo que escribe el usuario en llamadas al sistema: **no es parte del SO**.
-
-#### Desarrollo
-- **Kernel:** administra CPU, memoria, E/S e interrupciones, y ofrece las llamadas al sistema.
-- **Shell:** intérprete de comandos. Basado en texto (bash, cmd) o gráfico (GUI). Si lo reemplazás por otro shell, el SO sigue igual.
-- **Programas del sistema vs. de aplicación:** los primeros administran la operación de la máquina (el SO y sus utilidades); los segundos dan servicio al usuario (navegador, editor).
-- Compiladores, editores e intérpretes de comandos **no son parte del SO** (cátedra). Tampoco el programa que permite cambiar la contraseña: se ejecuta en modo usuario aunque haga algo delicado.
-
-### Ejemplo: un shell simple (TP1, pregunta 13)
-```c
-while (TRUE) {
-    type_prompt();                      // muestra el prompt
-    read_command(command, parameters);  // lee la línea del usuario
-    if (fork() != 0) {                  // el padre crea un hijo y espera
-        waitpid(-1, &status, 0);
-    } else {                            // el hijo reemplaza su imagen por el comando
-        execve(command, parameters, 0);
-    }
-}
-```
-- `fork()` crea un **proceso hijo** idéntico al shell. En el padre devuelve el PID del hijo (≠ 0); en el hijo devuelve **0**.
-- El padre espera con `waitpid` a que termine el hijo, y vuelve a mostrar el prompt.
-- El hijo ejecuta `execve`, que **reemplaza** su programa por el comando pedido (`ls`, `cp`…).
-- Todo esto son **llamadas al sistema**: el shell en sí no toca el disco ni la CPU, pide servicios al kernel.
-
-#### Cómo responderlo en el final
-"El shell es un programa de usuario que lee el comando y pide al kernel que lo ejecute con `fork` + `execve`; el kernel es el que realmente administra el hardware."
-
-> [!warning] Errores típicos
-> - "El shell es parte del SO porque el usuario lo usa." **No**: se ejecuta en modo usuario y se puede cambiar.
-> - Olvidar que `fork` devuelve valores distintos en padre e hijo.
-
-
----
-
-## Tema 1.2 — Modos de operación y llamadas al sistema
-
-
-### 1.2.1 Modo usuario y modo kernel
-
-> [!abstract] En una frase
-> El hardware tiene **dos modos**: **kernel** (o supervisor), con acceso a todas las instrucciones, y **usuario**, con un subconjunto limitado. Solo el SO corre en kernel; cualquier otro programa pasa a kernel únicamente mediante una interrupción o una llamada al sistema.
-
-#### Desarrollo
-| | Modo kernel / supervisor | Modo usuario |
-|---|---|---|
-| Quién corre | El kernel del SO | Aplicaciones, shell, bibliotecas |
-| Instrucciones | Todas, incluidas las **privilegiadas** | Solo un subconjunto |
-| Acceso a E/S y memoria ajena | Sí | No (la protección del hardware lo impide) |
-
-**Instrucciones privilegiadas** (que solo puede ejecutar el kernel): cambiar el mapa de memoria, deshabilitar interrupciones, grabar el reloj del día, controlar dispositivos de E/S.
-
-### Ejercicio TP1, pregunta 7
-| Instrucción | ¿Solo en kernel? | Por qué |
-|---|---|---|
-| a. Cambiar el mapa de memoria | **Sí** | Podría dar acceso a la memoria de otro proceso |
-| b. Leer la hora del día | No | Es una lectura inofensiva; no altera al resto del sistema |
-| c. Grabar la hora del día | **Sí** | Alteraría la hora para todos los procesos |
-| d. Deshabilitar todas las interrupciones | **Sí** | Un programa podría acaparar la CPU para siempre |
-
-**Respuesta:** a, c y d.
-
-### ¿Por qué el código del SO debe ser lo más chico posible?
-Todo lo que corre en kernel tiene poder total: un error ahí puede tirar abajo todo el sistema o comprometer la seguridad. Por eso la idea subyacente es **minimizar la parte privilegiada**: lo que no necesita ser kernel se saca a modo usuario (cuanto menos código privilegiado, menos superficie de error y más fácil de verificar).
-
-#### Cómo responderlo en el final
-"Hay dos modos. En kernel se ejecuta el SO con todas las instrucciones; en usuario, los programas con un subconjunto. El cambio se hace por interrupción o llamada al sistema. El código del SO debe ser mínimo porque todo lo que está en kernel puede dañar al sistema entero."
-
-> [!warning] Errores típicos
-> - Decir que "el usuario corre en modo usuario y el SO en modo supervisor" sin explicar **por qué** importa la protección.
-> - Olvidar que leer la hora **no** es privilegiado y grabarla sí.
-
-
-### 1.2.2 Llamadas al sistema
-
-> [!abstract] En una frase
-> Una **llamada al sistema** es el mecanismo por el que un programa en modo usuario pide un servicio al kernel: coloca los parámetros, ejecuta una instrucción **TRAP** que cambia a modo kernel, el kernel hace el trabajo y devuelve el control.
-
-#### Desarrollo
-Secuencia típica (ejemplo UNIX: `count = read(file, buffer, nbytes);`):
-1. El programa llama a un **procedimiento de biblioteca** (`read`).
-2. Ese procedimiento coloca los parámetros en lugares convenidos (típicamente registros).
-3. Ejecuta la instrucción **TRAP** (una "llamada a procedimiento protegida") que pasa a modo kernel.
-4. El kernel identifica la llamada, la ejecuta y **vuelve a modo usuario** con el resultado.
-
-Familias de llamadas POSIX (la cátedra las lista por categoría):
-- **Procesos:** `fork`, `execve`, `waitpid`, `exit`.
-- **Archivos:** `open`, `read`, `write`, `close`, `unlink`.
-- **Comunicación:** `pipe`, `socket`, `send`, `recv`.
-- **Varias:** `chdir`, `time`/reloj, señales.
-
-> [!important] Llamada al sistema ≠ función de biblioteca
-> Desde el código **se ven igual** (es una función con parámetros y retorno), pero no todas las funciones de biblioteca hacen una llamada al sistema: `strlen` o un `printf` sin vaciar el buffer no cruzan a kernel. **Sí importa** que el programador lo sepa, porque una syscall es más **costosa** (cambio de modo), puede **bloquear** el proceso, depende del sistema operativo (**portabilidad**) y puede **fallar** (hay que revisar el valor de retorno).
-
-#### Cómo responderlo en el final
-"Un programa pide un servicio con una función de biblioteca que ejecuta TRAP; el kernel valida, ejecuta y devuelve. Desde el código parece una función común, pero cambia el modo de ejecución y tiene costo y posibles bloqueos."
-
-> [!warning] Errores típicos
-> - Decir que "la syscall es una función más" sin mencionar el cambio a modo kernel.
-> - Creer que todo lo de la biblioteca estándar es una syscall.
-
-
----
-
-## Tema 1.3 — Historia y tipos de sistemas operativos
-
-
-### 1.3.1 Generaciones de computadoras y su SO
-
-> [!abstract] En una frase
-> La historia del SO es la historia de **reducir el tiempo que la máquina cara pasa esperando al operador**: de los paneles de control a los lotes, luego multiprogramación y tiempo compartido, y por último la PC.
-
-#### Desarrollo
-| Generación | Años | Tecnología | Sistema operativo |
+| Componente | Qué es | Dónde corre | Ejemplo |
 |---|---|---|---|
-| **1.ª** | 1945–1955 | Tubos de vacío | No hay SO ni lenguajes: se programa en lenguaje de máquina con paneles y, después, tarjetas perforadas |
-| **2.ª** | 1955–1965 | Transistores | **Sistemas por lotes** (batch): el antecesor del SO (IBM 1401 y 7094) |
-| **3.ª** | 1965–1980 | Circuitos integrados | **Multiprogramación, spooling y tiempo compartido** (OS/360, Multics → UNIX) |
-| **4.ª** | desde 1980 | Integración a gran escala | PC, redes y sistemas distribuidos: CP/M, DOS, UNIX, Windows, Linux, Android |
+| **Kernel** | Núcleo del SO; administra CPU, memoria, E/S, procesos | Modo kernel | Planificador, gestor de memoria, drivers |
+| **Shell** | Intérprete de comandos / interfaz de usuario | Modo usuario | bash, zsh, PowerShell, cmd |
+| **Programas del sistema** | Utilidades que acompañan al entorno | Modo usuario | compiladores, editores, utilidades de archivo |
+| **Programas de aplicación** | Resuelven necesidades del usuario | Modo usuario | navegador, editor de texto, reproductor |
 
-### El procedimiento de la 2.ª generación (TP1, pregunta 10)
-1. El programador escribe el programa en **tarjetas perforadas**.
-2. Un operador (con el **IBM 1401**, de bajo costo) lee las tarjetas y las copia a una **cinta** de entrada.
-3. El **IBM 7094** (el de cálculo) lee la cinta, procesa el trabajo y escribe el resultado en otra cinta.
-4. El 1401 lee esa cinta y **imprime** los resultados.
+## Relación con llamadas al sistema
 
-**Analogía con hoy:** las tarjetas son el archivo que subís a una cola; la cinta es el **spool en disco**; el 7094 es la CPU; la impresora es la cola de impresión. Lo que cambió: hoy el **SO** hace la cola y la planificación, hay discos y controladores de E/S que trabajan en paralelo con la CPU (y DMA, ver 1.4.3), y no hace falta mover cintas a mano.
+![[slide_26.png]]
 
-#### Cómo responderlo en el final
-Dar la tabla en tres renglones (generación → tecnología → SO) y, si piden el procedimiento, recitar los 4 pasos del 1401/7094 y su equivalente actual.
+Los programas (incluido el shell) se comunican con el SO mediante **llamadas al sistema**. El shell típicamente usa `fork/exec/wait` para ejecutar comandos: lee el comando, crea un proceso, ejecuta el programa y espera el resultado.
 
-> [!warning] Errores típicos
-> - Mezclar generación (hardware) con tipo de SO (uso).
-> - Decir que la 2.ª generación ya tenía multiprogramación: no, eso es de la 3.ª.
+## Complemento de libro (Tanenbaum)
+Tanenbaum distingue entre el kernel (modo supervisor) y el resto del software de sistema/usuario. La interfaz de usuario puede ser GUI o CLI; en ambos casos, las operaciones privilegiadas terminan pidiendo servicios al kernel por syscalls.
 
-
-### 1.3.2 Multiprogramación, spooling y tiempo compartido
-
-> [!abstract] En una frase
-> **Multiprogramación:** varios procesos en memoria y la CPU alterna entre ellos. **Spooling:** las E/S se encolan en disco y se procesan a su ritmo. **Tiempo compartido:** muchos usuarios en terminales reciben la CPU por turnos cortos.
-
-#### Desarrollo
-### Multiprogramación
-Mientras un proceso espera una E/S (lenta), otro usa la CPU. Se justifica por dos razones (TP1, pregunta 8):
-1. **Aprovechar la CPU:** se reducen los tiempos muertos en que la CPU espera al disco o a la impresora.
-2. **Mejorar la respuesta y el uso de recursos:** varios trabajos avanzan a la vez en vez de hacerse uno detrás del otro.
-
-Se formaliza con el modelo probabilístico (ver 2.5.2).
-
-### Spooling
-*Simultaneous Peripheral Operations On-Line*. Los datos destinados a un dispositivo lento (impresora) se guardan en un área intermedia (disco) y el dispositivo los consume después. La CPU queda libre apenas escribió en la cola.
-- **Ejemplos:** cola de impresión; cola de envío de correo; lectura de tarjetas en el 1401.
-- **¿Se usa hoy?** Sí: es la base de las colas de impresión y de cualquier buffer de E/S.
-- **¿Por qué no en la 2.ª generación?** No había multiprogramación que aprovechara esa libertad de la CPU, y el almacenamiento intermedio era cinta, lenta y secuencial; el disco aún no era la base de la E/S.
-
-### Tiempo compartido
-Varias terminales conectadas a la misma máquina. La CPU da a cada usuario un **quantum** breve, y la alternancia es tan rápida que cada uno siente que la máquina es suya. Multics (MIT, Bell, General Electric) fue el precursor, y de ahí sale UNIX.
-
-#### Cómo responderlo en el final
-Definir las tres en una frase cada una, dar un ejemplo de spooling y decir que la multiprogramación es lo que hace posible el tiempo compartido.
+## Cómo responderlo en el final
+“El kernel es la parte del SO que corre en modo kernel y gestiona recursos. El shell no es el kernel: es un programa en modo usuario que interpreta comandos y usa syscalls para pedir servicios al SO”.
 
 > [!warning] Errores típicos
-> - Confundir spooling con multiprogramación: el spooling es para **E/S**, la multiprogramación para **CPU**.
-> - Decir que el tiempo compartido es "multiprogramación sin quantum": el quantum es lo que lo define.
-
-
-### 1.3.3 Tipos de sistemas operativos
-
-> [!abstract] En una frase
-> El SO cambia según el **uso**: por lotes, interactivo o de tiempo real en la clasificación clásica; y mainframe, servidor, PC, móvil o embebido según el equipo.
-
-#### Desarrollo
-Según el tipo de equipo (cátedra):
-- **Mainframe:** gran capacidad de E/S, muchos trabajos.
-- **Servidores:** impresión, web, archivos.
-- **Multiprocesadores:** varios CPU en un mismo sistema.
-- **Computadoras personales.**
-- **PDA / handheld** y **móviles** (Android, iOS).
-- **Integrados o embebidos.**
-- **Nodos sensores.**
-- **En tiempo real:** la respuesta tiene un plazo garantizado (deadline).
-
-Según el **criterio de servicio** (útil para planificación, ver Unidad 2):
-- **Por lotes:** se busca rendimiento (trabajos completados por hora).
-- **Interactivo:** se busca tiempo de respuesta corto.
-- **Tiempo real:** se busca cumplir plazos.
-
-#### Cómo responderlo en el final
-Clasificar por equipo en una lista corta y, si piden "tipo de SO", dar el criterio de servicio y ejemplificar con uno de cada uno.
-
-> [!warning] Errores típicos
-> - Llamar "tipo" a la generación o al contrario.
+> - Decir que el shell “es” el sistema operativo.
+> - Confundir comando `time/date` con una syscall (el comando puede usar syscalls/reloj del sistema).
 
 
 ---
 
-## Tema 1.4 — Sistemas de archivos, E-S y máquinas virtuales
-
-
-### 1.4.1 Sistema de archivos y directorios
+# 1.2.1 Modo usuario y modo kernel
 
 > [!abstract] En una frase
-> El **sistema de archivos** organiza los datos del disco en archivos con nombre, agrupados en **directorios** jerárquicos, y los ofrece al proceso como una abstracción simple, sin que vea sectores ni bloques.
+> La CPU distingue al menos dos modos de ejecución: **modo kernel** (privilegiado, puede ejecutar instrucciones críticas y acceder a todo el hardware) y **modo usuario** (restringido, donde corren las aplicaciones).
 
-#### Desarrollo
-- **Archivo:** unidad lógica con nombre; el usuario no sabe dónde está en el disco.
-- **Directorio:** agrupa archivos; permite jerarquías (árboles). Cada archivo tiene una **ruta (path)** desde la **raíz**.
-- **Directorio de trabajo:** en cada instante, cada proceso tiene uno, y las rutas relativas se resuelven desde ahí.
-- **Montaje:** en UNIX/Linux, dispositivos externos (CD, USB, discos) se **montan** sobre el árbol de la raíz; no hay "letras" de unidad.
+## Diapositiva de cátedra: ubicación y modos
 
-### Raíz: UNIX/Linux vs. Windows (TP1, pregunta 15)
-| | UNIX / Linux | Windows |
+![[slide_04.png]]
+
+La diapositiva muestra la separación: arriba los programas de usuario (modo usuario), debajo el sistema operativo (modo kernel), y en la base el hardware. Esta separación protege al sistema.
+
+## Diapositiva: por qué existe el modo kernel
+
+![[slide_05.png]]
+
+La cátedra explica que a bajo nivel los dispositivos de E/S se controlan ingresando valores en registros. El **sistema operativo es la parte de software que se ejecuta en modo supervisor o kernel**, con protección de hardware. Así se evita que cualquier programa manipule directamente el hardware crítico.
+
+## Qué permite cada modo
+
+| Modo | Puede | No debe poder | Quién lo usa |
+|---|---|---|---|
+| **Kernel / supervisor** | Instrucciones privilegiadas, E/S, tablas de memoria, interrupciones | — | Núcleo del SO, handlers, drivers (según diseño) |
+| **Usuario** | Instrucciones normales, cálculo, memoria propia | E/S directa, deshabilitar interrupciones, cambiar tablas de memoria | Aplicaciones, shell, utilidades |
+
+## Cambio de modo
+
+![[slide_26.png]]
+
+El cambio a modo kernel ocurre de forma controlada:
+- **Syscall / TRAP:** el programa pide un servicio.
+- **Interrupción de hardware:** un dispositivo requiere atención.
+- **Excepción:** fallo de página, división por cero, instrucción inválida.
+
+Al terminar, el kernel devuelve el control a modo usuario.
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum lo presenta como el mecanismo básico de protección: el bit de modo en el PSW/registro de estado permite que el hardware impida operaciones peligrosas en modo usuario. Sin esta separación, un proceso defectuoso o malicioso podría dañar todo el sistema.
+
+## Cómo responderlo en el final
+“Modo kernel es privilegiado: ejecuta instrucciones críticas y controla hardware. Modo usuario es restringido: las aplicaciones corren ahí. El paso a kernel ocurre por syscalls, interrupciones o excepciones, y es controlado por el hardware/SO”.
+
+> [!warning] Errores típicos
+> - Pensar que el programa “decide” pasar a kernel libremente.
+> - Confundir modo kernel con “ser administrador/root” (son conceptos distintos).
+
+
+---
+
+# 1.2.2 Llamadas al sistema
+
+> [!abstract] En una frase
+> Una **llamada al sistema** es el mecanismo por el que un programa en modo usuario pide un servicio al kernel: prepara parámetros, ejecuta una instrucción **TRAP**, el kernel ejecuta el servicio y devuelve el control.
+
+## Diapositiva de cátedra: qué es una syscall
+
+![[slide_26.png]]
+
+La diapositiva destaca:
+- Los programas se comunican con el SO por medio de **llamadas al sistema**.
+- Cada llamada se corresponde con un procedimiento llamado por el programa.
+- Se colocan parámetros en lugares convenidos (típicamente registros).
+- Se ejecuta una instrucción **TRAP** (llamada protegida).
+- Ejemplo UNIX: `count = read(file, buffer, nbytes);`
+
+## Diapositiva: flujo de una syscall
+
+![[slide_27.png]]
+
+El diagrama muestra el paso de espacio de usuario a espacio de kernel: el programa llama a la biblioteca, esta ejecuta TRAP, el kernel despacha el handler correspondiente y luego retorna a modo usuario.
+
+## Syscalls POSIX (diapositivas)
+
+![[slide_28.png]]
+
+![[slide_29.png]]
+
+![[slide_31.png]]
+
+La cátedra agrupa llamadas POSIX por categoría:
+- **Procesos:** `fork`, `execve`, `waitpid`, `exit`, etc.
+- **Archivos:** `open`, `read`, `write`, `close`, `lseek`, `stat`, etc.
+- **Directorios/misceláneas:** `mkdir`, `rmdir`, `link`, `mount`, `chmod`, `kill`, `time`, etc.
+
+## Ejemplo: shell simple
+
+![[slide_32.png]]
+
+La diapositiva muestra un shell simple: lee comando, hace `fork()`; el hijo ejecuta `execve()` y el padre hace `waitpid()`. Esto conecta syscalls con el funcionamiento real del shell.
+
+## Syscall vs. función de biblioteca
+
+| | Función de biblioteca | Llamada al sistema |
 |---|---|---|
-| Raíz | Una sola: `/`. Todo cuelga de ahí | Una raíz **por unidad**: `C:\`, `D:\` |
-| Dispositivos | Se montan dentro del árbol (`/mnt/usb`) | Reciben una letra propia |
+| **Dónde corre** | Modo usuario (normalmente) | Cruza a modo kernel |
+| **Costo** | Bajo | Mayor (cambio de modo) |
+| **Puede bloquear** | No necesariamente | Sí (ej. `read` esperando E/S) |
+| **Ejemplo** | `strlen`, parte de `printf` | `read`, `write`, `fork`, `execve` |
 
-### ¿Qué es un sistema de archivos? (TP1, pregunta 21)
-La forma en que el SO organiza el almacenamiento: nombres, metadatos (tamaño, dueño, permisos, fechas), asignación de bloques del disco a cada archivo y control de acceso.
+## Complemento de libro (Tanenbaum)
+Tanenbaum explica que la API oculta el mecanismo de trap: el programador ve una función, pero la implementación hace la transición a kernel. También resalta portabilidad (POSIX) y el costo de las syscalls.
 
-#### Cómo responderlo en el final
-"El sistema de archivos abstrae el disco en archivos y directorios con rutas desde una raíz. En UNIX hay una sola raíz y los discos se montan; en Windows hay una raíz por unidad."
+## Cómo responderlo en el final
+“Una syscall es el pedido controlado de un servicio al kernel. El programa llama una rutina de biblioteca, se ejecuta TRAP, cambia a modo kernel, el kernel atiende y retorna. No es lo mismo que cualquier función de biblioteca”.
 
 > [!warning] Errores típicos
-> - Creer que el archivo "es" el sector del disco.
-> - Olvidar el directorio de trabajo al hablar de rutas relativas.
+> - Decir “llamada al sistema = función cualquiera”.
+> - Olvidar mencionar el cambio de modo / TRAP.
+> - Confundir comandos como `time/date` con syscalls.
 
 
-### 1.4.2 Archivos especiales de bloque y de caracteres
+---
+
+# 1.3.1 Generaciones de computadoras y su SO
 
 > [!abstract] En una frase
-> Los **archivos especiales** modelan dispositivos de E/S como si fueran archivos. **De bloque:** accesibles al azar, por bloques (disco). **De caracteres:** flujo secuencial de caracteres (impresora, terminal).
+> La evolución de los SO acompaña la evolución del hardware: de tubos al vacío sin SO, a transistores con batch, a circuitos integrados con multiprogramación/tiempo compartido, y a computadoras personales/redes con SO modernos.
 
-#### Desarrollo
-| | De bloque | De caracteres |
+## Diapositivas de cátedra
+
+### 1ª generación (1945–1955) — Tubos al vacío
+
+![[slide_07.png]]
+
+- Gran tamaño, alto mantenimiento.
+- Programación en lenguaje de máquina.
+- **Sin sistemas operativos** ni lenguajes de programación de alto nivel como hoy.
+- Operación por paneles de control y luego tarjetas perforadas.
+
+### 2ª generación (1955–1965) — Transistores y sistemas por lotes
+
+![[slide_08.png]]
+
+- Se pueden vender a clientes; menor mantenimiento.
+- Aparecen roles: constructores, programadores, operadores.
+- Tiempos elevados de operación: programar, perforar tarjetas, cinta, procesar, cinta, impresión.
+- **Sistemas por lotes (batch):** antecesor del SO (ej. 1401/7094).
+
+![[slide_09.png]]
+
+![[slide_10.png]]
+
+Las diapositivas muestran el flujo batch: trabajos agrupados, entrada en cinta/tarjetas, procesamiento secuencial y salida.
+
+### 3ª generación (1965–1980) — Circuitos integrados y multiprogramación
+
+![[slide_11.png]]
+
+- Se busca unificar líneas incompatibles (científica/ingeniería vs. comercial).
+- Aparece **multiprogramación**.
+- **Spooling:** operaciones simultáneas de entrada/salida.
+- Sigue siendo batch en muchos casos, pero aparece **tiempo compartido** (múltiples terminales en línea).
+- Referencias: Multics (MIT–Bell–GE), deriva hacia Unix.
+
+### 4ª generación (desde 1980) — Computadora personal
+
+![[slide_12.png]]
+
+- LSI: miles de transistores en 1 cm².
+- Bajo precio, facilidad de uso, poco mantenimiento.
+- Redes de computadoras y sistemas distribuidos.
+- Ejemplos: CP/M, DOS, Unix, Windows, Linux, Mac OS X, iOS, Android.
+
+## Tabla resumen
+
+| Generación | Hardware | Característica clave | SO / modo de operación |
+|---|---|---|---|
+| 1ª (1945–55) | Tubos al vacío | Programación manual | Sin SO; paneles/tarjetas |
+| 2ª (1955–65) | Transistores | Batch | Sistemas por lotes |
+| 3ª (1965–80) | CI | Multiprogramación | Batch + spooling + tiempo compartido |
+| 4ª (1980–) | LSI/VLSI | PC y redes | SO personales, redes, móviles |
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum agrega contexto histórico y ejemplos (OS/360, MULTICS, Unix, MS-DOS, Windows). La idea central coincide con la diapositiva: cada salto de hardware habilita una nueva forma de usar la computadora y exige un SO más complejo.
+
+## Cómo responderlo en el final
+Nombrá generación, tecnología de hardware, problema/necesidad y la solución/rasgo del SO. Si te piden 2ª y 3ª, enfatizá **batch** vs. **multiprogramación/spooling/tiempo compartido**.
+
+> [!warning] Errores típicos
+> - Confundir spooling con multiprogramación (relacionados, pero no iguales).
+> - Decir que en la 1ª generación había SO moderno.
+
+
+---
+
+# 1.3.2 Multiprogramación, spooling y tiempo compartido
+
+> [!abstract] En una frase
+> **Multiprogramación** mantiene varios procesos en memoria para aprovechar la CPU cuando uno espera E/S; **spooling** desacopla dispositivos lentos usando disco como buffer; **tiempo compartido** da la ilusión de uso simultáneo a varios usuarios/procesos.
+
+## Diapositiva de cátedra
+
+![[slide_11.png]]
+
+La diapositiva de 3ª generación introduce juntos estos conceptos:
+- **Multiprogramación**: varios trabajos en memoria.
+- **Spooling**: operaciones simultáneas de entrada/salida (Simultaneous Peripheral Operations On Line).
+- Seguía habiendo batch, pero aparece el **tiempo compartido**: múltiples terminales en línea.
+
+## Comparación
+
+| Técnica | Problema que ataca | Cómo lo resuelve | Métrica/efecto típico |
+|---|---|---|---|
+| **Multiprogramación** | CPU ociosa mientras un proceso espera E/S | Mantiene varios procesos listos en memoria | $U = 1-p^n$ |
+| **Spooling** | Dispositivos lentos bloquean el flujo de trabajos | Usa disco como cola/buffer | CPU y periféricos trabajan desacoplados |
+| **Tiempo compartido** | Un solo usuario monopoliza el sistema interactivo | Asigna quantum/turnos rápidos a varios usuarios | Mejor tiempo de respuesta |
+
+## Multiprogramación
+
+- Varios procesos cargados en memoria.
+- Si uno se bloquea por E/S, el planificador elige otro listo.
+- Aumenta utilización de CPU, pero requiere administración de memoria, protección y planificación.
+
+## Spooling
+
+- Ejemplo clásico: impresión. Los trabajos se envían a una cola en disco; la impresora los consume a su ritmo.
+- En la 3ª generación, evitaba que la CPU quedara atada a lectores/impresoras lentas.
+
+## Tiempo compartido
+
+- Evolución interactiva: varios usuarios con terminales.
+- El sistema rota la CPU entre procesos (quantum).
+- Prioriza respuesta percibida, no solo throughput batch.
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum relaciona multiprogramación con el modelo probabilístico y con la necesidad de planificación; spooling como técnica clave en batch; time-sharing como base de sistemas interactivos y de Unix/MULTICS.
+
+## Cómo responderlo en el final
+Definí cada técnica, el problema que resuelve y una diferencia: “spooling desacopla E/S lenta; multiprogramación solapa CPU y E/S en memoria; tiempo compartido reparte CPU entre usuarios interactivos”.
+
+> [!warning] Errores típicos
+> - Usar spooling y multiprogramación como sinónimos.
+> - Olvidar que el tiempo compartido necesita planificación por quantum/respuesta.
+
+
+---
+
+# 1.3.3 Tipos de sistemas operativos
+
+> [!abstract] En una frase
+> Los SO se clasifican según el entorno y objetivo: mainframe, servidores, multiprocesadores, personales, móviles/handheld, embebidos, nodos sensores y tiempo real.
+
+## Diapositiva de cátedra
+
+![[slide_16.png]]
+
+La diapositiva enumera tipos de sistemas operativos:
+- De mainframe: gran capacidad de E/S.
+- De servidores: servicios de impresión, web, archivos.
+- De multiprocesadores.
+- De computadoras personales.
+- De PDA o HandHeld.
+- Integrados o embebidos.
+- De nodos sensores.
+- En tiempo real.
+
+## Desarrollo por tipo
+
+| Tipo | Objetivo principal | Ejemplos/rasgos |
 |---|---|---|
-| Acceso | Bloques **direccionables al azar** (se puede leer el bloque 500 sin leer el 499) | **Flujo secuencial**, un carácter tras otro |
-| Ejemplo típico | Disco, SSD, CD | Impresora, terminal, teclado, puerto serie |
-| Por qué | Modela un dispositivo con "posiciones" | Modela un dispositivo que "emite o recibe" datos |
+| **Mainframe** | Alto throughput, mucha E/S, muchos trabajos | Batch, procesamiento masivo |
+| **Servidor** | Atender múltiples usuarios/servicios en red | Web, archivos, impresión, bases de datos |
+| **Multiprocesador** | Aprovechar varias CPUs/núcleos | Planificación SMP, sincronización |
+| **PC / escritorio** | Usabilidad, aplicaciones interactivas | Windows, Linux desktop, macOS |
+| **Handheld / móvil** | Energía, conectividad, interfaz táctil | Android, iOS |
+| **Embebido** | Función específica dentro de un dispositivo | Routers, electrodomésticos, autos |
+| **Nodos sensores** | Bajo consumo, red distribuida, eventos | IoT, redes de sensores |
+| **Tiempo real** | Cumplir plazos temporales | Control industrial, médico; hard/soft real-time |
 
-Otro pseudo-archivo que aparece en la cátedra: el **pipe** (canal), que enlaza procesos (ver 2.6.1).
+## Complemento de libro (Tanenbaum)
+Tanenbaum agrega la distinción entre **hard real-time** (no se puede perder el plazo) y **soft real-time** (se tolera degradación ocasional), y explica que los SO móviles/embebidos priorizan energía, memoria y confiabilidad.
 
-#### Cómo responderlo en el final
-"Un archivo de bloque representa un dispositivo con posiciones direccionables, como un disco; uno de caracteres, un dispositivo que transmite un flujo, como una impresora."
-
-> [!warning] Errores típicos
-> - Invertir los nombres. Regla fácil: **bloque = disco** (se accede por bloques), **caracteres = impresora/terminal**.
-
-
-### 1.4.3 E-S programada, interrupciones, DMA
-
-> [!abstract] En una frase
-> En la **E/S programada** la CPU copia cada byte del dispositivo a la memoria. Con **DMA** un controlador hace esa copia en bloque y avisa con una **interrupción** al terminar, liberando a la CPU.
-
-#### Desarrollo
-### Sin DMA (TP1, pregunta 17)
-Si cada byte lo lee o escribe la CPU, aparecen tres problemas para la multiprogramación:
-1. La CPU está **ocupada copiando** en vez de ejecutar otros procesos.
-2. No hay **solapamiento** real entre cálculo y E/S: mientras el dispositivo trabaja, la CPU espera.
-3. Cuantos más procesos hay, más tiempo de CPU se consume en E/S, y la multiprogramación pierde sentido.
-
-### Con DMA
-El controlador de DMA recibe la dirección de memoria y el tamaño, transfiere el bloque y **genera una interrupción** al final: la CPU interviene una vez por bloque, no una vez por byte.
-
-### Interrupciones
-Señal que hace que la CPU deje lo que hace y ejecute una **rutina de servicio** del SO. Hay de hardware (dispositivo, reloj) y de software (señales, syscalls). Ver el procedimiento completo en 2.2.2.
-
-#### Cómo responderlo en el final
-"Sin DMA la CPU copia byte a byte y se queda sin tiempo para otros procesos. Con DMA, el controlador mueve el bloque y avisa con una interrupción."
+## Cómo responderlo en el final
+Elegí el tipo según el escenario: si hay plazos estrictos, tiempo real; si hay muchos servicios en red, servidor; si es un dispositivo con función específica, embebido. Nombrá el objetivo y una característica.
 
 > [!warning] Errores típicos
-> - Decir que DMA "hace la E/S más rápida": lo que hace es **liberar la CPU**.
+> - Confundir “tiempo real” con “muy rápido”.
+> - Describir un SO de servidor como si fuera solo un SO de PC con más RAM.
 
 
-### 1.4.4 Máquinas virtuales, hipervisor, JVM y CLR
+---
+
+# 1.4.1 Sistema de archivos y directorios
 
 > [!abstract] En una frase
-> Una **máquina virtual** simula una computadora completa sobre una real. El **hipervisor** reparte el hardware físico entre varias VMs aisladas. La **JVM** y el **CLR** son máquinas virtuales de **proceso**: simulan un entorno de ejecución, no el hardware entero.
+> El **sistema de archivos** es la abstracción que el SO ofrece para almacenar datos persistentes: organiza información en **archivos** y **directorios**, ocultando detalles del disco.
 
-#### Desarrollo
-- **Hipervisor (monitor de VM):** divide CPU, memoria y dispositivos entre las VMs y las aísla, como si fueran máquinas distintas.
-- **Usos:** correr varios SO en una misma máquina física, pruebas, servidores aislados.
-- **JVM / .NET CLR (TP1, pregunta 22):** no simulan todo el hardware; ejecutan **bytecode** (o IL) en un entorno que administra memoria y tipos. Una VM de proceso vive dentro de un SO; un hipervisor vive debajo de varios SO.
+## Diapositiva de cátedra: archivos
 
-| | Hipervisor | JVM / CLR |
+![[slide_21.png]]
+
+La diapositiva indica que una función principal del SO es la **abstracción** del funcionamiento de discos y otras E/S.
+- Se usan **llamadas al sistema** para administrar archivos.
+- Para agrupar y organizar archivos se usan **directorios**.
+- Los directorios permiten crear **jerarquías (árboles)**.
+- Cada archivo tiene su **path** desde el directorio raíz.
+- En cada instante un proceso tiene un **directorio de trabajo**.
+
+## Diapositiva: jerarquía
+
+![[slide_22.png]]
+
+La imagen muestra la organización jerárquica típica: directorio raíz, subdirectorios y archivos.
+
+## Diapositiva: archivos montados
+
+![[slide_23.png]]
+
+En Unix, los sistemas de archivos de dispositivos externos (CD/DVD, discos, USB) se **montan** sobre el directorio raíz. Esto elimina dependencia de prefijos de unidad y unifica la vista del árbol.
+
+## Diapositiva: pipes
+
+![[slide_25.png]]
+
+Un **canal o pipe** es un pseudo-archivo relacionado con procesos y archivos: permite la **comunicación entre procesos**.
+
+## Conceptos clave
+
+| Concepto | Qué es | Ejemplo |
 |---|---|---|
-| Qué simula | Una computadora completa | Un entorno para un programa |
-| Qué ejecuta | Otros sistemas operativos | Bytecode / IL |
-| Dónde corre | Directamente sobre el hardware | Como un proceso más del SO |
+| **Archivo** | Unidad lógica de información persistente | `informe.txt` |
+| **Directorio** | Contenedor que organiza archivos/otros directorios | `/home/usuario` |
+| **Path** | Ruta desde raíz o desde directorio actual | `/etc/passwd` |
+| **Directorio de trabajo** | Contexto actual del proceso | `pwd` |
+| **Montaje** | Integrar un FS en el árbol | montar USB en `/media/...` |
+| **Pipe** | Canal de comunicación con interfaz tipo archivo | `ls | grep txt` |
 
-#### Cómo responderlo en el final
-"El hipervisor simula hardware completo para correr varios SO aislados. La JVM y el CLR son VMs de proceso: ejecutan bytecode y no reemplazan al SO."
+## Complemento de libro (Tanenbaum)
+Tanenbaum detalla implementación (inodos, bloques, journaling), permisos, enlaces duros/simbólicos y consistencia. Para el final de intro, alcanza con la abstracción, jerarquía, montaje y la idea de pipe como mecanismo de IPC con interfaz de archivo.
+
+## Cómo responderlo en el final
+“El SO abstrae el disco como archivos y directorios. Los directorios forman una jerarquía, cada archivo tiene un path, los FS se montan y los pipes permiten comunicación entre procesos con interfaz de archivo”.
 
 > [!warning] Errores típicos
-> - Llamar "máquina virtual" a la JVM como si simulara hardware físico.
+> - Confundir archivo lógico con bloque físico del disco.
+> - Olvidar que el directorio de trabajo es por proceso.
 
 
-### 1.4.5 Práctica — consultar fecha y hora del sistema (TP1, preguntas 5 y 6)
+---
+
+# 1.4.2 Archivos especiales de bloque y de caracteres
+
+> [!abstract] En una frase
+> En Unix, muchos dispositivos se representan como **archivos especiales**: de **bloque** (acceso por bloques direccionables) o de **caracteres** (flujo de caracteres), lo que permite una interfaz uniforme.
+
+## Diapositiva de cátedra
+
+![[slide_24.png]]
+
+La diapositiva explica:
+- Se utilizan para **modelar dispositivos de E/S**.
+- Permiten realizar una **abstracción** de los dispositivos.
+- Existen dos tipos especiales:
+  - **De bloque:** colección de bloques direccionables al azar; modelan dispositivos como discos.
+  - **De caracteres:** flujos de caracteres; modelan dispositivos como impresoras, terminales, etc.
+
+## Comparación
+
+| Tipo | Acceso | Ejemplos típicos | Operación típica |
+|---|---|---|---|
+| **Bloque** | Bloques direccionables al azar | discos, SSD, particiones | leer/escribir bloque N |
+| **Caracteres** | Flujo/secuencia de bytes/caracteres | terminal, impresora, puerto serie | leer/escribir flujo |
+
+## Por qué importa
+
+- Permite usar la misma interfaz (`open`, `read`, `write`, `close`) sobre dispositivos distintos.
+- Encapsula detalles de hardware detrás del driver.
+- Facilita redirecciones y tuberías en Unix.
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum agrega que los drivers de dispositivo implementan la interfaz específica, y que la abstracción de “todo es un archivo” simplifica la programación, aunque no todos los dispositivos encajan perfectamente.
+
+## Cómo responderlo en el final
+“Los archivos especiales abstraen dispositivos: los de bloque permiten acceso aleatorio por bloques (discos) y los de caracteres manejan flujos (impresoras/terminales). Ambos se usan con syscalls similares”.
+
+> [!warning] Errores típicos
+> - Decir que una impresora es archivo de bloque.
+> - Confundir “archivo especial” con “archivo normal con datos del usuario”.
+
+
+---
+
+# 1.4.3 E/S programada, interrupciones, DMA
+
+> [!abstract] En una frase
+> Son tres técnicas para realizar entrada/salida: en la **E/S programada** la CPU espera/gestiona activamente; con **interrupciones** el dispositivo avisa al terminar; con **DMA** el controlador transfiere datos a memoria y la CPU queda libre.
+
+## Diapositivas de cátedra
+
+### Jerarquía de memoria (contexto)
+
+![[slide_14.png]]
+
+La diapositiva muestra tiempos de acceso y capacidades: registros, caché, memoria principal, disco. Esta jerarquía explica por qué la E/S de disco es mucho más lenta que la CPU/memoria y por qué conviene solapar trabajo.
+
+### Dispositivos de E/S e interrupciones
+
+![[slide_15.png]]
+
+La diapositiva presenta la relación entre dispositivos de E/S e interrupciones: el hardware de E/S necesita coordinarse con la CPU sin obligarla a esperar inútilmente.
+
+## Comparación de técnicas
+
+| Técnica | Quién mueve los datos | CPU durante la operación | Ventaja | Desventaja |
+|---|---|---|---|---|
+| **E/S programada** | CPU | Ocupada esperando/polling | Simple | Desperdicia CPU |
+| **E/S por interrupciones** | CPU, por evento/bloque | Puede hacer otra cosa entre interrupciones | Mejor uso de CPU | Overhead por interrupción |
+| **DMA** | Controlador DMA | Libre tras iniciar la transferencia | Muy eficiente para bloques grandes | Requiere hardware DMA; coordinación |
+
+## Flujo resumido
+
+1. **Programada:** CPU pregunta “¿listo?” repetidamente; cuando listo, copia dato.
+2. **Interrupciones:** CPU inicia operación; dispositivo interrumpe cuando termina; CPU atiende.
+3. **DMA:** CPU configura origen/destino/tamaño; DMA transfiere; DMA interrumpe al finalizar.
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum detalla controladores de dispositivo, buffers, interrupciones y el rol del DMA en E/S de bloques. El punto clave: reducir tiempo de CPU desperdiciado y aumentar solapamiento, lo que habilita multiprogramación.
+
+## Cómo responderlo en el final
+Nombrá las tres técnicas en orden de evolución, explicá quién mueve los datos y qué hace la CPU. Cerrá con: “DMA libera más a la CPU y es clave para solapar E/S con cómputo”.
+
+> [!warning] Errores típicos
+> - Decir que en DMA “no hay ninguna interrupción”: sí hay, normalmente al finalizar.
+> - Confundir interrupción con polling.
+
+
+---
+
+# 1.4.4 Máquinas virtuales, hipervisor, JVM y CLR
+
+> [!abstract] En una frase
+> Una **máquina virtual** es una abstracción de una máquina: puede virtualizar hardware completo (hipervisor/VMM) o proveer un entorno de ejecución para procesos (JVM, CLR).
+
+## Diapositiva de cátedra
+
+![[slide_41.png]]
+
+La diapositiva de “Estructura de un sistema operativo – Máquinas virtuales” menciona:
+- **VM/370**
+- **Virtualización**
+- **JVM - CLR**
+
+Esto marca dos familias que en el examen se suelen confundir.
+
+## Dos familias
+
+| Tipo | Qué virtualiza | Qué corre encima | Ejemplos |
+|---|---|---|---|
+| **VM de sistema / hipervisor / VMM** | Hardware completo | Sistemas operativos invitados | VM/370, VMware, VirtualBox, KVM, Hyper-V |
+| **VM de proceso** | Entorno de ejecución | Un proceso/programa | JVM, CLR |
+
+## Hipervisor / VMM
+
+- Se interpone entre hardware y SOs invitados.
+- Multiplexa CPU, memoria, disco y dispositivos.
+- Aísla máquinas virtuales entre sí.
+- Útil para consolidación, pruebas, aislamiento y compatibilidad.
+
+## JVM y CLR
+
+- **JVM:** ejecuta bytecode Java.
+- **CLR:** ejecuta CIL/IL de .NET.
+- Proveen runtime: carga de clases/ensamblados, GC, verificación, JIT/interpretación.
+- **No** virtualizan hardware completo; virtualizan un entorno de proceso.
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum explica la virtualización como técnica de aislamiento y portabilidad. También distingue la virtualización de lenguaje/runtime (JVM) de la virtualización de máquina real (hipervisores tipo 1 y 2).
+
+## Cómo responderlo en el final
+“Un hipervisor virtualiza hardware y permite ejecutar SOs invitados. JVM y CLR son VM de proceso: ejecutan bytecode/IL en un runtime, no simulan hardware completo”.
+
+> [!warning] Errores típicos
+> - Llamar a JVM/CLR “hipervisor”.
+> - Decir que la VM siempre ejecuta un SO invitado completo.
+
+
+---
+
+# 1.4.5 Práctica — consultar fecha y hora del sistema (TP1, preguntas 5 y 6)
 
 > [!abstract] En una frase
 > Un comando como `date` o un programa que lee la hora **pide** la fecha al kernel mediante una llamada al sistema; el kernel la lee del reloj de hardware y la devuelve al programa, que la muestra.
 
-#### Desarrollo
+## Desarrollo
 Secuencia (válida para Linux y Windows):
 1. El usuario escribe `date` (Linux) o `date /t` / `time /t` (Windows) en el shell.
 2. El shell crea un proceso hijo y lo ejecuta (`fork` + `execve`, ver 1.1.2).
@@ -362,6 +604,117 @@ Secuencia (válida para Linux y Windows):
 > [!tip] Para el examen escrito
 > Describí la cadena: **usuario → shell → proceso hijo → biblioteca → syscall (TRAP) → kernel → reloj de hardware → vuelta a modo usuario → pantalla**.
 
-#### Cómo responderlo en el final
+## Cómo responderlo en el final
 Recitar la cadena de arriba. Es la pregunta que más une teoría (modo kernel, syscall, fork) con práctica.
 
+
+---
+
+# 1.5.1 Estructuras de sistemas operativos
+
+> [!abstract] En una frase
+> La **estructura** de un SO define cómo se organiza su código y dónde se ejecutan sus componentes: puede ser un bloque único en modo kernel (monolítico), organizado en capas, reducido a un núcleo mínimo (microkernel), distribuido como cliente-servidor, o basado en máquinas virtuales.
+
+## Diapositivas de cátedra
+
+Las diapositivas de Introducción cierran con las estructuras típicas de un SO. Se usan como base de este subtema.
+
+## 1. Monolítico
+
+![[slide_36.png]]
+
+**Idea de la diapositiva:** todo el sistema operativo se ejecuta como un solo programa en modo kernel. Es la organización más común.
+
+- Un **programa principal** invoca procedimientos de servicio.
+- Un conjunto de **procedimientos de servicio** realiza las llamadas al sistema.
+- Los procedimientos pueden llamarse entre sí, pero conviene estructurarlos.
+- Hay **procedimientos utilitarios** que ayudan a los de servicio.
+
+![[slide_37.png]]
+
+**Estructura típica (diapositiva):** programa de usuario → programa principal → procedimientos de servicio → procedimientos utilitarios; debajo, el hardware. La llamada entra al kernel y se despacha internamente.
+
+| Ventaja | Desventaja |
+|---|---|
+| Rendimiento: llamadas internas rápidas, sin mucho overhead | Un bug en un componente kernel puede tumbar todo el sistema |
+| Diseño simple y directo | Difícil de mantener cuando crece mucho |
+
+## 2. Sistemas por capas
+
+![[slide_38.png]]
+
+**Idea de la diapositiva:** el SO se organiza en niveles, donde cada capa usa servicios de la inferior. Ejemplo clásico de la cátedra:
+
+| Capa | Rol |
+|---:|---|
+| 5 | Operador |
+| 4 | Programas de usuario |
+| 3 | Administración de entrada/salida |
+| 2 | Comunicación operador–proceso |
+| 1 | Administración de memoria |
+| 0 | Asignación de procesador y multiprogramación |
+
+> [!note] Dato de cátedra
+> Multics lo utilizaba en forma de anillos concéntricos.
+
+| Ventaja | Desventaja |
+|---|---|
+| Modularidad, separación de responsabilidades | Puede ser difícil definir bien las capas; overhead por cruces entre niveles |
+
+## 3. Microkernel
+
+![[slide_39.png]]
+
+**Idea de la diapositiva:** el kernel se reduce al mínimo; servicios como drivers, sistemas de archivos o servidores corren en modo usuario como procesos separados. La cátedra menciona **Symbian** y **Minix**.
+
+- **En kernel:** IPC, interrupciones, planificación básica, manejo básico de memoria/protección.
+- **En modo usuario:** servidores/drivers (archivos, dispositivos, red, etc.).
+
+| Ventaja | Desventaja |
+|---|---|
+| Más robusto y seguro: un fallo en un servidor no tumba el kernel | Mayor costo por comunicación entre procesos (IPC) y cambios de modo |
+
+## 4. Cliente–servidor
+
+![[slide_40.png]]
+
+**Idea de la diapositiva:** los servicios del sistema se ofrecen como servidores; los clientes (programas o componentes) piden servicios mediante mensajes. Es una forma natural de organizar sistemas distribuidos o basados en microkernel.
+
+- **Cliente:** solicita un servicio (ej. archivo, impresión, nombre).
+- **Servidor:** recibe la solicitud, la procesa y responde.
+- Puede funcionar en una misma máquina o sobre red.
+
+| Ventaja | Desventaja |
+|---|---|
+| Modularidad, distribución, aislamiento | Overhead de mensajería; complejidad en fallos de red/servicio |
+
+## 5. Máquinas virtuales
+
+![[slide_41.png]]
+
+**Idea de la diapositiva:** se presenta la virtualización como estructura/técnica de SO. La cátedra menciona **VM/370**, virtualización, y también **JVM / CLR**.
+
+- **VM de sistema / hipervisor:** abstrae hardware y permite ejecutar varios SO invitados. Ej.: VM/370, VMware, VirtualBox.
+- **VM de proceso:** no virtualiza hardware completo; ejecuta un programa en un entorno de ejecución. Ej.: JVM, CLR.
+
+> [!warning] Trampa de examen
+> JVM y CLR **no son hipervisores**: son máquinas virtuales de proceso. Ver desarrollo completo en [[1.4.4 Máquinas virtuales, hipervisor, JVM y CLR]].
+
+## Comparación rápida
+
+| Estructura | Núcleo en kernel | Punto fuerte | Punto débil |
+|---|---|---|---|
+| Monolítico | Casi todo | Velocidad | Fragilidad/mantenimiento |
+| Capas | Todo, pero organizado por niveles | Modularidad conceptual | Definir capas y overhead |
+| Microkernel | Mínimo | Robustez/aislamiento | Costo de IPC |
+| Cliente–servidor | Depende; común con microkernel | Distribución/modularidad | Mensajería/fallos |
+| Máquinas virtuales | Hipervisor/VMM | Aislamiento, múltiples SO | Overhead de virtualización |
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum presenta estas estructuras como respuestas al problema de complejidad de los SO modernos: monolíticos por eficiencia, por capas por diseño ordenado, microkernels por confiabilidad, cliente-servidor por distribución y máquinas virtuales por aislamiento/compatibilidad. La elección depende del objetivo: rendimiento, seguridad, mantenimiento o portabilidad.
+
+## Cómo responderlo en el final
+Nombrá la estructura, decí **qué va en kernel**, una **ventaja**, una **desventaja** y un **ejemplo**. Si comparan monolítico vs. microkernel, cerrá con: “monolítico prioriza rendimiento; microkernel prioriza aislamiento/robustez”.
+
+
+---
