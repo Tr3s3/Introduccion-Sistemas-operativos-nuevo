@@ -1,10 +1,10 @@
 ---
 tipo: resolucion
 ---
-# Ejercicios frecuentes: resolución paso a paso
+# Resoluciones detalladas — Ejercicios de finales
 
-> [!abstract] Para qué es esta nota
-> Acá están los **ejercicios que más se repiten** en los finales y parciales revisados (incluye los de 2T Feb 2025, Parcial 2025 Tema 1 y 2, Final de julio 2024). Para cada uno: **contexto**, **teoría mínima**, **método paso a paso** y **un caso resuelto**. Si te alcanza el tiempo, estudiá en el orden de la tabla.
+> [!abstract] Cómo usar esta nota
+> Compilado de ejercicios extraídos de finales, parciales y modelos revisados. Cada ejercicio incluye, según corresponda: **contexto**, **teoría mínima**, **pasos/método**, **caso resuelto**, **respuesta modelo corta** y **trampas típicas**. Los enunciados están en [[01 Enunciados]].
 
 ## Mapa rápido
 
@@ -65,7 +65,13 @@ tipo: resolucion
 - Marcos con 512 MB: 2²⁹ ÷ 2¹³ = 2¹⁶ = **65 536 marcos**.
 - Tabla de páginas tradicional con entradas de 4 bytes: 2¹⁸ × 4 B = **1 MB**.
 
-**Caso resuelto (1T Feb 2024 — tabla de 8 bits).** Ver [[07 Ejercicios de los modelos (resueltos)]].
+**Caso resuelto (1T Feb 2025 — tabla de 8 bits, reconstruido desde OCR).**
+- **Enunciado típico:** direccionamiento de 8 bits; tabla con 8 filas (páginas 0–7), cada fila con 2 bits de marco y 1 bit de presencia/ausencia.
+- **Memoria direccionable:** 8 bits → $2^8 = 256$ bytes.
+- **Bits para página / cantidad de páginas:** 8 filas = 8 páginas → 3 bits de página, 5 bits de desplazamiento → páginas de $2^5 = 32$ bytes.
+- **Marcos y memoria física:** 2 bits de marco → $2^2 = 4$ marcos. Si la memoria física está totalmente ocupada: $4 	imes 32 = 128$ bytes.
+- **Cómo usar la tabla:** página = bits altos; desplazamiento = bits bajos; si presencia = 0 → fallo de página; si presencia = 1 → físico = marco × tamaño de página + desplazamiento.
+- **Trampa OCR:** el original escaneado puede tener valores puntuales distintos en la tabla; verificá con la imagen/fuente si te dan una tabla concreta.
 
 ---
 

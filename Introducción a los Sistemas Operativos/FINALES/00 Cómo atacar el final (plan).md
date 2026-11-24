@@ -54,4 +54,4 @@ Estas son las que, combinadas, cubren la mayoría de lo que se pregunta:
 > - Decir que el shell es parte del SO.
 
 ## Notas relacionadas
-[[01 Temas que más se repiten]] · [[02 Preguntas destacadas (aparecieron una vez)]] · [[03 Ejercicios tipo con resultado]] · [[04 Plan de estudio (cronograma)]] · [[05 Mapa pregunta a subtema]]
+[[01 Temas que más se repiten]] · [[01 Preguntas de teoria|Preguntas de teoría]] · [[02 Resoluciones detalladas|Resoluciones de finales]] · [[04 Plan de estudio (cronograma)]] · [[05 Mapa pregunta a subtema]]

@@ -4,7 +4,7 @@ tipo: frecuencia
 # Temas que más se repiten
 
 > [!abstract] Cómo leer la tabla
-> **Nivel** = qué tan seguido aparece el tema en las fuentes revisadas. **Muy alta** = en 4 o más fuentes; **Alta** = 3; **Media** = 2; **Baja** = 1 (lo tratamos en [[02 Preguntas destacadas (aparecieron una vez)]]). Las fuentes están en [[00 Cómo atacar el final (plan)|el plan]].
+> **Nivel** = qué tan seguido aparece el tema en las fuentes revisadas. **Muy alta** = en 4 o más fuentes; **Alta** = 3; **Media** = 2; **Baja** = 1 (lo tratamos en [[01 Preguntas de teoria|Preguntas de teoría]]). Las fuentes están en [[00 Cómo atacar el final (plan)|el plan]].
 
 ## Ranking
 | # | Tema | Nivel | Dónde aparece | Estudiar en |
@@ -37,8 +37,8 @@ tipo: frecuencia
 | 26 | Hilos vs. procesos | Media-baja | PP18 | [[2.3.1 Proceso vs. hilo]] |
 | 27 | Sincronización | Baja | PP20 | [[2.6.2 Sincronización y condiciones de carrera]] |
 | 28 | Thrashing y conjunto de trabajo | Baja | Cát | [[4.5.2 Conjunto de trabajo y thrashing]] |
-| 29 | Tiempo medio de acceso con caché | Baja | TP1-19 | [[03 Ejercicios tipo con resultado]] |
-| 30 | LRU exacto vs. aproximaciones (Aging/NFU) | Media-baja | RS, PP30 | [[08 Ejercicios frecuentes paso a paso]] |
+| 29 | Tiempo medio de acceso con caché | Baja | TP1-19 | [[02 Resoluciones detalladas|Resoluciones de finales]] |
+| 30 | LRU exacto vs. aproximaciones (Aging/NFU) | Media-baja | RS, PP30 | [[02 Resoluciones detalladas|Resoluciones de finales]] |
 | 31 | Buddy system y Quick Fit | Baja | SAE | [[3.5.1 Primer ajuste, próximo ajuste, mejor ajuste y peor ajuste]] |
 | 32 | Monolítico vs. microkernel; creación/fin de procesos | Baja | SAE | [[1.1.1 Definición y funciones]] · [[2.1.1 Programa vs. proceso]] |
 
@@ -52,18 +52,18 @@ tipo: frecuencia
 
 | # | Ejercicio | Frecuencia | Resolución paso a paso |
 |---|---|---|---|
-| E1 | Bits, páginas y marcos (desplazamiento, memoria direccionable) | en casi todos | [[08 Ejercicios frecuentes paso a paso]] |
-| E3 | Multiprogramación con U = 1 − pⁿ | en casi todos | [[08 Ejercicios frecuentes paso a paso]] |
-| E4 | Gantt con E/S del 50 % y procesos que llegan | 5 o más (Parcial 2025 T1 y T2, Modelos, Final julio 2024) | [[08 Ejercicios frecuentes paso a paso]] |
-| E5 | Tabla de páginas invertida (cantidad de entradas y bits) | 5 o más | [[08 Ejercicios frecuentes paso a paso]] |
-| E6 | Tabla multinivel (cantidad de tablas) | 4 o más | [[08 Ejercicios frecuentes paso a paso]] |
-| E2 | Tamaño óptimo de página √(2PE) | 3 o más (Parcial 2025 T1 y T2, 2T Feb 2025) | [[08 Ejercicios frecuentes paso a paso]] |
-| E7 | Fallo de página: pasos y reemplazo | 3 o más | [[08 Ejercicios frecuentes paso a paso]] |
-| E8 | FIFO y su problema (solución: FIFO con bit R) | 3 o más (Parcial 2025 T1 y T2) | [[08 Ejercicios frecuentes paso a paso]] |
-| E9 | Asignación de memoria: first, next, best, worst | 2 o 3 | [[08 Ejercicios frecuentes paso a paso]] |
-| E10 | Fragmentación interna vs. externa | 3 o más | [[08 Ejercicios frecuentes paso a paso]] |
-| E11 | Mapa de bits vs. listas enlazadas | 3 | [[08 Ejercicios frecuentes paso a paso]] |
-| E13 | LRU, NRU y Aging (matriz y contadores) | 2 o 3 | [[08 Ejercicios frecuentes paso a paso]] |
+| E1 | Bits, páginas y marcos (desplazamiento, memoria direccionable) | en casi todos | [[02 Resoluciones detalladas|Resoluciones de finales]] |
+| E3 | Multiprogramación con U = 1 − pⁿ | en casi todos | [[02 Resoluciones detalladas|Resoluciones de finales]] |
+| E4 | Gantt con E/S del 50 % y procesos que llegan | 5 o más (Parcial 2025 T1 y T2, Modelos, Final julio 2024) | [[02 Resoluciones detalladas|Resoluciones de finales]] |
+| E5 | Tabla de páginas invertida (cantidad de entradas y bits) | 5 o más | [[02 Resoluciones detalladas|Resoluciones de finales]] |
+| E6 | Tabla multinivel (cantidad de tablas) | 4 o más | [[02 Resoluciones detalladas|Resoluciones de finales]] |
+| E2 | Tamaño óptimo de página √(2PE) | 3 o más (Parcial 2025 T1 y T2, 2T Feb 2025) | [[02 Resoluciones detalladas|Resoluciones de finales]] |
+| E7 | Fallo de página: pasos y reemplazo | 3 o más | [[02 Resoluciones detalladas|Resoluciones de finales]] |
+| E8 | FIFO y su problema (solución: FIFO con bit R) | 3 o más (Parcial 2025 T1 y T2) | [[02 Resoluciones detalladas|Resoluciones de finales]] |
+| E9 | Asignación de memoria: first, next, best, worst | 2 o 3 | [[02 Resoluciones detalladas|Resoluciones de finales]] |
+| E10 | Fragmentación interna vs. externa | 3 o más | [[02 Resoluciones detalladas|Resoluciones de finales]] |
+| E11 | Mapa de bits vs. listas enlazadas | 3 | [[02 Resoluciones detalladas|Resoluciones de finales]] |
+| E13 | LRU, NRU y Aging (matriz y contadores) | 2 o 3 | [[02 Resoluciones detalladas|Resoluciones de finales]] |
 
 **Ejercicios nuevos identificados en esta revisión** (no estaban en la versión anterior): **E2** (tamaño óptimo, con los dos casos de Parcial 2025), **E4** (Gantt con llegadas escalonadas, que es el ejercicio más pedido del 2025), **E5** (invertida con 64 bits en tres exámenes) y **E7** (fallo de página con todos los marcos ocupados, pedido en julio 2024).
 
