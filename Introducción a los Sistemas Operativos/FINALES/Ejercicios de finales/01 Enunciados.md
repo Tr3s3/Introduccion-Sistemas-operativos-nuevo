@@ -2,10 +2,10 @@
 tipo: ejercicios
 ---
 
-# Ejercicios de finales (solo enunciados)
+# Enunciados — Ejercicios de finales
 
-> [!abstract] Para qué es esta nota
-> Compilado condensado de ejercicios obtenidos de finales/parciales/modelos revisados. Acá están **solo los enunciados**; las resoluciones paso a paso están en [[10 Ejercicios de finales (resoluciones)]].
+> [!abstract] Cómo usar esta nota
+> Compilado de ejercicios extraídos de finales, parciales y modelos revisados. Acá están **solo los enunciados**; resolvé primero y después corregí con [[02 Resoluciones detalladas]].
 
 ## Índice
 

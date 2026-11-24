@@ -10,8 +10,8 @@ Esta bóveda reúne el material de la materia organizado para estudiar de forma 
 
 | Área | Para qué sirve | Entrada |
 |---|---|---|
-| **FINALES** | Todo lo principal para preparar el final | [[Índice del final]] |
-| **Ejercicios** | Practicar enunciados y luego ver resoluciones | [[09 Ejercicios de finales (solo enunciados)]] · [[10 Ejercicios de finales (resoluciones)]] |
+| **FINALES** | Todo lo principal para preparar el final | [[00 EMPEZAR ACA - Ruta de estudio]] · [[Índice del final]] |
+| **Ejercicios** | Practicar enunciados y luego ver resoluciones | [[01 Enunciados|Enunciados de finales]] · [[02 Resoluciones detalladas|Resoluciones de finales]] |
 | **Gráficos** | Diagramas/figuras de apoyo | `FINALES/Gráficos/` |
 | **Complementario** | Teoría completa y material de respaldo (consultar si hace falta) | `Complementario/` |
 
@@ -25,15 +25,15 @@ Esta bóveda reúne el material de la materia organizado para estudiar de forma 
 | Tenés poco tiempo | [[00 Cómo atacar el final (plan)]] → [[01 Temas que más se repiten]] |
 | Querés leer la materia de corrido | [[Materia completa (las 4 unidades en un archivo)]] |
 | Querés estudiar por unidad | [[00 Índice de la materia]] |
-| Querés practicar ejercicios | [[09 Ejercicios de finales (solo enunciados)]] → [[10 Ejercicios de finales (resoluciones)]] |
+| Querés practicar ejercicios | [[01 Enunciados|Enunciados de finales]] → [[02 Resoluciones detalladas|Resoluciones de finales]] |
 | Querés ver modelos reales | [[06 Modelos de final revisados]] |
 | Querés ir de pregunta a subtema | [[05 Mapa pregunta a subtema]] |
 
 ## Estructura de estudio recomendada
 
 1. **Teoría**: leé el subtema en MATERIA-COMPLETA (definición, desarrollo, ejemplo, trampa).
-2. **Práctica**: resolvé el enunciado en 09 sin mirar.
-3. **Corrección**: compará con 10 (pasos, resultado, trampa típica).
+2. **Práctica**: resolvé el enunciado en [[01 Enunciados|Enunciados de finales]] sin mirar.
+3. **Corrección**: compará con [[02 Resoluciones detalladas|Resoluciones de finales]] (pasos, resultado, trampa típica).
 4. **Repaso**: usá 01/05/06 para priorizar lo más frecuente.
 
 > [!tip] Uso en Obsidian

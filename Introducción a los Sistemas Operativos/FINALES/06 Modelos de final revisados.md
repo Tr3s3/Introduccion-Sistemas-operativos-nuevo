@@ -4,7 +4,7 @@ tipo: modelos
 # Modelos de final revisados (2022 a 2025)
 
 > [!abstract] Qué contiene esta nota
-> Cada examen real que revisamos, qué temas trae y **qué se repite**. Sirve para saber con qué te puede tocar cada bloque. La resolución numérica está en [[07 Ejercicios de los modelos (resueltos)]].
+> Cada examen real que revisamos, qué temas trae y **qué se repite**. Sirve para saber con qué te puede tocar cada bloque. La resolución numérica está en [[02 Resoluciones detalladas|Resoluciones de finales]].
 
 > [!warning] Nombres y fechas
 > Los nombres de archivo no siempre coinciden con la fecha impresa en la hoja. Acá se usa la **fecha impresa** cuando la hay, y si no, una descripción por contenido.
@@ -46,7 +46,7 @@ tipo: modelos
 - **ResumenISOSAE1.pdf**: definiciones base, monolítico vs. microkernel, creación/fin de procesos, Buddy System y Quick Fit, TLB/MMU, tabla comparativa de algoritmos de reemplazo, y el Gantt canónico de 4 trabajos con 80 % de E/S.
 
 **Segunda tanda (diapositivas, TPs y Tanenbaum):**
-- **Diapositivas de cátedra** (Introducción, Procesos y Memoria, Administración de Memoria Virtual): se extrajeron diagramas clave y se embebieron en `08 Ejercicios frecuentes paso a paso.md` (`slide_tlb.png`, `slide_reloj.png`, `slide_lru.png`, `slide_aging_nru.png`, `slide_bitmap_vs_listas.png`, `slide_tabla_multinivel.png`, `slide_working_set_thrashing.png`, `slide_estados_proceso.png`).
+- **Diapositivas de cátedra** (Introducción, Procesos y Memoria, Administración de Memoria Virtual): se extrajeron diagramas clave y se embebieron en `Ejercicios de finales/02 Resoluciones detalladas.md` (`slide_tlb.png`, `slide_reloj.png`, `slide_lru.png`, `slide_aging_nru.png`, `slide_bitmap_vs_listas.png`, `slide_tabla_multinivel.png`, `slide_working_set_thrashing.png`, `slide_estados_proceso.png`).
 - **TP1 2022, TP2 2022, TP3 2018**: verificados contra el mapa de preguntas/ejercicios; la cobertura en `03`, `05`, `07` y `08` se mantiene alineada.
 - **Tanenbaum (cap. Introducción, Procesos, Memoria, Memoria Virtual) + libro completo**: usados como referencia de respaldo para definiciones y terminología; se priorizó el contenido que aparece en parciales/finales.
 
@@ -84,4 +84,4 @@ tipo: modelos
 - **Pila y datos en 16 bits y segmentación con paginación** (Junio 2026): exige sumar páginas por segmento y decidir si entra.
 
 > [!tip] Cómo usar esto
-> Si tenés tiempo para una sola cosa: los **cálculos de bits** y el **modelo probabilístico**. Son los que casi siempre tocan y los que más puntos dan en el oral.
+> Si tenés tiempo para una sola cosa: los **cálculos de bits** y el **modelo probabilístico**. Son los que casi siempre tocan y los que más puntos dan en el examen escrito.

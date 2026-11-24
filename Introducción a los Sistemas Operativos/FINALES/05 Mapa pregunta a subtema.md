@@ -61,11 +61,11 @@ tipo: mapa
 | TP1-14 | Proceso y programa | [[2.1.1 Programa vs. proceso]] |
 | TP1-15, 16, 21 | Raíz; archivos de bloque y de caracteres; sistema de archivos | [[1.4.1 Sistema de archivos y directorios]] · [[1.4.2 Archivos especiales de bloque y de caracteres]] |
 | TP1-17 | Multiprogramación sin DMA | [[1.4.3 E-S programada, interrupciones, DMA]] |
-| TP1-18 | Dos CPU con hiperhilos | [[03 Ejercicios tipo con resultado]] |
-| TP1-19 | Tiempo medio de acceso con caché y disco | [[03 Ejercicios tipo con resultado]] |
+| TP1-18 | Dos CPU con hiperhilos | [[02 Resoluciones detalladas|Resoluciones de finales]] |
+| TP1-19 | Tiempo medio de acceso con caché y disco | [[02 Resoluciones detalladas|Resoluciones de finales]] |
 | TP1-20 | Syscall vs. función de biblioteca | [[1.2.2 Llamadas al sistema]] |
 | TP1-22 | VM, hipervisor, JVM y CLR | [[1.4.4 Máquinas virtuales, hipervisor, JVM y CLR]] |
-| TP1-23 | Conversiones de unidades | [[02 Preguntas destacadas (aparecieron una vez)]] |
+| TP1-23 | Conversiones de unidades | [[01 Preguntas de teoria|Preguntas de teoría]] |
 | TP2-1, 2, 3 | Fragmentación; listas enlazadas; asignación con 1 GB | [[3.3.3 Fragmentación interna y externa]] · [[3.4.2 Listas enlazadas]] · [[3.3.1 Particiones fijas]] |
 | TP2-4 | Cuatro algoritmos de asignación | [[3.5.1 Primer ajuste, próximo ajuste, mejor ajuste y peor ajuste]] |
 | TP2-5 | Costo de compactación | [[3.3.2 Particiones variables, swapping y compactación]] |
@@ -76,7 +76,7 @@ tipo: mapa
 | TP3-3 | Direcciones físicas | [[4.1.2 Paginación y la MMU]] |
 | TP3-4 | Pasos del fallo de página | [[4.3.1 Pasos de un fallo de página]] |
 | TP3-5, 6, 7 | Bits de direcciones y tablas | [[4.1.3 Cálculo de bits, páginas y marcos]] |
-| TP3-8 | Reemplazo con tabla de tiempos | [[4.4.3 NRU, LRU y aging]] · [[03 Ejercicios tipo con resultado]] |
+| TP3-8 | Reemplazo con tabla de tiempos | [[4.4.3 NRU, LRU y aging]] · [[02 Resoluciones detalladas|Resoluciones de finales]] |
 | TP3-9 | Programa de 16 bits: 4 KB vs. 256 bytes | [[4.6.2 Segmentación con paginación y su combinación]] |
 | TP3-10 | Segmentación | [[4.6.1 Segmentación]] |
 | TP3-11 | Tamaño óptimo de página | [[4.5.1 Tamaño de página óptimo — s = √(2PE)]] |
