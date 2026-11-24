@@ -53,5 +53,10 @@ Estas son las que, combinadas, cubren la mayoría de lo que se pregunta:
 > - Olvidar que bloqueado → listo **no** va directo a ejecución.
 > - Decir que el shell es parte del SO.
 
+## Complementos recomendables (después del núcleo)
+
+> [!tip] Si ya cubriste el núcleo
+> Hay temas que no son los más repetidos en los finales recopilados, pero que conviene tener vistos: TLB con tiempo efectivo, Gantt de planificación de CPU (FIFO/SJF/SRTF/RR), hilos/sincronización, working set/thrashing/PFF, E/S-DMA y conceptos mínimos de sistema de archivos. Ver [[00 Índice - Complementos recomendados|Complementos recomendados]].
+
 ## Notas relacionadas
-[[01 Temas que más se repiten]] · [[01 Preguntas de teoria|Preguntas de teoría]] · [[02 Resoluciones detalladas|Resoluciones de finales]] · [[04 Plan de estudio (cronograma)]] · [[05 Mapa pregunta a subtema]]
+[[01 Temas que más se repiten]] · [[01 Preguntas de teoria|Preguntas de teoría]] · [[02 Resoluciones detalladas|Resoluciones de finales]] · [[04 Plan de estudio (cronograma)]] · [[05 Mapa pregunta a subtema]] · [[00 Índice - Complementos recomendados|Complementos recomendados]]
