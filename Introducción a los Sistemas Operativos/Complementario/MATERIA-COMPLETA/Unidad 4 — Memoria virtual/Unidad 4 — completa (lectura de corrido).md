@@ -1,378 +1,649 @@
 ---
-tipo: unidad-completa
+tipo: lectura-corrida
 unidad: 4
 ---
-# Unidad 4 — Memoria virtual — completa
+# Unidad 4 — completa (lectura de corrido)
 
-> [!abstract] Qué pide la unidad
-> Cómo un proceso puede usar más memoria que la RAM física: paginación, traducción de direcciones (MMU y TLB), fallo de página, algoritmos de reemplazo (FIFO, reloj, NRU, LRU), tamaño de página, y segmentación. Es la unidad con más cálculos y la que más se repite en los parciales.
+> [!abstract] Fuente
+> Desarrollada a partir de las **diapositivas de cátedra** (Administración de Memoria Virtual) y complementada con explicaciones, ejemplos, trampas de examen y libro (Tanenbaum). Ver [[00 Fuente - Temario de diapositivas]].
 
-> [!info] Cómo leer este archivo
-> Es la unidad entera, en orden: Tema → Subtema. Cada subtema tiene su nota propia en la carpeta del tema, por si querés estudiar uno solo.
+---
+
+# 4.1.1 Memoria virtual y overlays
+
+> [!abstract] En una frase
+> La **memoria virtual** permite ejecutar programas más grandes que la memoria física disponible, separando las direcciones que usa el programa de las direcciones físicas reales.
+
+## Diapositivas de cátedra
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_02.png]]
+
+La diapositiva plantea el desafío:
+- Algunos programas usan más memoria que la disponible.
+- **Overlays:** solución antigua; el programa se divide en partes que se cargan por turnos. Problemas: el programador debe planificarlos, no permite compartir rutinas fácilmente; todavía aparece en entornos muy restringidos.
+- **Solución moderna:** memoria virtual, con **paginación** y, generalmente, combinación con segmentación.
+
+## Por qué importa
+
+| Sin memoria virtual | Con memoria virtual |
+|---|---|
+| El programa depende fuertemente de la RAM física | El programa usa direcciones virtuales |
+| Overlays manuales | El SO gestiona carga/descarga |
+| Difícil compartir y aislar | Aislamiento, compartición controlada, más flexibilidad |
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum presenta la memoria virtual como la abstracción que da a cada proceso la ilusión de un gran espacio de direcciones contiguo, mientras el SO y el MMU mapean solo las páginas necesarias a marcos físicos.
+
+## Cómo responderlo en el final
+“Memoria virtual permite ejecutar procesos cuyo espacio excede la RAM física. Antes se usaban overlays manuales; ahora el SO usa paginación/MMU para traer páginas bajo demanda”.
+
+> [!warning] Errores típicos
+> - Confundir memoria virtual con “usar disco como si fuera RAM sin costo”.
+> - Creer que elimina la necesidad de memoria física.
 
 
 ---
 
-## Tema 4.1 — Concepto y paginación
-
-
-### 4.1.1 Memoria virtual y overlays
+# 4.1.2 Paginación y la MMU
 
 > [!abstract] En una frase
-> La **memoria virtual** da a cada proceso un espacio de direcciones propio, dividido en **páginas**. Solo algunas páginas están en RAM; el resto queda en disco, y el hardware traduce cada dirección. Así un programa puede ser más grande que la RAM física.
+> La **paginación** divide el espacio virtual en páginas y la memoria física en marcos; la **MMU** traduce direcciones virtuales a físicas usando la tabla de páginas.
 
-#### Desarrollo
-- **Antes:** los **overlays** (sobrepuestos) dividían el programa a mano: el programador planeaba qué parte cargar. Era tedioso y propenso a errores, y no permitía compartir rutinas. Todavía se usan en celulares y PDA.
-- **Idea de la memoria virtual** (Fotheringham, 1961): el SO y el hardware hacen ese trabajo. Si la página pedida no está en RAM, se genera un **fallo de página** y el SO la trae del disco y reinicia la instrucción.
-- **Generalización de base y límite:** en vez de reubicar todo el espacio de un golpe, se reubica en unidades pequeñas e iguales (las páginas).
-- **Ventaja para multiprogramación:** mientras un proceso espera que una página llegue del disco, la CPU atiende a otro.
+## Diapositivas de cátedra
 
-#### Cómo responderlo en el final
-"Memoria virtual: cada proceso ve un espacio contiguo propio dividido en páginas; sólo algunas están en RAM. Si falta una, hay un fallo de página y el SO la trae del disco."
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_03.png]]
+
+La diapositiva muestra la relación entre memoria virtual, mapa de memoria (tabla de páginas), memoria física y disco.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_04.png]]
+
+**MMU (Memory Management Unit):** mapea direcciones virtuales en reales. Pertenece al hardware.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_06.png]]
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_07.png]]
+
+Ejemplo de traducción: una instrucción como `MOV REG, 8192` usa una dirección virtual; la MMU la traduce al marco físico correspondiente.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_08.png]]
+
+Si la página no está presente, la MMU provoca una interrupción/fallo al SO.
+
+## Conceptos
+
+| Concepto | Definición |
+|---|---|
+| **Página** | Bloque fijo del espacio virtual |
+| **Marco** | Bloque fijo de la RAM |
+| **Tabla de páginas** | Mapea página → marco + bits de control |
+| **MMU** | Hardware que traduce direcciones |
+| **Bit de presencia** | Indica si la página está en RAM |
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum detalla campos típicos de la entrada: número de marco, presente/ausente, protección, referenciada, modificada, caching. La MMU usa estos bits para traducir y proteger.
+
+## Cómo responderlo en el final
+“Paginación divide virtual en páginas y físico en marcos del mismo tamaño. La MMU consulta la tabla de páginas: si está presente traduce; si no, genera fallo de página”.
 
 > [!warning] Errores típicos
-> - Confundir memoria virtual con swapping: el swapping mueve **procesos enteros**; la memoria virtual mueve **páginas**.
+> - Confundir página (virtual) con marco (físico).
+> - Pensar que la MMU “decide” por software qué página traer: eso lo hace el SO.
 
 
-### 4.1.2 Paginación y la MMU
+---
+
+# 4.1.3 Cálculo de bits, páginas y marcos
 
 > [!abstract] En una frase
-> Con **paginación**, la memoria virtual se divide en **páginas** y la física en **marcos** del mismo tamaño. Una dirección virtual es un par **(número de página, desplazamiento)**; la **MMU** reemplaza el número de página por el número de marco que tiene en la tabla de páginas.
+> Con el tamaño de dirección virtual, tamaño de página y memoria física se calculan: bits de desplazamiento, bits de página, cantidad de páginas y cantidad de marcos.
 
-#### Desarrollo
-- **MMU:** parte del hardware (suele estar dentro del chip de CPU). Las direcciones del programa no van directo al bus: pasan por la MMU.
-- **Tabla de páginas:** una entrada por página, con el **número de marco**, el bit **V / presente-ausente**, y los bits **R** (referenciada) y **M** (modificada).
-- **Dirección física = marco × tamaño de página + desplazamiento.**
+## Diapositiva de cátedra
 
-### Ejemplo de la cátedra (TP3, pregunta 3): páginas de 2 KB
-Tabla: página 1 → marco 4; página 2 → marco 7; página 4 → marco 2. Páginas 0, 3 y 5 ausentes (V = 0).
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_05.png]]
 
-| Dirección virtual (página, desplazamiento) | Resultado | Dirección física |
+La diapositiva recuerda la escala del direccionamiento: 16 bits → 64 KB, 32 bits → 4 GB, 64 bits → espacio enorme. Esto motiva el cálculo cuidadoso de tablas y marcos.
+
+## Fórmulas
+
+| Qué calcular | Fórmula | Nota |
 |---|---|---|
-| (1, 481) | Marco 4 | 4 × 2048 + 481 = **8673** |
-| (2, 1324) | Marco 7 | 7 × 2048 + 1324 = **15660** |
-| (5, 122) | Página ausente | **Fallo de página** |
-| (3, 2051) | Página ausente (además, 2051 > 2048: desplazamiento inválido) | **Fallo de página** |
-| (9, 21) | La página 9 no existe en la tabla | **Dirección inválida** |
+| Desplazamiento | $\log_2(\text{tamaño página})$ | bits dentro de la página |
+| Bits de página | bits virtuales − desplazamiento | indexa la tabla |
+| Páginas virtuales | $2^{bits\_página}$ | espacio virtual dividido en páginas |
+| Marcos físicos | memoria física / tamaño página | bloques en RAM |
+| Memoria direccionable | $2^{bits\_virtuales}$ | límite teórico por dirección |
 
-### Ejemplo de Tanenbaum
-Direcciones de 16 bits: 64 KB virtuales, pero 32 KB físicos. Con páginas de 4 KB hay 16 páginas virtuales y 8 marcos: sólo 8 páginas pueden estar en RAM al mismo tiempo.
+## Ejemplo
 
-#### Cómo responderlo en el final
-Dibujar la tabla de páginas con los bits, convertir una dirección (página, offset) a física y mencionar qué pasa si V = 0.
+Dirección virtual 32 bits, página 4 KB, RAM 1 GB:
+- desplazamiento = $\log_2(4096)=12$
+- bits página = $32-12=20$
+- páginas = $2^{20}$
+- marcos = $1GB/4KB = 2^{18}$
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum insiste en separar claramente dirección virtual, número de página, desplazamiento y marco físico. Los errores en el examen suelen venir de confundir estos campos.
+
+## Cómo responderlo en el final
+Escribí datos, fórmula, sustitución y resultado con unidades. Antes de empezar, verificá que el tamaño de página sea potencia de 2.
+
+> [!warning] Errores típicos
+> - Usar bits totales como bits de página (olvidar restar desplazamiento).
+> - Confundir marcos con páginas.
+> - No chequear que memoria utilizable es $\min(direccionable, física)$.
 
 
-### 4.1.3 Cálculo de bits, páginas y marcos
+---
+
+# 4.2.1 TLB (memoria asociativa)
 
 > [!abstract] En una frase
-> Todo ejercicio de paginación se resuelve con cuatro cuentas: **bits de desplazamiento = log₂(tamaño de página)**; **bits de página = bits totales − desplazamiento**; **nº de páginas = 2^(bits de página)**; **nº de marcos = memoria física ÷ tamaño de marco**.
+> La **TLB** (Translation Lookaside Buffer) es una caché de hardware para traducciones recientes página→marco, que acelera el acceso a memoria.
 
-#### Desarrollo
-### Fórmulas
-| Dato | Cálculo |
-|---|---|
-| Bits de desplazamiento | log₂(página). Página de 8 KB = 2¹³ → **13 bits** |
-| Bits de número de página | Bits de la dirección − desplazamiento |
-| Páginas virtuales | 2^(bits de página) |
-| Marcos | Memoria física ÷ tamaño de página |
-| Bits de dirección física | log₂(memoria física) |
+## Diapositivas de cátedra
 
-### Casos resueltos
-| Enunciado | Desplazamiento | Páginas | Marcos |
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_14.png]]
+
+- Dispositivo de hardware, generalmente parte de la MMU.
+- Si la dirección virtual está en el TLB y pasa protección, se evita consultar la tabla en memoria.
+- El acceso al TLB es menor que a memoria → **hit ratio** importa.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_15.png]]
+
+La diapositiva muestra el funcionamiento de la memoria asociativa/TLB.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_16.png]]
+
+Ejemplo de hit ratio: acceso a memoria 100 ns, acceso a TLB 20 ns, hit 90% → tiempo promedio = $(0.9\times 20) + (0.1\times 100)=28$ ns.
+
+## TLB hit / miss
+
+| Caso | Qué pasa | Costo |
+|---|---|---|
+| **TLB hit** | Traducción encontrada en TLB | Bajo |
+| **TLB miss, página en RAM** | Se consulta tabla de páginas y se carga TLB | Medio |
+| **TLB miss, página ausente** | Fallo de página | Alto |
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum explica TLB con manejo por hardware o software, entradas con bits de validez/protección/modificación y el efecto de cambios de contexto (flush o ASID).
+
+## Cómo responderlo en el final
+“TLB es caché de traducciones página-marco. Acelera porque evita acceder a la tabla en memoria. Si hay miss, se va a tabla; si la página no está, hay page fault”.
+
+> [!warning] Errores típicos
+> - Confundir TLB con caché de datos.
+> - Olvidar que tras TLB miss puede venir hit en tabla o fallo de página.
+
+
+---
+
+# 4.2.2 Tablas multinivel e invertidas
+
+> [!abstract] En una frase
+> Las **tablas multinivel** dividen la tabla de páginas para no mantenerla completa en memoria; la **tabla invertida** tiene una entrada por marco físico y escala mejor en espacios virtuales grandes.
+
+## Diapositivas de cátedra
+
+### Problema del tamaño
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_11.png]]
+
+El tamaño de la tabla de páginas puede ser enorme (64 bits). El mapeo debe ser rápido; no conviene tener todo en registros o en una tabla lineal enorme.
+
+### Tablas multinivel
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_12.png]]
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_13.png]]
+
+Las diapositivas muestran la paginación multinivel: la dirección virtual se divide en índices de niveles y desplazamiento. Solo se materializan las subtablas necesarias.
+
+### Tabla invertida
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_17.png]]
+
+En lugar de una entrada por página virtual, se usa una entrada por **marco físico**. Reduce el tamaño cuando el espacio virtual es muy grande.
+
+## Comparación
+
+| Esquema | Entrada por | Ventaja | Costo |
 |---|---|---|---|
-| **Repaso:** 42 bits, páginas de 8 KB, memoria física de 8 GB | 13 bits | 2²⁹ | 8 GB / 8 KB = 2²⁰ |
-| **Parcial 13:** 64 bits, 8 KB, 32 GB | 13 bits | 2⁵¹ | 2³⁵ / 2¹³ = **2²²** |
-| **Parcial 14:** 64 bits, 16 KB, 65 GB | 14 bits | 2⁵⁰ | 65 GB / 16 KB = 4 259 840 |
-| **TP3, 7:** 36 bits, desplazamiento de 13 bits | 13 bits | 2²³ | Con 512 MB: 65 536 marcos |
-| **TP3, 5:** 7 páginas de 4096 palabras, 64 bloques físicos | 12 bits | Dirección virtual de **15 bits** (7 × 4096 = 28 672 < 2¹⁵) | Dirección física de **18 bits** (64 × 4096 = 2¹⁸) |
-| **TP3, 2:** 32 bits, nivel 1 de 8 bits, nivel 2 de 11 bits | 13 bits (8 KB) | 2¹⁹ páginas | — |
+| **Lineal** | Página virtual | Simple | Muy grande |
+| **Multinivel** | Páginas, por niveles | Solo subtablas necesarias | Más accesos en miss |
+| **Invertida** | Marco físico | Escala con RAM | Búsqueda más compleja (hash/TLB) |
 
-### Tabla de páginas en TP3, pregunta 7
-Con entradas de **64 bits** y 2²³ páginas: 2²³ × 8 bytes = **64 MB** solo para la tabla de páginas. Por eso aparecen las tablas multinivel (4.2.2).
+## Complemento de libro (Tanenbaum)
+Tanenbaum explica que la tabla invertida ahorra espacio en arquitecturas de 64 bits, pero requiere hash y manejo de colisiones. La TLB mitiga el costo de búsqueda.
 
-#### Cómo responderlo en el final
-Escribir las cuatro cuentas en orden y dar cada resultado como potencia de 2 y como número. Sobre todo, mostrar el log₂ del tamaño de página.
+## Cómo responderlo en el final
+“Multinivel divide el número de página en varios índices y evita tabla lineal completa. Invertida usa una entrada por marco físico: escala con RAM, pero buscar es más complejo”.
 
 > [!warning] Errores típicos
-> - Usar 1 KB = 1000 bytes en lugar de 1024: en potencias de 2 siempre binario.
-> - Olvidar que el desplazamiento se mide en **bytes** cuando el enunciado habla de palabras (TP3, 5 usa palabras).
+> - Decir que tabla invertida tiene una entrada por página virtual.
+> - No aclarar si te piden tablas totales o subtablas.
 
 
 ---
 
-## Tema 4.2 — Traducción rápida y tablas de páginas
-
-
-### 4.2.1 TLB (memoria asociativa)
+# 4.3.1 Pasos de un fallo de página
 
 > [!abstract] En una frase
-> El **TLB** es una caché pequeña y asociativa dentro de la MMU que guarda traducciones recientes (página → marco). Si la página está en el TLB (**hit**), no hace falta leer la tabla de páginas en RAM; eso acelera casi todos los accesos.
+> Un **fallo de página** ocurre cuando se referencia una página no presente en RAM; el SO debe traerla desde disco, actualizar tablas y reiniciar la instrucción.
 
-#### Desarrollo
-- Sin TLB, cada acceso a memoria implicaría **dos** accesos: uno a la tabla de páginas y otro al dato.
-- **Tiempo efectivo** con hit ratio h: `t = h × t_TLB + (1 − h) × t_memoria` (cátedra: TLB 20 ns, memoria 100 ns, 90 % de aciertos → 0,9 × 20 + 0,1 × 100 = **28 ns**).
-- Un fallo de TLB no es un fallo de página: la página puede estar en RAM y solo hay que buscar la entrada en la tabla.
+## Diapositivas de cátedra
 
-#### Cómo responderlo en el final
-Dar la definición de TLB, la fórmula del tiempo promedio con el ejemplo de 28 ns y la diferencia entre fallo de TLB y fallo de página.
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_09.png]]
 
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_10.png]]
 
-### 4.2.2 Tablas multinivel e invertidas
+La diapositiva resume: si la página no está en memoria, el CPU causa interrupción al kernel; se guarda estado, se verifica validez, se busca/libera marco, se carga la página, se reinicia la instrucción.
 
-> [!abstract] En una frase
-> Una tabla de páginas de un espacio de 64 bits tendría cerca de 20 millones de terabytes. Para reducirla: **multinivel** (la tabla se parte en niveles y solo se crean las tablas de niveles inferiores que se usan) o **invertida** (una entrada por marco, no por página).
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_37.png]]
 
-#### Desarrollo
-### Multinivel
-- La dirección se divide en campos: índice del nivel superior, índice del nivel inferior y desplazamiento.
-- El nivel superior apunta a tablas de segundo nivel; **solo se crean las que se usan**, lo que ahorra mucha memoria.
-- **Ejemplo (TP3, 2):** 32 bits con campos de 8 + 11 bits → desplazamiento de 13 bits → páginas de **8 KB**, y 2¹⁹ páginas virtuales. El nivel superior tiene 2⁸ = 256 entradas; cada segundo nivel, 2¹¹ = 2048.
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_38.png]]
 
-### Invertida
-- Una sola tabla con **una entrada por marco físico**: cada entrada dice qué página virtual (y de qué proceso) está en ese marco.
-- Su tamaño depende de la RAM, no del espacio virtual. Para buscar hace falta una tabla de dispersión o asociativa.
+Secuencia detallada de la cátedra:
+1. Hardware interrumpe al kernel y guarda PC en la pila.
+2. Rutina en assembler guarda registros y estado volátil.
+3. El SO detecta page fault y averigua qué página virtual se necesita.
+4. Controla si la página es válida y el acceso permitido; si no, aborta.
+5. Si el marco seleccionado está ocupado, se planifica escritura a disco si está sucio y se hace cambio de contexto.
+6. Cuando hay marco limpio, se busca la página en disco y se planifica lectura.
+7. Al llegar la interrupción de disco, se actualiza tabla de páginas y se marca marco normal.
+8. Se restaura el estado de la instrucción fallida y se reprograma el proceso.
+9. El planificador lo ejecuta; la rutina assembler restaura registros y continúa.
 
-#### Cómo responderlo en el final
-Dibujar la dirección de 3 campos del multinivel, decir que solo se crean las tablas que se usan y comparar con la invertida (depende de la RAM).
+## Versión corta para examen
 
+1. MMU detecta P=0 → trap.
+2. SO guarda estado.
+3. Verifica página válida/permiso.
+4. Busca marco libre o elige víctima.
+5. Si víctima sucia (M=1), escribir a disco.
+6. Cargar página requerida.
+7. Actualizar tabla/TLB.
+8. Reiniciar instrucción.
 
----
+## Complemento de libro (Tanenbaum)
+Tanenbaum enfatiza que la instrucción que causó el fallo debe poder reiniciarse. Esto es fácil en algunas arquitecturas y difícil en otras con instrucciones complejas.
 
-## Tema 4.3 — Fallo de página
-
-
-### 4.3.1 Pasos de un fallo de página
-
-> [!abstract] En una frase
-> Un **fallo de página** ocurre cuando se accede a una página con V = 0. La MMU lanza una interrupción; el SO valida el acceso, consigue un marco libre (desalojando si hace falta), trae la página desde el disco, actualiza la tabla y **reinicia la instrucción**.
-
-#### Desarrollo
-Pasos (cátedra y Tanenbaum):
-1. La MMU detecta que el bit de presente = 0 y dispara una **interrupción** al kernel.
-2. El hardware guarda el **contador de programa** en la pila; una rutina en ensamblador guarda los **registros**.
-3. El SO identifica qué **página virtual** se necesita y verifica que sea **válida** y que el acceso esté **permitido**. Si no, aborta el proceso.
-4. Busca un **marco libre**. Si no hay, elige una página a **desalojar** con un algoritmo de reemplazo (4.4).
-5. Si la página desalojada está **modificada** (M = 1), la **escribe en disco** antes de reutilizar el marco.
-6. Planifica la **lectura** de la página pedida desde el disco. Mientras tanto, puede pasar a ejecutar otro proceso.
-7. Cuando llega la interrupción de disco, **actualiza la tabla de páginas** y marca el marco en estado normal.
-8. La instrucción que falló vuelve a su estado previo y el contador apunta a ella: **se reinicia**.
-9. Al volver a planificar el proceso, la rutina de ensamblador restaura registros y sigue.
-
-> [!tip] Frase para responder en el examen
-> "Interrumpe, valida, libera (guardando si M = 1), trae, actualiza la tabla y reinicia la instrucción."
-
-#### Cómo responderlo en el final
-Recitar los 6 pasos del parcial (pregunta 26) y, si hay tiempo, los detalles del paso 5 (M = 1 → escribir en disco) y del paso 8 (reinicio).
-
-
-### 4.3.2 Reinicio de la instrucción y páginas compartidas
-
-> [!abstract] En una frase
-> Reiniciar una instrucción es difícil cuando la instrucción **modificó** registros antes del fallo (por ejemplo, un autoincremento). Los diseñadores guardan el contador y qué registros se modificaron. Las páginas se pueden **compartir** (código de una librería) mientras los datos son privados.
-
-#### Desarrollo
-- **Problema del backup:** hay que saber si el fallo fue en el **operando** o en la **instrucción**, para dejar el estado como estaba.
-- **Autoincremento:** si el incremento ocurrió antes del acceso, hay que **revertirlo** antes de reiniciar. Solución de hardware: un registro guarda el contador previo y otro indica qué registros se incrementaron.
-- **Páginas compartidas:** un programa (código) se puede compartir entre procesos; los datos, no. Si el proceso termina y libera páginas compartidas, los demás tendrían fallos masivos: hace falta una estructura especial para llevar cuenta.
-- **Área de swap:** puede ser **estática** (una zona fija del disco) o **dinámica** (hay que llevar registro de dónde está cada página en disco).
-
-#### Cómo responderlo en el final
-Decir qué es el problema del backup con el autoincremento y mencionar la compartición de páginas como complicación.
-
-
----
-
-## Tema 4.4 — Algoritmos de reemplazo de páginas
-
-
-### 4.4.1 Óptimo, FIFO y anomalía de Belady
-
-> [!abstract] En una frase
-> El **óptimo** reemplaza la página que tardará más en volver a usarse (no es implementable, pero sirve de referencia). **FIFO** reemplaza la más antigua en RAM: es simple, pero no mira el uso y puede empeorar al tener más marcos (**anomalía de Belady**).
-
-#### Desarrollo
-- **Óptimo:** reemplaza la que **no se va a usar por más tiempo**. Requiere conocer el futuro; se usa para comparar.
-- **FIFO:** cola en orden de llegada a RAM. Reemplaza el frente. Problemas: puede sacar una página muy usada solo porque "entró hace mucho", y presenta **anomalía de Belady**.
-- **Anomalía de Belady:** con más marcos, puede haber **más** fallos. Ocurre en FIFO, no en los algoritmos de pila (LRU, óptimo).
-
-### Ejemplo clásico de Belady
-Cadena de referencias: **1 2 3 4 1 2 5 1 2 3 4 5**
-- Con **3 marcos** en FIFO: **9 fallos**.
-- Con **4 marcos** en FIFO: **10 fallos**. Más memoria, más fallos.
-
-> [!tip] Cómo se repasa
-> Hacé la tabla de marcos paso a paso: en cada referencia, anotá qué queda en RAM. Es el ejercicio que más se pide.
-
-#### Cómo responderlo en el final
-"FIFO reemplaza la más antigua; tiene bajo costo pero no mira el uso y puede tener anomalía de Belady: el ejemplo 1 2 3 4 1 2 5 1 2 3 4 5 da 9 fallos con 3 marcos y 10 con 4."
+## Cómo responderlo en el final
+Enumerá los pasos en orden, destacá “guardar estado”, “víctima si no hay marco libre”, “si M=1 escribir a disco”, “actualizar tabla” y “reiniciar instrucción”.
 
 > [!warning] Errores típicos
-> - Decir que el óptimo es implementable.
-> - Decir que LRU tiene anomalía de Belady: no la tiene.
+> - Olvidar el bit M al reemplazar.
+> - No reiniciar la instrucción que falló.
+> - No distinguir página inválida de página ausente válida.
 
 
-### 4.4.2 Segunda oportunidad y algoritmo del reloj
+---
 
-> [!abstract] En una frase
-> **Segunda oportunidad** es FIFO con el bit **R**: la página más vieja se reemplaza solo si R = 0; si R = 1, se pone R = 0 y se manda al final de la cola. El **reloj** hace lo mismo pero con las páginas en **círculo** y un puntero que avanza: es más eficiente.
-
-#### Desarrollo
-### Segunda oportunidad
-1. Mirar la página más vieja (frente de la cola).
-2. Si **R = 0**: reemplazarla.
-3. Si **R = 1**: poner R = 0 y moverla al **final** de la cola ("segunda oportunidad").
-
-**Problema:** si casi todas tienen R = 1, da muchas vueltas antes de encontrar una con R = 0: cuesta CPU.
-
-### Reloj (Clock)
-- Las páginas están en un **anillo** y un **puntero** recorre el anillo.
-- Si R = 0 → reemplazar y avanzar. Si R = 1 → poner R = 0 y avanzar.
-- Es una forma **eficiente** de implementar segunda oportunidad. Puede combinarse con M (reloj mejorado).
-
-#### Cómo responderlo en el final
-Dibujar el anillo con los bits R, mover el puntero y explicar el paso de R = 1 → R = 0. Decir que es una aproximación de LRU.
-
-
-### 4.4.3 NRU, LRU y aging
+# 4.3.2 Reinicio de la instrucción y páginas compartidas
 
 > [!abstract] En una frase
-> **NRU** clasifica las páginas por los bits R y M en cuatro clases y reemplaza de la clase más baja. **LRU** reemplaza la menos usada recientemente; es buen predictor, pero caro de implementar exacto. **Aging** es una aproximación de LRU por software: un contador por página que se desplaza y suma R en cada tick.
+> Tras un page fault, la instrucción debe reiniciarse correctamente; además, algunas páginas pueden compartirse entre procesos y requieren control especial al reemplazarlas o liberarlas.
 
-#### Desarrollo
-### NRU (Not Recently Used)
-| Clase | R | M | Descripción |
+## Diapositivas de cátedra
+
+### Reinicio de instrucción
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_39.png]]
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_40.png]]
+
+El problema: si la instrucción falló por un operando, debe reejecutarse. Instrucciones con autoincremento/autodecremento pueden complicar el reinicio. La cátedra menciona que los diseñadores de CPU usan registros auxiliares para restaurar el estado.
+
+### Páginas compartidas
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_41.png]]
+
+Hay páginas compartibles (código) y no compartibles (datos privados). Al terminar un proceso, no se deben liberar marcos que otro proceso sigue usando.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_42.png]]
+
+Ejemplo: librerías compartidas por más de un proceso.
+
+### Almacenamiento en disco
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_43.png]]
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_44.png]]
+
+Las páginas pueden respaldarse en área de intercambio estática o dinámica. Si se usa swap dinámico, se debe llevar registro de dónde está cada página.
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum destaca copy-on-write para páginas compartidas: se comparten mientras son de solo lectura; al escribir, se copia. Esto optimiza fork y librerías compartidas.
+
+## Cómo responderlo en el final
+“Después del page fault se reinicia la instrucción fallida, lo cual puede ser complejo si hubo autoincrementos. Las páginas compartidas (código/librerías) no deben liberarse si otro proceso las usa; datos privados no se comparten igual”.
+
+> [!warning] Errores típicos
+> - Liberar una página compartida cuando termina un solo proceso.
+> - Ignorar que reiniciar instrucción no siempre es trivial.
+
+
+---
+
+# 4.4.1 Óptimo, FIFO y anomalía de Belady
+
+> [!abstract] En una frase
+> **Óptimo** reemplaza la página que se usará más lejos en el futuro (teórico); **FIFO** reemplaza la más antigua en llegar, pero puede sufrir la **anomalía de Belady**.
+
+## Diapositivas de cátedra
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_18.png]]
+
+La diapositiva lista algoritmos: óptimo, NRU, FIFO, segunda oportunidad.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_23.png]]
+
+**Anomalía de Belady:** en FIFO, más marcos de página pueden resultar en más fallos de página.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_22.png]]
+
+La tabla resumen de algoritmos ayuda a comparar criterios.
+
+## Comparación
+
+| Algoritmo | Criterio | Ventaja | Desventaja |
 |---|---|---|---|
-| 0 | 0 | 0 | No usada, no modificada |
-| 1 | 0 | 1 | No usada recientemente, modificada |
-| 2 | 1 | 0 | Usada, no modificada |
-| 3 | 1 | 1 | Usada y modificada |
+| **Óptimo** | Usar más lejos en el futuro | Mínimos fallos | Imposible en la práctica |
+| **FIFO** | Más antigua cargada | Simple | Belady; puede sacar página útil |
 
-- Se reemplaza una página de la **clase más baja** disponible.
-- Periódicamente se pone R = 0 en todas para "olvidar" el pasado.
+## Anomalía de Belady
 
-### LRU (Least Recently Used)
-- Reemplaza la que hace **más tiempo** no se usa.
-- **Costo:** mantener el orden exacto en cada acceso es caro. Por eso hay aproximaciones.
-- **Método de la matriz (Repaso):** matriz n × n. Al usar la página i: poner 1 en **toda la fila i** y 0 en **toda la columna i**. La fila con la **suma más baja** es la menos usada recientemente.
+Para algunas cadenas de referencia, aumentar marcos con FIFO produce más fallos. No ocurre en algoritmos de pila como LRU.
 
-Ejemplo del Repaso con P0…P3, accesos P1, P2, P0, P3: sumas finales 4, 2, 4, 4 → **P1** es la menos usada.
+## Complemento de libro (Tanenbaum)
+Tanenbaum usa el óptimo como cota de referencia para evaluar algoritmos reales. FIFO es fácil de implementar pero puede comportarse mal.
 
-### Aging (NFU, por software)
-1. Cada página tiene un **contador** en 0.
-2. En cada interrupción de reloj: se **corre el contador a la derecha** y se suma el bit R al bit más significativo.
-3. En un fallo, se reemplaza la página con el **contador más chico**.
-
-#### Cómo responderlo en el final
-Dar las 4 clases de NRU y decir que LRU es ideal pero caro; aging lo aproxima con contadores. Si piden un ejemplo, usar la matriz del Repaso.
+## Cómo responderlo en el final
+Definí óptimo (teórico) y FIFO (práctico/simple). Si preguntan Belady, explicá: más marcos pueden dar más fallos en FIFO.
 
 > [!warning] Errores típicos
-> - Decir que NRU elige la página menos usada: elige **de la clase más baja**, sin orden fino dentro de la clase.
+> - Decir que Belady ocurre en LRU.
+> - Presentar FIFO como “bueno” sin mencionar su defecto.
 
 
 ---
 
-## Tema 4.5 — Tamaño de página y rendimiento
-
-
-### 4.5.1 Tamaño de página óptimo — s = √(2PE)
+# 4.4.2 Segunda oportunidad y algoritmo del reloj
 
 > [!abstract] En una frase
-> Las páginas chicas reducen la fragmentación interna pero agrandan la tabla de páginas; las grandes hacen lo contrario. El **tamaño óptimo** minimiza la suma de ambas: **s = √(2·P·E)**, donde P es el tamaño medio del proceso y E el tamaño de cada entrada de la tabla.
+> **Segunda oportunidad** mejora FIFO usando el bit R; el **reloj** implementa la misma idea con un puntero circular.
 
-#### Desarrollo
-Modelo (cátedra, parcial 12 y Tanenbaum):
-- Pérdida por **fragmentación interna** (promedio): **s / 2**.
-- Pérdida por **tabla de páginas**: (P / s) · E.
-- **Total:** W(s) = s/2 + P·E/s.
-- Derivando e igualando a cero: 1/2 − P·E/s² = 0 ⇒ **s = √(2·P·E)**.
+## Diapositivas de cátedra
 
-### Ejemplos
-| Dato | Resultado |
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_18.png]]
+
+Se menciona segunda oportunidad como FIFO con bit R.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_19.png]]
+
+**Algoritmo de reloj:** las páginas están en un círculo; un puntero avanza. Si R=0, se reemplaza; si R=1, se limpia R y se da segunda oportunidad.
+
+## Funcionamiento
+
+| Bit R | Acción del reloj |
 |---|---|
-| P = 8 KB = 8192 bytes, E = 4 bytes (parcial 34) | s = √(2 × 8192 × 4) = √65 536 = **256 bytes** |
-| P = 2 MB, E = 16 bytes (TP3, 11) | s = √(2 × 2²¹ × 16) = √2²⁶ = **8 KB** |
-| s = 128 KB, E = 8 bytes (Tanenbaum) | ≈ **1448 bytes**; en la práctica se elige 1 KB o 2 KB |
+| 0 | Página candidata: se reemplaza |
+| 1 | Se pone R=0 y se avanza el puntero |
 
-> [!note] En la práctica
-> El modelo da un número teórico. Los sistemas reales usan potencias de 2 cercanas (1, 2, 4 u 8 KB). Decilo en el examen escrito.
+## Comparación con FIFO
 
-#### Cómo responderlo en el final
-Escribir W(s), derivar, dar s = √(2PE) y resolver el ejemplo de 8 KB y 4 bytes → 256 bytes.
+- FIFO puro mira solo llegada.
+- Segunda oportunidad/reloj considera si fue referenciada recientemente.
+- Evita sacar una página muy usada solo por ser vieja.
 
+## Complemento de libro (Tanenbaum)
+Tanenbaum muestra el reloj como una aproximación eficiente a LRU: barato y con buen comportamiento en la práctica.
 
-### 4.5.2 Conjunto de trabajo y thrashing
+## Cómo responderlo en el final
+“Reloj es una implementación eficiente de segunda oportunidad. Puntero circular: R=0 reemplaza, R=1 se limpia y avanza. Mejora FIFO evitando sacar páginas recientemente usadas”.
 
-> [!abstract] En una frase
-> **Thrashing** es cuando un proceso genera fallos de página cada pocas instrucciones: pasa más tiempo trayendo páginas que ejecutando. El **conjunto de trabajo** es el conjunto de páginas que el proceso usó en sus últimas Δ referencias; asignarle al menos ese conjunto evita el thrashing.
-
-#### Desarrollo
-- **Thrashing:** la CPU trabaja poco y el disco mucho. Con multiprogramación, si cada proceso tiene menos marcos que su conjunto, todos empeoran.
-- **Modelo de conjunto de trabajo (WSM):** se miran las referencias recientes; el tamaño del conjunto en el tiempo t define cuántos marcos merece el proceso.
-- **Asignación local vs. global:** local = cada proceso reemplaza sus propios marcos; global = puede quitarle marcos a otro.
-- **Índice de frecuencia de fallos (PFF):** si el proceso falla muy seguido, se le dan más marcos; si casi no falla, se le quitan.
-- **Prepaginación vs. paginación por demanda:** prepaginar trae páginas antes de usarlas; demanda espera al fallo.
-
-#### Cómo responderlo en el final
-Definir thrashing con su causa (poca RAM para los procesos) y decir que el conjunto de trabajo es la forma de evitarlo asignando marcos según el uso reciente.
+> [!warning] Errores típicos
+> - Olvidar que al dar segunda oportunidad se limpia R.
+> - No mencionar el puntero circular.
 
 
 ---
 
-## Tema 4.6 — Segmentación y esquemas combinados
-
-
-### 4.6.1 Segmentación
+# 4.4.3 NRU, LRU y aging
 
 > [!abstract] En una frase
-> La **segmentación** divide el espacio lógico en **segmentos** de tamaño variable (código, datos, pila, tablas), cada uno con su base, su longitud y sus permisos. Una dirección es un par **(segmento, desplazamiento)**. Al tener tamaño variable, produce **fragmentación externa**.
+> **NRU** clasifica páginas por bits R y M; **LRU** reemplaza la menos recientemente usada; **Aging** aproxima LRU en software con contadores.
 
-#### Desarrollo
-- **Ventajas:** refleja la estructura lógica del programa; permite **permisos distintos** por segmento (código solo lectura, pila lectura/escritura); facilita **compartir** segmentos (bibliotecas).
-- **Tabla de segmentos:** base, longitud y bits de protección por segmento.
-- **Control:** si el desplazamiento ≥ longitud → **trampa** (violación de segmento).
-- **Desventaja:** fragmentación externa; por eso la segmentación se combina con paginación (4.6.2).
+## Diapositivas de cátedra
 
-### Ejercicio resuelto (TP3, 10)
-| Segmento | Base | Longitud |
-|---|---|---|
-| 0 | 23 | 310 |
-| 1 | 350 | 600 |
-| 2 | 1700 | 700 |
-| 3 | 2700 | 68 |
-| 4 | 950 | 450 |
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_18.png]]
 
-| Dirección (segmento, desplazamiento) | Resultado |
+La diapositiva lista NRU (bits R y M).
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_20.png]]
+
+**LRU:** menos usado recientemente. Se puede predecir por el pasado. Implementaciones HW: contadores, matriz LRU.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_21.png]]
+
+**NRU simulando LRU en software = Aging.** Se desplazan contadores y se incorpora el bit R.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_22.png]]
+
+Resumen comparativo de algoritmos.
+
+## NRU (clases R,M)
+
+| Clase | R | M | Prioridad de reemplazo |
+|---:|---:|---:|---|
+| 0 | 0 | 0 | Mejor candidata |
+| 1 | 0 | 1 |  |
+| 2 | 1 | 0 |  |
+| 3 | 1 | 1 | Peor candidata |
+
+## LRU vs Aging
+
+| Algoritmo | Precisión | Costo | Observación |
+|---|---|---|---|
+| **LRU exacto** | Alta | Alto HW | Matriz/contadores caros |
+| **Aging** | Aproximada | Moderado | Buen compromiso en software |
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum explica que LRU exacto es ideal pero costoso; Aging aproxima bien manteniendo historia reciente. NRU es simple pero poco fino y mejora si se limpian bits R periódicamente.
+
+## Cómo responderlo en el final
+NRU: 4 clases R/M, reemplaza la clase más baja. LRU: la usada hace más tiempo; caro exacto. Aging: desplazamiento + bit R como aproximación práctica.
+
+> [!warning] Errores típicos
+> - Confundir aging de páginas con aging de prioridades de procesos.
+> - Creer que NRU considera el tiempo exacto de uso.
+
+
+---
+
+# 4.5.1 Tamaño de página óptimo — s = √(2PE)
+
+> [!abstract] En una frase
+> El tamaño óptimo de página equilibra la fragmentación interna (favorece páginas chicas) con el tamaño de la tabla de páginas (favorece páginas grandes), resultando en $s = \sqrt{2PE}$.
+
+## Diapositivas de cátedra
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_34.png]]
+
+Tamaño de página pequeño: ventajas (menos fragmentación interna, menos parte no usada en memoria); desventaja (más páginas, tablas más grandes).
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_35.png]]
+
+Sobrecarga total aproximada: fragmentación interna promedio $s/2$ + espacio de tabla $(s/p)\cdot ?$ La diapositiva plantea: $s$ = tamaño promedio de proceso, $p$ = tamaño de página, $e$ = entrada en tabla.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_36.png]]
+
+Optimizando: $-se/p^2 + 1/2 = 0 \Rightarrow p = \sqrt{2se}$. Ejemplo: $s=128K$, $e=8$ bytes → ~1448 bytes; en la práctica 1K o 2K.
+
+## Fórmula
+
+$$p = \sqrt{2se}$$
+
+- $s$: tamaño promedio del proceso.
+- $e$: tamaño de una entrada de tabla de páginas.
+- $p$: tamaño óptimo de página.
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum muestra el mismo trade-off: páginas pequeñas reducen desperdicio interno; páginas grandes reducen tablas y TLB misses por overhead de administración. El óptimo matemático es una guía, no una regla absoluta.
+
+## Cómo responderlo en el final
+Escribí la fórmula, identificá $s$ y $e$, sustituí con unidades consistentes y calculá. Aclaralo si el enunciado usa $P$ o $s$.
+
+> [!warning] Errores típicos
+> - Mezclar KB con bytes.
+> - Olvidar que es un óptimo teórico; en la práctica se eligen potencias de 2 cercanas.
+
+
+---
+
+# 4.5.2 Conjunto de trabajo y thrashing
+
+> [!abstract] En una frase
+> El **conjunto de trabajo** es el conjunto de páginas que un proceso necesita en un intervalo reciente; si no cabe en memoria, puede aparecer **thrashing**.
+
+## Diapositivas de cátedra
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_31.png]]
+
+**Modelo de conjunto de trabajo (WSM):** reduce el thrashing. Thrashing: el programa genera fallos de página cada pocas instrucciones. Se compara prepaginación vs. paginación por demanda.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_32.png]]
+
+**Políticas de asignación:** local vs. global. Local: reemplaza solo páginas del proceso; global: puede tomar marcos de otros procesos.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_33.png]]
+
+**PFF (Page Fault Frequency):** controla la tasa de fallos para ajustar la cantidad de marcos asignados.
+
+## Conceptos
+
+| Concepto | Idea |
 |---|---|
-| (0, 230) | 23 + 230 = **253** |
-| (1, 2) | 350 + 2 = **352** |
-| (1, 602) | 602 ≥ 600 → **fuera del segmento** |
-| (2, 699) | 1700 + 699 = **2399** |
-| (3, 400) | 400 ≥ 68 → **fuera del segmento** |
-| (4, 700) | 700 ≥ 450 → **fuera del segmento** |
+| **Working set** | Páginas usadas recientemente por el proceso |
+| **Thrashing** | El sistema pagina más de lo que ejecuta |
+| **PFF** | Si hay muchos fallos, dar más marcos; si pocos, quitar |
+| **Local vs global** | A quién se le quita el marco al reemplazar |
 
-#### Cómo responderlo en el final
-Definir el par (segmento, desplazamiento), dar la regla base + desplazamiento con control de longitud, y mencionar la fragmentación externa como costo.
+## Complemento de libro (Tanenbaum)
+Tanenbaum explica que el thrashing aparece cuando la suma de working sets supera la RAM. La solución es reducir grado de multiprogramación o ajustar asignación de marcos.
+
+## Cómo responderlo en el final
+“Working set: páginas necesarias en la ventana reciente. Thrashing: exceso de fallos por falta de marcos para el working set. Se mitiga con PFF, políticas local/global y control de multiprogramación”.
+
+> [!warning] Errores típicos
+> - Confundir thrashing con “la CPU está lenta” en general.
+> - No relacionar working set con localidad de referencia.
 
 
-### 4.6.2 Segmentación con paginación y su combinación
+---
+
+# 4.6.1 Segmentación
 
 > [!abstract] En una frase
-> El esquema más usado (modelo Intel) divide el espacio **primero en segmentos lógicos** y **después pagina cada segmento**. Así se conservan los permisos y la estructura lógica, y se elimina la fragmentación externa.
+> La **segmentación** divide el espacio de direcciones en segmentos lógicos (código, datos, pila, tablas), cada uno con nombre/número y longitud.
 
-#### Desarrollo
-| Esquema | Primero se divide en | Después |
+## Diapositivas de cátedra
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_45.png]]
+
+Un espacio de direcciones unidimensional puede causar problemas cuando tablas crecen; la segmentación propone espacios separados por unidades lógicas.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_48.png]]
+
+Motivación: un compilador maneja varias tablas/áreas (código fuente, símbolos, constantes, árbol parse, pila) que crecen de forma distinta.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_49.png]]
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_50.png]]
+
+Segmentación: direccionamiento bidimensional (segmento, offset). Divide el espacio lógico en segmentos; cada segmento es una unidad lógica.
+
+## Características
+
+| Aspecto | Segmentación |
+|---|---|
+| Unidad | Segmento lógico |
+| Dirección | (segmento, desplazamiento) |
+| Crece | Por segmento, según necesidad |
+| Protección | Por segmento (lectura, escritura, ejecución) |
+| Problema | Fragmentación externa |
+
+## Complemento de libro (Tanenbaum)
+Tanenbaum contrasta paginación (unidades físicas fijas) con segmentación (unidades lógicas variables). La segmentación facilita compartir/proteger estructuras lógicas, pero complica la asignación por fragmentación externa.
+
+## Cómo responderlo en el final
+“Segmentación divide el programa en unidades lógicas con (segmento, offset). Facilita protección y compartición lógica, pero puede generar fragmentación externa”.
+
+> [!warning] Errores típicos
+> - Confundir segmento con página.
+> - Olvidar que el desplazamiento no puede superar el tamaño del segmento.
+
+
+---
+
+# 4.6.2 Segmentación con paginación y su combinación
+
+> [!abstract] En una frase
+> La **segmentación paginada** combina la visión lógica de la segmentación con la asignación física eficiente de la paginación: cada segmento se divide en páginas.
+
+## Diapositivas de cátedra
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_51.png]]
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_52.png]]
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_53.png]]
+
+Las diapositivas muestran la comparación paginación vs segmentación y la idea de combinar ambas: segmentos lógicos, paginados internamente.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_54.png]]
+
+**MULTICS:** ejemplo clásico de segmentación con paginación. El descriptor de segmento apunta a la tabla de páginas del segmento.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_55.png]]
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_59.png]]
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_60.png]]
+
+MULTICS usa dirección virtual con número de segmento y dirección dentro del segmento, que luego se traduce a través de tablas de páginas.
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_62.png]]
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_64.png]]
+
+![[Complementario/MATERIA-COMPLETA/_slides/Unidad 4/slide_65.png]]
+
+**Intel:** también combina segmentación y paginación. Selector + offset → dirección lineal → paginación → dirección física.
+
+## ¿Por qué combinar?
+
+| Esquema | Aporta | Limita |
 |---|---|---|
-| **Segmentación con paginación** (Intel) | Segmentos lógicos de tamaño variable | Cada segmento se pagina en unidades fijas |
-| Paginación con segmentación (menos común) | Páginas fijas | Se agrupan en segmentos lógicos |
+| Paginación | Sin fragmentación externa, manejo simple de marcos | No respeta lógica del programa |
+| Segmentación | Lógica, protección, compartición por unidades | Fragmentación externa |
+| **Seg. paginada** | Lógica + asignación física eficiente | Más complejidad en traducción |
 
-- Cada segmento tiene su tabla de páginas; los segmentos pueden cargarse en RAM **de forma no contigua**.
-- **Regla práctica (TP3, 9):** una página **no puede contener datos de segmentos distintos**. Por eso el tamaño de página se redondea por segmento.
+## Cómo se resuelve “¿entra en memoria?”
 
-### Ejemplo (TP3, 9): programa de 16 bits
-Código 31 945 bytes, datos 15 386, pila 16 870.
-- Con páginas de **4 KB**: 8 + 4 + 5 = **17 páginas** = 69 632 bytes > 65 536 (no entra en 16 bits).
-- Con páginas de **256 bytes**: 125 + 61 + 66 = **252 páginas** = 64 512 bytes ≤ 65 536 → **sí entra**.
+1. Calcular tamaño de página y páginas direccionables.
+2. Por cada segmento: $\lceil tamaño / página \rceil$.
+3. Sumar páginas de todos los segmentos (no mezclar segmentos en una misma página).
+4. Comparar con páginas disponibles.
 
-#### Cómo responderlo en el final
-Explicar el orden (segmentos y después páginas), mencionar que elimina la externa, y resolver el ejemplo del programa de 16 bits con las dos páginas.
+## Complemento de libro (Tanenbaum)
+Tanenbaum usa MULTICS e Intel x86 como casos históricos/reales. La idea clave: la segmentación da estructura lógica, la paginación resuelve la colocación en memoria física.
 
+## Cómo responderlo en el final
+“Segmentación paginada: cada segmento lógico se divide en páginas. Conserva la lógica/protección de segmentos y evita la fragmentación externa de la segmentación pura. Para ver si entra, se calculan páginas por segmento y se suman”.
+
+> [!warning] Errores típicos
+> - Sumar todo el proceso y dividir por página sin separar segmentos.
+> - Confundir dirección lineal (Intel) con dirección física final.
+
+
+---
