@@ -1,0 +1,33 @@
+===== /tmp/arena-coding-uploads/Recu2025.jpeg =====
+--- image Recu2025.jpeg (ocr) ---
+Uoversidad Caica de Sat
+Faaitad Ge Vgenieya
+Cacrera de Ingenieria en Iriomitica
+Recuperatorio-2025-Tema 2
+Apliido y Nombre
+INO
+Emsil
+memoria de 64bylesy memoria fisica de 32Gb.
+a.Cuantos bits se utilizan para el acceso a la tabla de paginacion?
+b.Cuantos bits se utilizan para el acceso intemo de la pagina?
+c.Cuanta memoria virtual se puede direccionar?
+d.LEn cuantas paginas se divide el espacio de direccionamiento virtual?
+e.iCuantos marcos de pagina posee la memoria?
+f.iEncuentra algun problema?
+2) Basandose en el modelo probabilistico de Multiprogramacion:Como afecta la
+multiprogramacion en el uso de la CPu de todo el sistema / computadora? Como afecta la
+multiprogramaci6n en el uso de la CPU de cada proceso individual? Como es la relacion del
+uso de la CPu general y de cada proceso a medida que aumenta el nivel o grado de
+multiprogramacion?Puede responder con un ejemplo.
+3) En un sistema de 16 bits y paginas de 1Kb,que utiliza segmentacion con paginacion para
+bytes, los datosocupan 18834bytesy el tamano de la pila es de 14870 bytes.
+bits al proceso y que una pagina no puede contener datas de diferentes segmentas.Justifique
+numericamente.
+4)Cual es el problema del algoritmo de reemplazo de paginas LRu mediante Hardware (menos
+usado recientemente por Hw)? Que algoritmo soluciona dicho problema? Explique brevemente
+como funciona el algoritmo que soluciona el problema indicado. En un sistema de 32 bits y
+paginas de 4kB:Cuanta memoria necesitaria el algoritmo de reemplazo de paginas LRU por
+Hardware (menos usado recientemente por HW) para llevar registro de uso reciente?
+5) Explique como funciona la tecnica de spooling aplicada a la impresion y que procesos
+intervienen.Por que motivo se necesita esta tecnica?Que pasaria con los trabajos de
+Impresion si no se aplica spooling?En que generacion de computadoras se incorpora?

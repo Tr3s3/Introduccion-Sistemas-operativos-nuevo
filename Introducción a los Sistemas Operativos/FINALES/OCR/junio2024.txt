@@ -1,0 +1,169 @@
+===== /tmp/arena-coding-uploads/junio2024.pdf =====
+--- page 1 (ocr) ---
+Universidad Catolica de Salta
+Facultad de Ingenieria
+Carrera de Ingenieria en Informatica
+Final-03-07-2024
+Apellidoy Nombre
+DNI
+Email
+1)Que es la multiprogramacion?En que generacion de computadoras se incorpora?Qué
+es importante actualmente?
+2) Explique la tabla de paginasmultinivel.De un ejemplo.Por que motivo se introduce la tabla
+depaginas multinivel?
+3)Explique la administracion de memoria por listas enlazadas Que registra este tipo de
+Justifique.
+marcosdememoria se encuentranocupados.
+32GB
+lamemoriafisica),enun sistema de64bits,donde lamemoria fisicaesde16Gbyel tamanode
+laspaginasdememoria esde8Kb.
+-Grafique la tabla depaginas invertida indicando cantidad depaginas.
+-Indique la cantidad depaginas de la tabla sinose utilizara una tabla invertida.
+
+--- page 2 (ocr) ---
+Tomas Scacchi-Ing.Informatico
+Desarrollo:
+ola
+aenopuslusthdp
+RS
+OcCotaNos
+ceidicncia
+dedderespuksto
+Srhre
+CUDI
+eincoreoraenla3ragenerecion,paraminimizarel
+Syadoiseimolemen+o
+be
+Eisdermareraeficente
+ndo
+Qestionorlasoperociones
+Os
+trabojoseplastarjeraypor
+dePcsyseminimizabe
+eda
+Brontosecolocaben
+hmom
+poradasyseaslevahaalccarro
+1tehoeocbespera
+ActuelmonteesmumeortonteentodososSo,yaer
+EL
+problemapuetieneestooslaComoetenciade
+entrelosdifercmteserograhnas
+rerorsos
+moltinivelseuilicanpanh
+pa8debdo9ueson
+610
+2Lasfablas
+aseaginasenlatobled
+sOPO4
+iaspagines
+tener
+inuFilieabkes
+vnySistemade32binsdondc
+EEEMPLO:Tenomos
+paraeldesplaeahmientoyloscms
+022105
+1023
+2
+TP1TP2Dse
+1061oh
+12h
+Wiv.500
+2=409665
+1023
+1023
+Tamanot
+Centdo：2=1024bm
+Cahaentnadanlexoda CnraTo
+direco
+1025
+2
+Otro+abla.doca8inocorresondicmm
+leentcadoLoontrada
+diretcono
+Cnatabladepsginas
+Panhsoburidad
+qaecoseoopegetecn
+da+os.N1a1023
+sereeierealoeiladegognahoe
+Tablas'de
+Lasdemasno seutilizan.
+donivelAsamblea
+Asamblea
+
+--- page 3 (ocr) ---
+Adnninistracondememoriaporlisrasenhazacas:
+Setieneuinelistadeseomentosdelo memorio.Cale
+rtid
+unopuederepresenta
+vacro.Enhmmmwwer
+ontrodadocadasogmehtose
+siesteVeeto.Luego sigue adireccion on la aue
+empieEaelsegmento.TahmbienSeroprcsepta1adistanca
+guerecorre
+porSfimo+ieneVnaoon+aooralsiguiente
+seomento
+Memoria
+e
+Momonia
+BLLTAAN
+ConBArocsos
+Lisra
+Rm.
+P06H63
+EnloEada
+Quelaadministracionformopodebits,yaOuc
+Esmeix
+ciDidentieicarunhuecoUtilizableParaelerocesg
+vaye
+debennos
+guiere
+roferenciar
+quenotieneasignradohingohmarco
+eniamcmnonioesica
+Esrociode
+dir.Nirtuess
+Si sePuere
+242L
+X
+rendnr
+direadio5
+Virtuelconxocorrira
+X
+p8epoen
+Mom Fisica
+ogueho+ienshingn
+142f
+215t
+marcoasociado
+X
+3C5F
+O
+8564
+PASOS:
+1.Fallode osgino
+2。TRAPa（SO
+3.ESobuscaemarcode0aginaPara（levar1oθ
+meneoriafisico.onoldiso
+maruo.
+5.sereinicialainstruccion
+Asamblea
+
+--- page 4 (ocr) ---
+SinoseUtilliearraUnatabladeoapinasinnertib
+bytes
+enep
+provocaguelo
+tabrdeeaossea
+enormeyoacfendo
+manrenenoen.mom.
+Conoao.invertidai
+Ca5+.demarcosdog
+m2rcos
+es
+213
+p0si610
+fener
+esta
+Tomas
+Scacch

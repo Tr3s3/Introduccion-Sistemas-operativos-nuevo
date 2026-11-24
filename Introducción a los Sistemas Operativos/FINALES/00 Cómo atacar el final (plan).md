@@ -16,6 +16,9 @@ tipo: estrategia
 | **Cát** | Presentaciones de la cátedra (Introducción, Procesos y memoria, Administración de memoria virtual) |
 | **Tan** | Tanenbaum, *Sistemas Operativos Modernos*, caps. 1, 2 y 3 (memoria virtual) |
 
+> [!note] Material integrado en esta revisión
+> Se incorporaron los PDFs adjuntos (**PP**, **RS**, **SAE**) para reforzar definiciones, ejemplos y casos de final. Los gráficos con prefijo `fuente_` en `FINALES/Gráficos/` son extractos de diapositivas/libro y están embebidos en los ejercicios donde aportan contexto.
+
 ## Las 10 preguntas núcleo (si solo tenés una semana)
 Estas son las que, combinadas, cubren la mayoría de lo que se pregunta:
 

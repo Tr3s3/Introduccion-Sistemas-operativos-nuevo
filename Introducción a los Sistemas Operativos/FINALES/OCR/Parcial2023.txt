@@ -1,0 +1,23 @@
+===== /tmp/arena-coding-uploads/Parcial2023.jpeg =====
+--- image Parcial2023.jpeg (ocr) ---
+Parcial-2023-Tem
+Apellido y Nombre
+DNI
+Email
+que generacion de computadoras se incorpora?  Por que se agrego en su momento?  Por qué
+es importante actualmente?
+registro de la memoria no usada y usada? (1pto)  Cual es mas rapida? (indicar mas rapida para
+qué) (0,5pto) Cual ocupa menos espacio? (0,5pto)
+3) Aplicando el modelo probabilistico de multiprogramacion con un porcentaje promedio de
+grado de multiprogramacion 3):
+a.  Cual es el porcentaje de tiempo de Entrada/Salida?
+b.  Cual es el porcentaje de uso de la CPU?
+c. Cual es el uso de la CPU para cada proceso?
+E/S es 90%. Cual es el uso de la CPU para cada proceso?
+4) En un sistema de 42 bits, con paginas de memoria de 8Kb y memoria fisica de 8Gb.
+a.  Cuantos bits se utilizan para el acceso a la tabla de paginacion?
+b.  Cuantos bits se utilizan para el acceso interno de la pagina?
+c.  En cuantas paginas se divide el espacio de direccionamiento virtual?
+d. i Cuantos marcos de pagina posee la memoria?
+e.  Cuanta memoria se puede direccionar?
+5) Explique el algoritmo LRU (Menos usado recientemente) (1pto)  Cual es el problema de dicho

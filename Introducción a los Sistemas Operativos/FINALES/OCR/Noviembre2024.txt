@@ -1,0 +1,45 @@
+===== /tmp/arena-coding-uploads/Noviembre2024.jpeg =====
+--- image Noviembre2024.jpeg (ocr) ---
+Final-27-11-2024
+Apellido y Nombre
+DNI
+Email
+es una llamada al sistema? Explique su respuesta.
+necesario y demuestrelo numericamente.
+solucionaria dichoproblema?
+OK-24K
+6K-20K
+12K-16K
+8K-12K
+4K-8K
+K-64K
+56K-60K
+3K-52K
+K-48K
+-44K
+K-40K
+K-36K
+3K-32K
+K-28K
+Espacio de
+K-5
+direcciones
+vinuales
+109
+Direccion de
+3
+4
+9
+2
+memoria
+7X5
+fisica
+Uua
+48
+(En direccion de memoria fisica se indica el marco de pagina donde se ubica cada pagina)
+Si sabemos que una instruccion accede a la direccion virtual 20500
+- Cual es la direccion virtual en binario (de 16 bits)?
+En que numero de pagina se encuentra dicha direccion (en decimal y binario)?
+-En que marco de pagina se encuentra dicha direccion (en decimal y binario)?
+- Cuai es la ubicacion dentro de la pagina (en decimal y binario)?
+-Cual es la direccion fisica en binario (de 16 bits)?

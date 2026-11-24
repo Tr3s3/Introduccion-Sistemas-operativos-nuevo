@@ -1,0 +1,23 @@
+===== /tmp/arena-coding-uploads/Diciembre2025.jpeg =====
+--- image Diciembre2025.jpeg (ocr) ---
+sistema relacionadas con archivos. El comando time del cmd, simbolo del sistema o Shell es
+una llamadas al sistema? Justifique su respuesta
+2) En un sistema de multiprogramacion se sabe que el tiempo promedio de espera de E/S es del
+60%. Se desea saber los momentos (en horas y minutos) en que finalizara cada uno de los
+siguientes procesos. Realice un Gantt para mostrar la ejecucion de los procesos en el tiempo. Y
+realice los calculos necesarios para la estimacion (no redondee,utilice todos los decimales):
+Proceso1:Inicia 13:00 hs,Duracion:2,32minutos
+Proceso2:Inicia 13:05 hs,Duraci6n:2,32minutos
+Proceso 3:Inicia 13:12hs,Duracion:4,00 minutos
+3) Cual es el problema de aplicar segmentacion pura (sin paginacion)? Cual es el problema de
+aplicar paginacion pura (sin segmentacion)? Cual es el problema de aplicar paginacion con
+respuestas
+4)En un sistema de 36 bits,con paginas de memoria de 16Kb y memoria fisica de 128Gb.
+a.Cuantos bits se utilizan para el acceso interno de la pagina?
+b. Cuantos bits se utilizan para el acceso a la tabla de paginacion?
+c. En cuantas paginas se divide el espacio de direccionamiento virtual?
+d.Cuantos marcos de pagina posee la memoria?
+e.Cuanta memoria se puede direccionar?
+f.Detecta algun problema? Si la respuesta es si: Cual es?
+5) Cual es el problema del algoritmo de reemplazo de paginas NRU o No Usadas
+Recientemente?Que algoritmo soluciona dicho problema y porque?
